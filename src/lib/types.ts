@@ -1,4 +1,5 @@
-import { Prisma } from "@/generated/prisma";
+import { Prisma } from "@prisma/client";
+
 
 
 export function getUserDataSelect() {
