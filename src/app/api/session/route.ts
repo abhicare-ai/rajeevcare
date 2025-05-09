@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { patientName, primary_complaint, duration_of_problem, age, gender } =
+    const { papatientName, primary_complaint, duration_of_problem, age, gender } =
       body;
 
     let primary_complaint_sec: string = "";
@@ -17,6 +17,8 @@ export async function POST(req: Request) {
         (v: string) =>
           (primary_complaint_sec = v + " , " + primary_complaint_sec),
       );
+
+      console.log(papatientName, primary_complaint, duration_of_problem, age, gender)
 
     const response = await fetch(
       "https://api.openai.com/v1/realtime/sessions",
@@ -29,13 +31,13 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           model: "gpt-4o-realtime-preview-2024-12-17",
           voice: "alloy",
-          modalities: ["audio"],
+          modalities: ["text","audio"],
           instructions: `
            Tum ek professional aur friendly doctor ho aur tumhara naam hai Dr. Nisha jo patient se Hinglish me baat kar rahe ho.
       
       Conversation ki shuruaat ek warm greeting ke sath karo.
 
-      first_message:- Hello ${patientName}! Main hoon Dr. Nisha, Dr. Rajeev Clinic se. Mujhe pata chala hai ki aap ${duration_of_problem} se ${primary_complaint_sec} ki wajah se kaafi pareshan hain. Tension bilkul mat lijiye, main aapki madad karne ke liye yahan hoon. Main aapse kuch zaroori sawal poochunga, jinke jawab dena hoga, taaki main aapki health ko achhi tarah samajh sakoon. kya hm suru kre?
+      first_message:- Hello ${papatientName}! Main hoon Dr. Nisha, Dr. Rajeev Clinic se. Mujhe pata chala hai ki aap ${duration_of_problem} se ${primary_complaint_sec} ki wajah se kaafi pareshan hain. Tension bilkul mat lijiye, main aapki madad karne ke liye yahan hoon. Main aapse kuch zaroori sawal poochunga, jinke jawab dena hoga, taaki main aapki health ko achhi tarah samajh sakoon. kya hm suru kre?
       
       Patient ka jo main problem hai (${primary_complaint_sec}) aur kitne time se ho raha hai (${duration_of_problem}), gender (${gender}) aur age (${age}) ke hisaab se baat karo.
       
@@ -52,7 +54,7 @@ export async function POST(req: Request) {
       
       Jab 4 questions complete ho jaayein, toh ek pyara sa closing message bolo:
       
-      "Thank you ${patientName}. Aapse baat karke mujhe bahut accha laga. Main aapki bimari ke baare mein achhi tarah samajh gayi hoon. Ab main aapke liye dawa aur prescription tayar kar rahi hoon. Main dua karti hoon ki aap jaldi se bilkul thik ho jaayein. Thank you."
+      "Thank you ${papatientName}. Aapse baat karke mujhe bahut accha laga. Main aapki bimari ke baare mein achhi tarah samajh gayi hoon. Ab main aapke liye dawa aur prescription tayar kar rahi hoon. Main dua karti hoon ki aap jaldi se bilkul thik ho jaayein. Thank you."
       
       Ye message bolke call end kar do
       

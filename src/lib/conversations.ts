@@ -31,3 +31,11 @@ export interface PrescitopnTypes {
   };
 }
 
+export interface detaForCove {
+  id:string
+  papatientName : string;
+  primary_complaint :string[];
+  duration_of_problem :string;
+  age :string;
+  gender :string;
+}

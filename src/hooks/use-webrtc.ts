@@ -4,8 +4,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Conversation } from "@/lib/conversations";
-
+import { Conversation, detaForCove } from "@/lib/conversations";
 
 export interface Tool {
   name: string;
@@ -36,7 +35,7 @@ interface UseWebRTCAudioSessionReturn {
 export default function useWebRTCAudioSession(
   voice: string,
   tools?: Tool[],
-  complaintData?: any,
+  complaintData?: detaForCove,
 ): UseWebRTCAudioSessionReturn {
   // Connection/session states
   const [status, setStatus] = useState("");
@@ -300,7 +299,7 @@ export default function useWebRTCAudioSession(
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          patientName: complaintData?.papatientName,
+          papatientName: complaintData?.papatientName,
           primary_complaint: complaintData?.primary_complaint,
           duration_of_problem: complaintData?.duration_of_problem,
           age: complaintData?.age,

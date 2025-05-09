@@ -16,12 +16,13 @@ import { Mic, MicOff } from "lucide-react";
 import useWebRTCAudioSession from "@/hooks/use-webrtc";
 import { useRouter } from "next/navigation";
 import { conversationWithAI } from "./actions";
+import { detaForCove } from "@/lib/conversations";
 
 interface VapiSpeechDialogBoxProps {
   open: boolean;
   onclose: () => void;
   patientData: AppoinmentData;
-  compaintData: any;
+  compaintData: detaForCove;
 }
 
 export default function OpenAISpeechDialog({
@@ -80,7 +81,7 @@ export default function OpenAISpeechDialog({
                 </div>
 
                 <div className="flex flex-col items-center justify-center space-y-2">
-                  <h5 className="text-center font-bold">Dr.Arya (MD BHMS)</h5>
+                  <h5 className="text-center font-bold">Dr. Nisha (MD BHMS)</h5>
                   <h5 className="text-center font-bold">Doctor</h5>
 
                   {status === "Session established successfully!" ? (
