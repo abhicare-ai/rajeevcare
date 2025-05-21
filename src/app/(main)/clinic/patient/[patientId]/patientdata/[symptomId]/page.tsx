@@ -48,11 +48,14 @@ export default async function Page({
     where: {
       id: symptomId,
     },
+   
   });
   if (!prescitonData) {
     return {};
   }
   const rawPrescription = prescitonData?.presciption;
+
+
 
   // Fix unquoted keys only if the string exists
   const parsedPrescription = rawPrescription

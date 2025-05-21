@@ -101,7 +101,7 @@ export default function SymtomForm({
                 <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
                 <p className="uppercase">{prescitonData?.age}</p>
               </div>
-              <p>Patinet ID :- ahh123</p>
+              <p className="hidden">Patinet ID :- 123</p>
             </div>
           </div>
         </div>
@@ -185,6 +185,12 @@ export default function SymtomForm({
             <div className="space-y-4">
               {fields.map((field, index) => (
                 <div key={field.id} className="flex items-end space-x-4">
+                  {/* Sr. No directly in div */}
+                  <div className="flex w-12 items-center">
+                    <div className="font-bold">{index + 1}</div>{" "}
+                    {/* Display Sr. No */}
+                  </div>
+
                   <FormField
                     control={form.control}
                     name={`Medicines.${index}.name`}
@@ -220,7 +226,6 @@ export default function SymtomForm({
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name={`Medicines.${index}.frequency`}
@@ -237,7 +242,6 @@ export default function SymtomForm({
                       </FormItem>
                     )}
                   />
-
                   <Button
                     type="button"
                     onClick={() => remove(index)}

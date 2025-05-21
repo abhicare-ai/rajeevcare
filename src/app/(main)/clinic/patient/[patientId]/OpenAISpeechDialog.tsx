@@ -81,7 +81,9 @@ export default function OpenAISpeechDialog({
                 </div>
 
                 <div className="flex flex-col items-center justify-center space-y-2">
-                  <h5 className="text-center font-bold">Dr. Nisha (MD BHMS)</h5>
+                  <h5 className="text-center font-bold">
+                    Dr. Mridula (MD BHMS)
+                  </h5>
                   <h5 className="text-center font-bold">Doctor</h5>
 
                   {status === "Session established successfully!" ? (
