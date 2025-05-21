@@ -97,7 +97,7 @@ export default function Appointment({ appt }: PostPorps) {
               <TableCell>{post.phoneNumber}</TableCell>
 
               <TableCell>
-                {post.gendar} ({post.user._count.Appointment})
+                {post.gendar}
               </TableCell>
               <TableCell>{calculateAge(post.patientDOB)}</TableCell>
               <TableCell>{formatDate(post.patientDOB)}</TableCell>
