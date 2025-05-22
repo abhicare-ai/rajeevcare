@@ -19,7 +19,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TagsInput } from "@/components/TagsInput";
 import { Input } from "@/components/ui/input";
-import { calculateAge } from "@/lib/utils";
+import { calculateAge, formatDate } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -53,6 +53,10 @@ export default function GenerateQutions({
       gender: patientData.gendar,
       id: patientData.id,
       papatientName: patientData.patientName,
+
+      Patient_Number: patientData.phoneNumber,
+      DOB: formatDate(patientData.patientDOB),
+      Ai_Check_Up_Date: formatDate(patientData.appointmentDate),
     },
   });
 
@@ -184,6 +188,61 @@ export default function GenerateQutions({
                     <FormLabel>Gender </FormLabel>
                     <FormControl>
                       <Input {...field} value={field.value} readOnly />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="Patient_Number"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Phone Number </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="DOB"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel> DOB </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="Ai_Check_Up_Date"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel> Check Up Date </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -198,8 +198,8 @@ export default function CreateAppointmetPostDialog({
                           </SelectTrigger>
                           <SelectContent position="popper">
                             {Array.from(
-                              { length: 2025 - 1990 + 1 },
-                              (_, i) => 1990 + i,
+                              { length: 2025 - 1890 + 1 },
+                              (_, i) => 1890 + i,
                             ).map((yr) => (
                               <SelectItem key={yr} value={yr.toString()}>
                                 {yr}
@@ -218,7 +218,7 @@ export default function CreateAppointmetPostDialog({
                             }}
                             month={dobSelectedMonth}
                             onMonthChange={setDobSelectedMonth}
-                            fromDate={new Date(1990, 0, 1)}
+                            fromDate={new Date(1890, 0, 1)}
                             toDate={new Date(2025, 11, 31)}
                           />
                         </div>

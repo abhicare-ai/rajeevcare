@@ -38,6 +38,10 @@ interface SymtomFormProps {
     age: string;
     gender: string;
     papatientName: string;
+
+    Patient_Number: string;
+    DOB: string;
+    Ai_Check_Up_Date: string;
   };
 }
 
@@ -95,13 +99,19 @@ export default function SymtomForm({
             <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
               {prescitonData?.papatientName[0]}
             </div>
-            <div>
+            <div className="space-y-3">
               <p className="uppercase">{prescitonData?.papatientName}</p>
               <div className="flex gap-1">
                 <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
                 <p className="uppercase">{prescitonData?.age}</p>
               </div>
-              <p className="hidden">Patinet ID :- 123</p>
+              <p className="">Patinet ID :- </p>
+              <p className="">Token No :- </p>
+              <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
+              <p className="">DOB :- {prescitonData.DOB}</p>
+              <p className="">
+                Chek Up Date :- {prescitonData.Ai_Check_Up_Date}
+              </p>
             </div>
           </div>
         </div>

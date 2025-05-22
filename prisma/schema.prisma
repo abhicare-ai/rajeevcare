@@ -76,6 +76,9 @@ model Prisciption {
   age                 String
   gender              String
   papatientName       String
+  Patient_Number      String
+  DOB                 String
+  Ai_Check_Up_Date    String
 
   presciption String?
 

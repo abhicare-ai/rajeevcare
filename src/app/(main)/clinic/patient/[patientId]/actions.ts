@@ -20,6 +20,10 @@ export async function generateDeasesQuations(
       primary_complaint,
       duration_of_problem,
       id,
+
+      Patient_Number,
+      DOB,
+      Ai_Check_Up_Date,
     } = generateQuationSchema.parse(input);
 
     const result = await prisma.prisciption.create({
@@ -30,6 +34,10 @@ export async function generateDeasesQuations(
         gender,
         primary_complaint,
         duration_of_problem,
+
+        Patient_Number,
+        DOB,
+        Ai_Check_Up_Date,
       },
       select: {
         id: true,
@@ -40,6 +48,9 @@ export async function generateDeasesQuations(
         primary_complaint: true,
         duration_of_problem: true,
         createdAt: true,
+        Patient_Number: true,
+        DOB: true,
+        Ai_Check_Up_Date: true,
       },
     });
 
@@ -73,11 +84,14 @@ export async function conversationWithAI(conversation: {
         {
           role: "system",
           content: `
-You are a homeopathic doctor. Speak in simple English so that the patient can understand clearly. You will provide only homeopathic treatments.
+You are a homeopathic doctor.
 
-Based on the conversation below, summarize the conversation and return a **JSON** object with the following structure:
+The conversation below is a **voice-to-text transcript** between the AI doctor (Dr. Mridula) and the patient. It is in Hinglish and includes natural speech patterns like "uh-huh", "haan", "hmm", and incomplete sentences.
 
-{
+Your task is to **understand and cleanly interpret** this voice-style conversation and return a structured **JSON object** only (no markdown, no \`\`\`, no extra text).
+
+Format strictly like this:
+//json//{
   summary: string,
   qa: [
     { question: string, answer: string }
@@ -99,30 +113,16 @@ Based on the conversation below, summarize the conversation and return a **JSON*
   }
 }
 
-You must:
-- Convert the conversation into **simple question-answer format**.
-- Keep the language **simple, clear**, and **easy to understand**.
-- If the message from the patient includes symptoms, convert them into **symptoms list** and include all symptoms mentioned in the conversation.
-- If the diagnosis is clear, mention it in the **diagnosis list**.
-- Include **medicines** with name, dose, and frequency for treatment.
-- Suggest **diet plans** for breakfast, lunch, and dinner.
-- Include **morning workout plans** and general notes.
+🟡 Instructions:
+- In the **summary**, convert the full conversation into simple English — from start ("Namaste...") to end ("Thank you...") in a fluent and factual way. Don’t add or assume anything.
+- In **qa**, clearly format every exchange as a question and answer. If the patient says “uh-huh” or “hmm”, interpret it appropriately (e.g., "Haan", "Nahi") based on the context.
+- Extract **all symptoms** mentioned directly or indirectly.
+- Add possible **diagnosis** based on symptoms.
+- Recommend suitable **homeopathic medicines** with dose and frequency.
+- Create a simple **diet plan** (breakfast, lunch, dinner) and include helpful dietary tips.
+- Include a short **morning workout** and helpful health note.
 
-For example:
-- If the patient says, "I have a sore throat, fever, and body aches for the last 3 days," 
-  then generate:
-    - Question: "What symptoms are you facing?"
-    - Answer: "I have a sore throat, fever, and body aches for 3 days."
-
-- If the patient says, "I feel weak, tired, and have headaches," then:
-    - Question: "Do you have any other symptoms?"
-    - Answer: "I feel weak, tired, and have headaches."
-
-- **Important**: The **complete symptom list** should include everything the patient has mentioned in their responses, even if it's in different messages or at different points in the conversation.
-
-Keep everything **concise**, **structured**, and **focused on the treatment**.
-
-Do not use unnecessary technical details. Just focus on what is needed to create a **homeopathic treatment plan**.
+⚠️ Don’t include markdown, explanations, or any extra formatting. Return clean and valid JSON only.
 `.trim(),
         },
         {
@@ -155,7 +155,7 @@ Do not use unnecessary technical details. Just focus on what is needed to create
 
     // Parse with fallback fix for unquoted keys
     const oldPrescription: PrescitopnTypes = rawPrescription
-      ? JSON.parse(rawPrescription.replace(/([{,])\s*(\w+)\s*:/g, '$1"$2":'))
+      ? JSON.parse(rawPrescription.replace(/^\/\/json\/\/\s*/, ""))
       : {
           summary: "N/A",
           qa: [],

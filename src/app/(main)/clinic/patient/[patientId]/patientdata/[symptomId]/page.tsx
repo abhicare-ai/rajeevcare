@@ -5,8 +5,6 @@ import { notFound } from "next/navigation";
 import React, { cache } from "react";
 import SymtomForm from "./SymtomForm";
 
-
-
 const getUser = cache(async (symptomId: string) => {
   const user = await prisma.prisciption.findFirst({
     where: {
@@ -48,18 +46,15 @@ export default async function Page({
     where: {
       id: symptomId,
     },
-   
   });
   if (!prescitonData) {
     return {};
   }
   const rawPrescription = prescitonData?.presciption;
 
-
-
   // Fix unquoted keys only if the string exists
   const parsedPrescription = rawPrescription
-    ? JSON.parse(rawPrescription.replace(/([{,])\s*(\w+)\s*:/g, '$1"$2":'))
+    ? JSON.parse(rawPrescription.replace(/^\/\/json\/\/\s*/, ''))
     : null;
 
   return (
@@ -73,6 +68,11 @@ export default async function Page({
         age: prescitonData?.age,
         gender: prescitonData?.gender,
         papatientName: prescitonData?.papatientName,
+        Patient_Number:prescitonData?.Patient_Number,
+        DOB:prescitonData?.DOB,
+        Ai_Check_Up_Date:prescitonData?.Ai_Check_Up_Date
+
+
       }}
     />
   );
