@@ -94,21 +94,28 @@ export default function SymtomForm({
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
         <div className="space-y-6">
-          <p className="text-2xl font-bold">Personal Information</p>
-          <div className="flex items-center gap-5">
-            <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
-              {prescitonData?.papatientName[0]}
+          <p className="text-center text-2xl font-bold">Personal Information</p>
+          <div className="flex justify-between">
+            <div className="flex items-center gap-5">
+              <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
+                {prescitonData?.papatientName[0]}
+              </div>
+              <div className="space-y-3">
+                <p className="font-bold uppercase">
+                  {prescitonData?.papatientName}
+                </p>
+                <div className="flex gap-1">
+                  <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
+                  <p className="uppercase">{prescitonData?.age}</p>
+                </div>
+                <p className="">DOB :- {prescitonData.DOB}</p>
+                <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
+              </div>
             </div>
             <div className="space-y-3">
-              <p className="uppercase">{prescitonData?.papatientName}</p>
-              <div className="flex gap-1">
-                <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
-                <p className="uppercase">{prescitonData?.age}</p>
-              </div>
               <p className="">Patinet ID :- </p>
               <p className="">Token No :- </p>
-              <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
-              <p className="">DOB :- {prescitonData.DOB}</p>
+
               <p className="">
                 Chek Up Date :- {prescitonData.Ai_Check_Up_Date}
               </p>
