@@ -2,6 +2,7 @@
 import { OpenAI } from "@/hooks/openAI";
 import { Conversation, PrescitopnTypes } from "@/lib/conversations";
 import { prisma } from "@/lib/prisma";
+import { safeParsePrescriptionAction } from "@/lib/utils";
 import {
   FinalPresciptionValues,
   generateQuationSchema,
@@ -151,28 +152,11 @@ Format strictly like this:
       select: { presciption: true },
     });
 
-    const rawPrescription = prescitonData?.presciption;
+    const rawPrescription: any = prescitonData?.presciption;
 
     // Parse with fallback fix for unquoted keys
-    const oldPrescription: PrescitopnTypes = rawPrescription
-      ? JSON.parse(rawPrescription.replace(/^\/\/json\/\/\s*/, ""))
-      : {
-          summary: "N/A",
-          qa: [],
-          symptoms: [],
-          diagnosis: [],
-          medicines: [],
-          dietPlan: {
-            breakfast: [],
-            lunch: [],
-            dinner: [],
-            extras: [],
-          },
-          workoutPlan: {
-            morning: "",
-            note: "",
-          },
-        };
+    const oldPrescription: PrescitopnTypes =
+      safeParsePrescriptionAction(rawPrescription);
 
     // ✅ Merge with new values (only override if exists in values)
     const newPrescription: Partial<PrescitopnTypes> = {};

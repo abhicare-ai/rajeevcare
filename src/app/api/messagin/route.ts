@@ -5,12 +5,15 @@ const accountSid = process.env.TWILO_ACCOUNT_SID;
 const authToken = process.env.TWILO_AUTH_TOKEN;
 const client = twilio(accountSid, authToken);
 
-export async function GET(req: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
+    const { inpute } = await req.json();
+
     const message = await client.messages.create({
-      body: "Pal ji, aapka WhatsApp message mil gaya hai 🎉",
-       from: 'whatsapp:+14155238886',
-        to: 'whatsapp:+919534441837'
+      body: `Here is your link:\n${inpute}`,
+
+      from: "whatsapp:+14155238886",
+      to: "whatsapp:+919534441837",
     });
 
     return Response.json(message);

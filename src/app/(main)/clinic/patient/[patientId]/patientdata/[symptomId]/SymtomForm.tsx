@@ -18,7 +18,7 @@ import {
   FinalPresciptionValues,
 } from "@/lib/vallidaion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusIcon, Printer, XIcon } from "lucide-react";
+import { MessageCircleMore, PlusIcon, Printer, XIcon } from "lucide-react";
 
 import { useFieldArray, useForm } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
@@ -26,6 +26,7 @@ import { useRef, useTransition } from "react";
 import { conversationWithAI } from "../../actions";
 import { PrescitopnTypes } from "@/lib/conversations";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -90,6 +91,16 @@ export default function SymtomForm({
 
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
+
+  const sendtodr = async () => {
+    if (typeof window !== "undefined") {
+      const { data } = await axios.post("/api/messagin", {
+        inpute: window.location.href,
+      });
+
+      console.log(data);
+    }
+  };
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
@@ -400,6 +411,12 @@ export default function SymtomForm({
                 disabled={ispending}
               >
                 <Printer /> Print
+              </Button>
+              <Button type="button" disabled={ispending} onClick={sendtodr}>
+                <MessageCircleMore /> Send To Dr.Rajeev Sir
+              </Button>
+              <Button type="button" disabled={ispending}>
+                <MessageCircleMore /> Send To Medicine Counter
               </Button>
             </div>
           </form>
