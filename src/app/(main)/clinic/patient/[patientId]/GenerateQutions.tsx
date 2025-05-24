@@ -57,7 +57,7 @@ export default function GenerateQutions({
       Patient_Number: patientData.phoneNumber,
       DOB: formatDate(patientData.patientDOB),
       Ai_Check_Up_Date: formatDate(patientData.appointmentDate),
-      caseidId: patientData.phoneNumber,
+      caseidId: patientData.tokenNo,
     },
   });
 

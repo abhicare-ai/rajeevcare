@@ -149,27 +149,22 @@ export default function SymtomForm({
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
         <div className="space-y-6">
-          <p className="text-2xl font-bold md:text-center">
-            Personal Information
-          </p>
-          <div className="flex justify-between gap-5">
-            <div className="flex flex-col items-center gap-5 md:flex-row">
-              <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
-                {prescitonData?.papatientName[0]}
-              </div>
-              <div className="space-y-3">
-                <p className="font-bold uppercase">
-                  {prescitonData?.papatientName}
-                </p>
-                <div className="flex gap-1">
-                  <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
-                  <p className="uppercase">{prescitonData?.age}</p>
-                </div>
-                <p className="">DOB :- {prescitonData.DOB}</p>
-                <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
-              </div>
+          <p className="text-2xl font-bold">Personal Information</p>
+
+          <div className="flex gap-5">
+            <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
+              {prescitonData?.papatientName[0]}
             </div>
             <div className="space-y-3">
+              <p className="font-bold uppercase">
+                {prescitonData?.papatientName}
+              </p>
+              <div className="flex gap-1">
+                <p className="uppercase">{prescitonData?.gender}</p> , {"  "}
+                <p className="uppercase">{prescitonData?.age}</p>
+              </div>
+              <p className="">DOB :- {prescitonData.DOB}</p>
+              <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
 
               <p className="">
@@ -397,7 +392,7 @@ export default function SymtomForm({
               </Button>
             </div>
 
-            <div className="printer block space-y-4 md:hidden">
+            <div className="block space-y-4 md:hidden">
               {fields.map((field, index) => (
                 <div
                   key={field.id}
@@ -685,7 +680,7 @@ export default function SymtomForm({
                   <FormItem className="!w-full space-y-2">
                     <FormLabel className="font-bold">Note</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="max-h-30 resize-none" />
+                      <Textarea {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
