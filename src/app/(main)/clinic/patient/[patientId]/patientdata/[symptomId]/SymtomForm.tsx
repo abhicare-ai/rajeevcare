@@ -225,7 +225,8 @@ export default function SymtomForm({
               )}
             />
 
-            <div className="space-y-4">
+            {/* Medicine section with reponsove  start here*/}
+            <div className="hidden space-y-4 md:block">
               {fields.map((field, index) => (
                 <div key={field.id} className="flex items-end space-x-4">
                   {/* Sr. No directly in div */}
@@ -246,7 +247,11 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Textarea className="resize" {...field} placeholder="e.g. Paracetamol" />
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. Paracetamol"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -262,7 +267,11 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Textarea className="resize" {...field} placeholder="e.g. 450ml" />
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 450ml"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -279,7 +288,11 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Textarea className="resize" {...field} placeholder="e.g. 500mg" />
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 500mg"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -295,7 +308,11 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Textarea className="resize" {...field} placeholder="e.g. 2 times a day" />
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 2 times a day"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -311,7 +328,11 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Textarea className="resize" {...field} placeholder="e.g. 2 tablets" />
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 2 tablets"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -345,6 +366,158 @@ export default function SymtomForm({
                 <PlusIcon /> Add Medicine
               </Button>
             </div>
+
+            <div className="space-y-4 md:hidden block printer">
+              {fields.map((field, index) => (
+                <div
+                  key={field.id}
+                  className="grid grid-cols-1 items-end gap-4 md:grid-cols-6"
+                >
+                  {/* Sr. No */}
+                  <div className="flex items-center justify-center font-bold">
+                    {index + 1}
+                  </div>
+
+                  {/* Medicine Name */}
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.name`}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">
+                            Medicine Name
+                          </FormLabel>
+                        )}
+                        <FormControl>
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. Paracetamol"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* ML */}
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.ml`}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">ML</FormLabel>
+                        )}
+                        <FormControl>
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 450ml"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Dose */}
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.dose`}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">Dose</FormLabel>
+                        )}
+                        <FormControl>
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 500mg"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Frequency */}
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.frequency`}
+                    render={({ field }) => (
+                      <FormItem className="space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">Frequency</FormLabel>
+                        )}
+                        <FormControl>
+                          <Textarea
+                            className="resize"
+                            {...field}
+                            placeholder="e.g. 2 times a day"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Quantity + Remove */}
+                  <div className="flex flex-col space-y-2">
+                    <FormField
+                      control={form.control}
+                      name={`Medicines.${index}.quantity`}
+                      render={({ field }) => (
+                        <FormItem>
+                          {index === 0 && (
+                            <FormLabel className="font-bold">
+                              Quantity
+                            </FormLabel>
+                          )}
+                          <FormControl>
+                            <Textarea
+                              className="resize"
+                              {...field}
+                              placeholder="e.g. 2 tablets"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="button"
+                      onClick={() => remove(index)}
+                      variant="destructive"
+                      size="sm"
+                    >
+                      <XIcon />
+                    </Button>
+                  </div>
+                </div>
+              ))}
+
+              <Button
+                type="button"
+                onClick={() =>
+                  append({
+                    name: "",
+                    ml: "",
+                    dose: "",
+                    frequency: "",
+                    quantity: "",
+                  })
+                }
+                variant="default"
+                className="printer"
+              >
+                <PlusIcon /> Add Medicine
+              </Button>
+            </div>
+
+           {/* Medicine section with reponsove  end here*/}
 
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Diet
@@ -482,7 +655,7 @@ export default function SymtomForm({
                   <FormItem className="!w-full space-y-2">
                     <FormLabel className="font-bold">Note</FormLabel>
                     <FormControl>
-                      <Textarea {...field} className="max-h-30 resize-none"/>
+                      <Textarea {...field} className="max-h-30 resize-none" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
