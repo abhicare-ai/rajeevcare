@@ -39,6 +39,7 @@ export const generateQuationSchema = z.object({
   Patient_Number: requiredString,
   DOB: requiredString,
   Ai_Check_Up_Date: requiredString,
+  caseidId:requiredString
 });
 
 export type GenerateQuationValues = z.infer<typeof generateQuationSchema>;

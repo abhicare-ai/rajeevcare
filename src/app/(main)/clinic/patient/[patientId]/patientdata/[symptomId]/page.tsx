@@ -69,6 +69,7 @@ export default async function Page({
         Patient_Number: prescitonData?.Patient_Number,
         DOB: prescitonData?.DOB,
         Ai_Check_Up_Date: prescitonData?.Ai_Check_Up_Date,
+        caseidIdx: prescitonData?.caseidId,
       }}
     />
   );
