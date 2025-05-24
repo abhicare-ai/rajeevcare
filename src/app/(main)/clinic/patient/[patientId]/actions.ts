@@ -91,6 +91,10 @@ The conversation below is a **voice-to-text transcript** between the AI doctor (
 
 Your task is to **understand and cleanly interpret** this voice-style conversation and return a structured **JSON object** only (no markdown, no \`\`\`, no extra text).
 
+🧠 "Theek hai, kripya apna pura problem detail mein bataiye — jo bhi takleef ho sab share kijiye."  es wala question or eska answer tumko qa me dalna hi dalna hai smje. 
+🧠 sara kuch simple english me summary or qa hona chhiaye smje.
+🧠 tumko pura conversation jo ${formattedMessages} esme aa rha hai pura dalna hai qa me smje
+
 Format strictly like this:
 //json//{
   summary: string,
@@ -100,16 +104,18 @@ Format strictly like this:
   symptoms: string[],
   diagnosis: string[],
   medicines: [
-    { name: string, dose: string, frequency: string }
+    { name: string,ml: string, dose: string, frequency: string,quantity : string }
   ],
   dietPlan: {
     breakfast: string[],
     lunch: string[],
     dinner: string[],
-    extras: string[]
+    do: string[]
+    dontdo: string[]
   },
   workoutPlan: {
-    morning: string,
+    yoga: string[],
+    exercise: string[]
     note: string
   }
 }
@@ -170,12 +176,14 @@ Format strictly like this:
       ...(values.Breakfast && { breakfast: values.Breakfast }),
       ...(values.Lunch && { lunch: values.Lunch }),
       ...(values.Dinner && { dinner: values.Dinner }),
-      ...(values.Extras && { extras: values.Extras }),
+      ...(values.Do && { do: values.Do }),
+      ...(values.DontDo && { dontdo: values.DontDo }),
     };
 
     newPrescription.workoutPlan = {
       ...oldPrescription.workoutPlan,
-      ...(values.Morning && { morning: values.Morning }),
+      ...(values.Yoga && { yoga: values.Yoga }),
+      ...(values.Exercize && { exercise: values.Exercize }),
       ...(values.Note && { note: values.Note }),
     };
 

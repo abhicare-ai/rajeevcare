@@ -96,10 +96,12 @@ function getEmptyPrescription(): PrescitopnTypes {
       breakfast: [],
       lunch: [],
       dinner: [],
-      extras: [],
+      do: [],
+      dontdo: [],
     },
     workoutPlan: {
-      morning: "",
+      yoga: [],
+      exercise: [],
       note: "",
     },
   };

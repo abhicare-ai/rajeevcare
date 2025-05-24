@@ -16,26 +16,30 @@ export interface PrescitopnTypes {
   diagnosis: string[];
   medicines: {
     name: string;
+    ml: string;
     dose: string;
     frequency: string;
+    quantity: string;
   }[];
   dietPlan: {
     breakfast: string[];
     lunch: string[];
     dinner: string[];
-    extras: string[];
+    do: string[];
+    dontdo: string[];
   };
   workoutPlan: {
-    morning: string;
+    yoga: string[];
+    exercise: string[];
     note: string;
   };
 }
 
 export interface detaForCove {
-  id:string
-  papatientName : string;
-  primary_complaint :string[];
-  duration_of_problem :string;
-  age :string;
-  gender :string;
+  id: string;
+  papatientName: string;
+  primary_complaint: string[];
+  duration_of_problem: string;
+  age: string;
+  gender: string;
 }

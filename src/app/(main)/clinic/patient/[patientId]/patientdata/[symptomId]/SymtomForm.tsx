@@ -18,15 +18,17 @@ import {
   FinalPresciptionValues,
 } from "@/lib/vallidaion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { MessageCircleMore, PlusIcon, Printer, XIcon } from "lucide-react";
+import { Eye, MessageCircleMore, PlusIcon, Printer, XIcon } from "lucide-react";
 
 import { useFieldArray, useForm } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
-import { useRef, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { conversationWithAI } from "../../actions";
 import { PrescitopnTypes } from "@/lib/conversations";
 import { toast } from "sonner";
 import axios from "axios";
+import Link from "next/link";
+import { Textarea } from "@/components/ui/textarea";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -60,8 +62,11 @@ export default function SymtomForm({
       Breakfast: finalData.dietPlan.breakfast || [],
       Lunch: finalData.dietPlan.lunch || [],
       Dinner: finalData.dietPlan.dinner || [],
-      Extras: finalData.dietPlan.extras || [],
-      Morning: finalData.workoutPlan.morning || "",
+      Do: finalData.dietPlan.do || [],
+      DontDo: finalData.dietPlan.dontdo || [],
+      Yoga: finalData.workoutPlan.yoga || [],
+      Exercize: finalData.workoutPlan.exercise || [],
+
       Note: finalData.workoutPlan.note || "",
     },
   });
@@ -101,6 +106,16 @@ export default function SymtomForm({
       console.log(data);
     }
   };
+
+  const [prevLink, setPrevLink] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentUrl = window.location.href;
+      const trimmedUrl = currentUrl.split("patientdata")[0];
+      setPrevLink(trimmedUrl);
+    }
+  }, []);
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
@@ -231,7 +246,23 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Input {...field} placeholder="e.g. Paracetamol" />
+                          <Textarea className="resize" {...field} placeholder="e.g. Paracetamol" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.ml`}
+                    render={({ field }) => (
+                      <FormItem className="w-full space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">ML</FormLabel>
+                        )}
+
+                        <FormControl>
+                          <Textarea className="resize" {...field} placeholder="e.g. 450ml" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -248,7 +279,7 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Input {...field} placeholder="e.g. 500mg" />
+                          <Textarea className="resize" {...field} placeholder="e.g. 500mg" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -264,7 +295,23 @@ export default function SymtomForm({
                         )}
 
                         <FormControl>
-                          <Input {...field} placeholder="e.g. 2 times a day" />
+                          <Textarea className="resize" {...field} placeholder="e.g. 2 times a day" />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`Medicines.${index}.quantity`}
+                    render={({ field }) => (
+                      <FormItem className="w-full space-y-2">
+                        {index === 0 && (
+                          <FormLabel className="font-bold">Quantity</FormLabel>
+                        )}
+
+                        <FormControl>
+                          <Textarea className="resize" {...field} placeholder="e.g. 2 tablets" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -283,7 +330,15 @@ export default function SymtomForm({
 
               <Button
                 type="button"
-                onClick={() => append({ name: "", dose: "", frequency: "" })}
+                onClick={() =>
+                  append({
+                    name: "",
+                    ml: "",
+                    dose: "",
+                    frequency: "",
+                    quantity: "",
+                  })
+                }
                 variant="default"
                 className="printer"
               >
@@ -348,10 +403,27 @@ export default function SymtomForm({
               />
               <FormField
                 control={form.control}
-                name="Extras"
+                name="Do"
                 render={({ field }) => (
                   <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Extras</FormLabel>
+                    <FormLabel className="font-bold">Do</FormLabel>
+                    <FormControl>
+                      <TagsInput
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="DontDo"
+                render={({ field }) => (
+                  <FormItem className="!w-full space-y-2">
+                    <FormLabel className="font-bold">Don't Do</FormLabel>
                     <FormControl>
                       <TagsInput
                         value={field.value}
@@ -371,12 +443,33 @@ export default function SymtomForm({
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}
-                name="Morning"
+                name="Yoga"
                 render={({ field }) => (
                   <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Morning</FormLabel>
+                    <FormLabel className="font-bold">Yoga</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <TagsInput
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="w-full"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="Exercize"
+                render={({ field }) => (
+                  <FormItem className="!w-full space-y-2">
+                    <FormLabel className="font-bold">Exercize</FormLabel>
+                    <FormControl>
+                      <TagsInput
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        className="w-full"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -389,7 +482,7 @@ export default function SymtomForm({
                   <FormItem className="!w-full space-y-2">
                     <FormLabel className="font-bold">Note</FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Textarea {...field} className="max-h-30 resize-none"/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -417,6 +510,13 @@ export default function SymtomForm({
               </Button>
               <Button type="button" disabled={ispending}>
                 <MessageCircleMore /> Send To Medicine Counter
+              </Button>
+              <Button type="button" variant="default" className="w-full">
+                <Eye />
+                <Link href={prevLink}>
+                  {" "}
+                  Vew All {prescitonData.papatientName} diseases
+                </Link>
               </Button>
             </div>
           </form>

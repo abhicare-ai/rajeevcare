@@ -45,8 +45,10 @@ export type GenerateQuationValues = z.infer<typeof generateQuationSchema>;
 
 const medicineSchema = z.object({
   name: requiredString,
+  ml: requiredString,
   dose: requiredString,
   frequency: requiredString,
+  quantity: requiredString,
 });
 
 export const finalPresciptionSchema = z.object({
@@ -60,8 +62,10 @@ export const finalPresciptionSchema = z.object({
   Breakfast: z.array(z.string()).nonempty("Please at least one  diet paln "),
   Lunch: z.array(z.string()).nonempty("Please at least one  diet paln "),
   Dinner: z.array(z.string()).nonempty("Please at least one  diet paln "),
-  Extras: z.array(z.string()).nonempty("Please at least one  diet paln "),
-  Morning: z.string().trim(),
+  Do: z.array(z.string()).nonempty("Please at least one do diet paln "),
+  DontDo: z.array(z.string()).nonempty("Please at least one don't diet paln "),
+  Yoga: z.array(z.string()).nonempty("Please at least one  yoga  "),
+  Exercize: z.array(z.string()).nonempty("Please at least one  exercise  "),
   Note: z.string().trim(),
 });
 
