@@ -12,7 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import {
   finalPresciptionSchema,
   FinalPresciptionValues,
@@ -29,6 +28,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
+import { useAppSelector } from "@/hooks/hooks";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -97,14 +97,37 @@ export default function SymtomForm({
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
+  const [loading, setloding] = useState(false);
   const sendtodr = async () => {
+    setloding(true);
     if (typeof window !== "undefined") {
       const { data } = await axios.post("/api/messagin", {
         inpute: window.location.href,
       });
 
-      console.log(data);
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success("Message sent successfully!");
+      }
     }
+    setloding(false);
+  };
+  const [loadinga, setlodinga] = useState(false);
+  const sendtomec = async () => {
+    setlodinga(true);
+    if (typeof window !== "undefined") {
+      const { data } = await axios.post("/api/sentocounter", {
+        inpute: window.location.href,
+      });
+
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success("Message sent successfully!");
+      }
+    }
+    setlodinga(false);
   };
 
   const [prevLink, setPrevLink] = useState("");
@@ -116,6 +139,11 @@ export default function SymtomForm({
       setPrevLink(trimmedUrl);
     }
   }, []);
+
+  const { user } = useAppSelector((state) => state.authSlice);
+  if (!user) {
+    throw Error(" You are not logged in");
+  }
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
@@ -367,7 +395,7 @@ export default function SymtomForm({
               </Button>
             </div>
 
-            <div className="space-y-4 md:hidden block printer">
+            <div className="printer block space-y-4 md:hidden">
               {fields.map((field, index) => (
                 <div
                   key={field.id}
@@ -517,7 +545,7 @@ export default function SymtomForm({
               </Button>
             </div>
 
-           {/* Medicine section with reponsove  end here*/}
+            {/* Medicine section with reponsove  end here*/}
 
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Diet
@@ -663,14 +691,17 @@ export default function SymtomForm({
               />
             </div>
             <div className="printer grid grid-cols-1 gap-4 md:grid-cols-2">
-              <LoadingButton
-                loading={ispending}
-                className="w-full"
-                type="submit"
-                disabled={!isDirty}
-              >
-                {isDirty ? "Update" : "Submit"}
-              </LoadingButton>
+              {user.isAdmin && (
+                <LoadingButton
+                  loading={ispending}
+                  className="w-full"
+                  type="submit"
+                  disabled={!isDirty}
+                >
+                  {isDirty ? "Update" : "Submit"}
+                </LoadingButton>
+              )}
+
               <Button
                 onClick={reactToPrintFn}
                 type="button"
@@ -678,12 +709,24 @@ export default function SymtomForm({
               >
                 <Printer /> Print
               </Button>
-              <Button type="button" disabled={ispending} onClick={sendtodr}>
+              <LoadingButton
+                type="button"
+                disabled={loading}
+                loading={loading}
+                onClick={sendtodr}
+              >
                 <MessageCircleMore /> Send To Dr.Rajeev Sir
-              </Button>
-              <Button type="button" disabled={ispending}>
-                <MessageCircleMore /> Send To Medicine Counter
-              </Button>
+              </LoadingButton>
+              {user.isAdmin && (
+                <LoadingButton
+                  type="button"
+                  disabled={loadinga}
+                  loading={loadinga}
+                  onClick={sendtomec}
+                >
+                  <MessageCircleMore /> Send To Medicine Counter
+                </LoadingButton>
+              )}
               <Button type="button" variant="default" className="w-full">
                 <Eye />
                 <Link href={prevLink}>
