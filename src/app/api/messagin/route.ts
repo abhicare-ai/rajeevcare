@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       body: `Here is your link:\n${inpute}`,
 
       from: "whatsapp:+14155238886",
-      to: "whatsapp:+919534441837",
+      to: "whatsapp:+919263049994",
     });
 
     return Response.json(message);
