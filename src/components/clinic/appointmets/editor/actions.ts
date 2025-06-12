@@ -44,7 +44,7 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
   });
 
   const newPatientId = lastAppointment?.tokenNo
-    ? lastAppointment.tokenNo + 1
+    ? Number(lastAppointment.tokenNo) + 1
     : 1;
 
   const appoinmentData = await prisma.appointment.create({
