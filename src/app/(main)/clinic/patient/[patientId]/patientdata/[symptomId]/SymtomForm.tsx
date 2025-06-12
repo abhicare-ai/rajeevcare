@@ -145,8 +145,9 @@ export default function SymtomForm({
 
   const { user } = useAppSelector((state) => state.authSlice);
   if (!user) {
-    throw Error(" You are not logged in");
+    throw Error(" You are not logged in"); 
   }
+  // 
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
