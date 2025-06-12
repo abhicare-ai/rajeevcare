@@ -17,13 +17,10 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     consultationFees,
   } = createAppointmentSchema.parse(input);
 
-  const randomNumber = Math.floor(1000 + Math.random() * 9000);
-
   const { user } = await validateRequest();
-
   if (!user) throw Error("User not found");
 
-  const apptNumber = await prisma.appointment.findFirst({
+  const existingAppointment = await prisma.appointment.findFirst({
     where: {
       phoneNumber: {
         equals: phoneNumber,
@@ -32,15 +29,28 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     },
   });
 
-  if (apptNumber) {
-    return {
-      message: "Appointment already exist.",
-    };
+  if (existingAppointment) {
+    return { message: "Appointment already exists." };
   }
+
+  // ✅ Get the last patientId and increment
+  const lastAppointment = await prisma.appointment.findFirst({
+    orderBy: {
+      tokenNo: "desc",
+    },
+    select: {
+      tokenNo: true,
+    },
+  });
+
+  const newPatientId = lastAppointment?.tokenNo
+    ? lastAppointment.tokenNo + 1
+    : 1;
+
   const appoinmentData = await prisma.appointment.create({
     data: {
       userId: user.id,
-      tokenNo: `ahh${randomNumber}`,
+      tokenNo: String(newPatientId),
       phoneNumber,
       patientName,
       gendar,
@@ -50,5 +60,6 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     },
     include: getAppoimentDataInclude(user.id),
   });
+
   return appoinmentData;
 }
