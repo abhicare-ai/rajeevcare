@@ -42,7 +42,7 @@ export default function SetTocounter({
 
         <Row>
           <Text>
-            A new prescription has been generated for patient{" "}
+            A new prescription has been generated for Case History ID{" "}
             <strong>{patientName}</strong>.
           </Text>
         </Row>

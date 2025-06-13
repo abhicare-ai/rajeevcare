@@ -108,7 +108,7 @@ export default function SymtomForm({
     if (typeof window !== "undefined") {
       const { data } = await axios.post("/api/messagin", {
         inpute: window.location.href,
-        patientName: prescitonData.papatientName,
+        patientName: prescitonData.caseidIdx,
       });
 
       if (!data) {
@@ -125,7 +125,7 @@ export default function SymtomForm({
     if (typeof window !== "undefined") {
       const { data } = await axios.post("/api/sentocounter", {
         inpute: window.location.href,
-        patientName: prescitonData.papatientName,
+        patientName: prescitonData.caseidIdx,
       });
 
       if (!data) {
