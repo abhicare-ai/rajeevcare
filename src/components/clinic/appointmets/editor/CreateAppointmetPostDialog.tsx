@@ -359,14 +359,14 @@ export default function CreateAppointmetPostDialog({
                 name="refrenshby"
                 render={({ field }) => (
                   <FormItem className="!w-full">
-                    <FormLabel>Gender</FormLabel>
+                    <FormLabel>Reference By</FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
                       <FormControl className="w-full">
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a Gender" />
+                          <SelectValue placeholder="Reference By" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
