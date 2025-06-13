@@ -105,8 +105,9 @@ The conversation below is a **voice-to-text transcript** between the AI doctor (
 Your task is to **understand and cleanly interpret** this voice-style conversation and return a structured **JSON object** only (no markdown, no \`\`\`, no extra text).
 
 🧠 "Theek hai, kripya apna pura problem detail mein bataiye — jo bhi takleef ho sab share kijiye."  es wala question or eska answer tumko qa me dalna hi dalna hai smje. 
-🧠 sara kuch simple english me summary or qa hona chhiaye smje.
+🧠 sara kuch simple Hinglish me summary or qa hona chhiaye smje.
 🧠 tumko pura conversation jo ${formattedMessages} esme aa rha hai pura dalna hai qa me smje
+🧠  Agar multiple bimariyon ka zikr ho (jaise "fever aur vomiting"), toh pehle pehli bimari ka Q&A complete karo, fir uske baad doosri bimari ka Q&A likho — dono ko mix mat karo.
 
 Format strictly like this:
 //json//{
