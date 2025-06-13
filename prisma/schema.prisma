@@ -56,9 +56,9 @@ model Appointment {
   consultationFees String
   audio            String?
   presciption      Json?
-  patientAddress   String?
-  pmsId            String?
-  refrenshby       String?
+  patientAddress   String
+  pmsId            String
+  refrenshby       String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -84,9 +84,9 @@ model Prisciption {
   Ai_Check_Up_Date    String
   caseidId            String
 
-  patientAddress String?
-  pmsId          String?
-  refrenshby     String?
+  patientAddress String
+  pmsId          String
+  refrenshby     String
 
   presciption String?
 
