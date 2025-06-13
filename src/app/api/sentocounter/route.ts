@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
   // ✅ Email Options
   const mailOptions = {
     from: `"Dr Rajeev's Wellness Ai👨‍💻" <${process.env.EMAIL_USER}>`,
-    to: `prityabhihomoeohall@gmail.com `,
+    to: `counterahh@gmail.com `,
     subject: `${patientName} :- Prescription Data`,
     html: emailHtml,
   };
