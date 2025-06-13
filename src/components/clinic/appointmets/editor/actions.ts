@@ -15,6 +15,9 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     patientDOB,
     appointmentDate,
     consultationFees,
+    pmsId,
+    refrenshby,
+    patientAddress,
   } = createAppointmentSchema.parse(input);
 
   const { user } = await validateRequest();
@@ -57,6 +60,9 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
       patientDOB,
       appointmentDate,
       consultationFees,
+      pmsId,
+      refrenshby,
+      patientAddress,
     },
     include: getAppoimentDataInclude(user.id),
   });

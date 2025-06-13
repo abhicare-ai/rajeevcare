@@ -46,6 +46,10 @@ interface SymtomFormProps {
     DOB: string;
     Ai_Check_Up_Date: string;
     caseidIdx: string;
+
+    pmsId: string;
+    refrenshby: string;
+    patientAddress: string;
   };
 }
 
@@ -145,9 +149,9 @@ export default function SymtomForm({
 
   const { user } = useAppSelector((state) => state.authSlice);
   if (!user) {
-    throw Error(" You are not logged in"); 
+    throw Error(" You are not logged in");
   }
-  // 
+  //
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
@@ -169,10 +173,13 @@ export default function SymtomForm({
               <p className="">DOB :- {prescitonData.DOB}</p>
               <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
+              <p className="">Patient Id :- {prescitonData.pmsId}</p>
 
               <p className="">
                 Chek Up Date :- {prescitonData.Ai_Check_Up_Date}
               </p>
+              <p className="">Address :- {prescitonData.patientAddress}</p>
+              <p className="">Reference By :- {prescitonData.refrenshby}</p>
             </div>
           </div>
         </div>

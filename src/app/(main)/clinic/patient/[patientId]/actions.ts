@@ -26,6 +26,9 @@ export async function generateDeasesQuations(
       DOB,
       Ai_Check_Up_Date,
       caseidId,
+      pmsId,
+      refrenshby,
+      patientAddress,
     } = generateQuationSchema.parse(input);
 
     const result = await prisma.prisciption.create({
@@ -41,6 +44,9 @@ export async function generateDeasesQuations(
         DOB,
         Ai_Check_Up_Date,
         caseidId,
+        pmsId,
+        refrenshby,
+        patientAddress,
       },
       select: {
         id: true,
@@ -55,6 +61,10 @@ export async function generateDeasesQuations(
         DOB: true,
         Ai_Check_Up_Date: true,
         caseidId: true,
+
+        pmsId: true,
+        refrenshby: true,
+        patientAddress: true,
       },
     });
 

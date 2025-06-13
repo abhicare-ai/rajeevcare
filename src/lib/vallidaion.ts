@@ -21,6 +21,9 @@ export const createAppointmentSchema = z.object({
     required_error: "Required",
   }),
   consultationFees: requiredString,
+  pmsId: requiredString,
+  refrenshby: requiredString,
+  patientAddress: requiredString,
 });
 
 export type CreateAppointmentSchemaValues = z.infer<
@@ -39,7 +42,11 @@ export const generateQuationSchema = z.object({
   Patient_Number: requiredString,
   DOB: requiredString,
   Ai_Check_Up_Date: requiredString,
-  caseidId:requiredString
+  caseidId: requiredString,
+
+  pmsId: requiredString,
+  refrenshby: requiredString,
+  patientAddress: requiredString,
 });
 
 export type GenerateQuationValues = z.infer<typeof generateQuationSchema>;

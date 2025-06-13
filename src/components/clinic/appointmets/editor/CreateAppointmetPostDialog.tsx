@@ -41,6 +41,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import LoadingButton from "@/components/LoadingButton";
 import { useSubmitAppointmetsMutaion } from "./mutation";
+import { Textarea } from "@/components/ui/textarea";
 
 interface CreateAppointmetPostDialogProps {
   open: boolean;
@@ -59,6 +60,9 @@ export default function CreateAppointmetPostDialog({
       patientDOB: undefined,
       appointmentDate: undefined,
       consultationFees: "600",
+      pmsId: "",
+      refrenshby: "",
+      patientAddress: "",
     },
   });
 
@@ -336,7 +340,62 @@ export default function CreateAppointmetPostDialog({
                 )}
               />
             </div>
+            <div className="flex gap-5">
+              <FormField
+                control={form.control}
+                name="pmsId"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>Patient Id </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Patient Id" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="refrenshby"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>Gender</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a Gender" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Doctor">Doctor</SelectItem>
+                        <SelectItem value="Friend">Friend</SelectItem>
+                        <SelectItem value="Google">Google</SelectItem>
+                        <SelectItem value="Facebook">Facebook</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
 
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <FormField
+              control={form.control}
+              name="patientAddress"
+              render={({ field }) => (
+                <FormItem className="!w-full">
+                  <FormLabel>Patient Address </FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Patient Address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <LoadingButton
               loading={mutation.isPending}
               type="submit"

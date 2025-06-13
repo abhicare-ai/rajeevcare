@@ -58,6 +58,10 @@ export default function GenerateQutions({
       DOB: formatDate(patientData.patientDOB),
       Ai_Check_Up_Date: formatDate(patientData.appointmentDate),
       caseidId: patientData.tokenNo,
+
+      pmsId: patientData.pmsId,
+      refrenshby: patientData.refrenshby,
+      patientAddress: patientData.patientAddress,
     },
   });
 
@@ -252,6 +256,60 @@ export default function GenerateQutions({
               <FormField
                 control={form.control}
                 name="caseidId"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel> Case History Id </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="pmsId"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel> Case History Id </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="refrenshby"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel> Case History Id </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="patientAddress"
                 render={({ field }) => (
                   <FormItem className="hidden !w-full">
                     <FormLabel> Case History Id </FormLabel>
