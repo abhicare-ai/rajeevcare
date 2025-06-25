@@ -14,7 +14,7 @@ export function useSubmitAppointmetsMutaion() {
     mutationFn: appoinment,
     onSuccess: async (newAppt) => {
       if ("message" in newAppt) {
-        toast.error(newAppt.message); // "Appointment already exists."
+        toast.error(typeof newAppt.message === "string" ? newAppt.message : "Appointment already exists."); // "Appointment already exists."
         return;
       }
       const quryFilter = { queryKey: ["appointmet-feed", "yourbranch"] };
