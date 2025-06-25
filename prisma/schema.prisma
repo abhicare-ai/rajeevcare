@@ -82,7 +82,7 @@ model Prisciption {
   Patient_Number      String
   DOB                 String
   Ai_Check_Up_Date    String
-  caseidId            String
+  caseidId            Int
 
   patientAddress String
   pmsId          String
