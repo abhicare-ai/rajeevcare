@@ -45,7 +45,7 @@ model Session {
 model Appointment {
   id      String @id @default(cuid())
   userId  String
-  tokenNo String
+  tokenNo Int?
 
   patinetAvatar    String?
   phoneNumber      String
