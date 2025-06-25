@@ -42,7 +42,7 @@ export const generateQuationSchema = z.object({
   Patient_Number: requiredString,
   DOB: requiredString,
   Ai_Check_Up_Date: requiredString,
-  caseidId: requiredString,
+  caseidId: z.number(),
 
   pmsId: requiredString,
   refrenshby: requiredString,
