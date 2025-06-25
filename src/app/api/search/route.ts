@@ -23,22 +23,20 @@ export async function GET(req: NextRequest) {
         OR: [
           {
             patientName: {
-              // startsWith: searchQuery,
-              search: searchQuery, //full name serch ke liye
+              contains: searchTerm,
               mode: "insensitive",
             },
           },
           {
-            tokenNo: {
-              // startsWith: searchQuery,
-              search: searchQuery, //full name serch ke liye
-              mode: "insensitive",
-            },
+            tokenNo: isNaN(Number(searchTerm))
+              ? undefined
+              : {
+                  equals: Number(searchTerm),
+                },
           },
           {
             phoneNumber: {
-              // startsWith: searchQuery,
-              search: searchQuery, //full name serch ke liye
+              contains: searchTerm,
               mode: "insensitive",
             },
           },
