@@ -1,40 +1,31 @@
 
 
-import { NextRequest } from "next/server";
-import nodemailer from "nodemailer";
-import Sendtodr from "../../../../email/Sendtodr";
-import { render } from "@react-email/components";
-export async function POST(req: NextRequest) {
-  const { inpute, patientName } = await req.json();
 
-  // ✅ Nodemailer Transporter Setup for Zoho Mail
-  const transporter = nodemailer.createTransport({
-     service: "gmail",
-  
-    auth: {
-      user: "abhihomeoit@gmail.com", // ✅ .env se email lo
-      pass:"ttrj rwcs fhsu yvde", // ✅ .env se App Password lo (Zoho ke app password)
-    },
-  });
+// app/api/send-sms/route.ts
+import { NextResponse } from "next/server";
+import twilio from "twilio";
 
+const accountSid = process.env.TWILIO_SID!;
+const authToken = process.env.TWILIO_AUTH_TOKEN!;
+const client = twilio(accountSid, authToken);
 
-  const emailHtml = await render(
-    Sendtodr({
-      link: inpute,
-      patientName: patientName,
-    }),
-  );
+export async function POST(req: Request) {
+  const body = await req.json();
+  const { casehistory,inpute } = body;
 
-  // ✅ Email Options
-  const mailOptions = {
-    from: `"Dr Rajeev's Wellness Ai👨‍💻" <${process.env.EMAIL_USER}>`,
-    to: `abhihomoeo@gmail.com`,
-    subject: `${patientName} :- Case History Id`,
-    html: emailHtml,
-  };
+  try {
 
-  // ✅ Email Send karo (await lagao)
-  const message = await transporter.sendMail(mailOptions);
+    const response = await client.messages.create({
+      to: `whatsapp:+919263049994`, // e.g., +91xxxxxxxxxx
+      from: "whatsapp:+15557486713",
+      body: `A new prescription has been generated for Case History ID ${casehistory}:\n${inpute}`,
+    });
 
-  return Response.json(message);
+    return NextResponse.json({ success: true, sid: response.sid });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 },
+    );
+  }
 }

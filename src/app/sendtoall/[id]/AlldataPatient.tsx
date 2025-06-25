@@ -22,13 +22,13 @@ import { Eye, MessageCircleMore, PlusIcon, Printer, XIcon } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
 import { useEffect, useRef, useState, useTransition } from "react";
-import { conversationWithAI } from "../../actions";
 import { PrescitopnTypes } from "@/lib/conversations";
 import { toast } from "sonner";
 import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
-import { useAppSelector } from "@/hooks/hooks";
+import Image from "next/image";
+import logo from "@/assets/web_logo_2.png"
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -53,7 +53,7 @@ interface SymtomFormProps {
   };
 }
 
-export default function SymtomForm({
+export default function AlldataPatient({
   finalData,
   prescitonData,
 }: SymtomFormProps) {
@@ -86,100 +86,32 @@ export default function SymtomForm({
     formState: { isDirty },
   } = form;
 
-  const onSubmit = async (values: FinalPresciptionValues) => {
-    console.log("✅ Final Submitted Values:", values);
-
-    startTransation(async () => {
-      const res = await conversationWithAI({ values: values });
-      if (!res) toast.error("Failed to update prescription.");
-      if (res) {
-        form.reset(values);
-        toast.success("Prescription updated successfully!");
-      }
-    });
-  };
-
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
 
-  const [loading, setloding] = useState(false);
-  const sendtodr = async () => {
-    setloding(true);
-    if (typeof window !== "undefined") {
-      const { data } = await axios.post("/api/messagin", {
-        inpute: window.location.href,
-        casehistory: prescitonData.caseidIdx,
-      });
 
-      if (!data) {
-        toast.error("Failed to send message.");
-      } else {
-        toast.success("Message sent successfully!");
-      }
-    }
-    setloding(false);
-  };
-  const [loadinga, setlodinga] = useState(false);
-  const sendtomec = async () => {
-    setlodinga(true);
-    if (typeof window !== "undefined") {
-      const { data } = await axios.post("/api/sentocounter", {
-        inpute: window.location.href,
-        casehistory: prescitonData.caseidIdx,
-      });
-
-      if (!data) {
-        toast.error("Failed to send message.");
-      } else {
-        toast.success("Message sent successfully!");
-      }
-    }
-    setlodinga(false);
-  };
-
-  const [prevLink, setPrevLink] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const currentUrl = window.location.href;
-      const trimmedUrl = currentUrl.split("patientdata")[0];
-      setPrevLink(trimmedUrl);
-    }
-  }, []);
-
-  const { user } = useAppSelector((state) => state.authSlice);
-  if (!user) {
-    throw Error(" You are not logged in");
-  }
-
-  const [ploding, setPloding] = useState(false);
-  const sendToPatient = async () => {
-    const url = window.location.href;
-    const patientDataId = url.split("/patientdata/")[1]; // extracts part after /patientdata/
-
-    try {
-      setPloding(true);
-      await axios.post(`/api/patienwatsappsend`, {
-        id: patientDataId,
-        to: prescitonData.Patient_Number,
-      });
-      toast.success("Message sent successfully!");
-    } catch (error) {
-      setPloding(false);
-      toast.error("Failed to send message.");
-    } finally {
-      setPloding(false);
-    }
-
-    console.log("Patient Data ID:", patientDataId);
-
-    // yahan se aage Twilio ya backend API call kar sakte ho
-  };
 
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
         <div className="space-y-6">
+            <div className="flex gap-10 items-center md:flex-row flex-col">
+                      <Image src={logo} alt="logo" width={160}/>
+               <p className="text-center font-bold">
+            This is Dr. Rajeev's Homeopathy Clinic, ranked #2 in India. To
+            purchase your prescribed medicines, please visit:
+            <a
+              href={"https://www.drrajeevswellness.com/"}
+              target="_blank"
+              className="text-blue-500"
+            >
+              {" "}
+              https://www.drrajeevswellness.com/
+            </a>
+          </p>
+                    </div>
+        
+          <p className="text-2xl font-bold">Personal Information</p>
+
           <div className="flex gap-5">
             <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
               {prescitonData?.papatientName[0]}
@@ -239,7 +171,7 @@ export default function SymtomForm({
       <div className="space-y-6 rounded-md border p-3">
         <p className="text-2xl font-bold">Final</p>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form className="space-y-6">
             <input
               type="hidden"
               {...form.register("id")}
@@ -395,33 +327,8 @@ export default function SymtomForm({
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="button"
-                    onClick={() => remove(index)}
-                    variant="destructive"
-                    className="printer"
-                  >
-                    <XIcon />
-                  </Button>
                 </div>
               ))}
-
-              <Button
-                type="button"
-                onClick={() =>
-                  append({
-                    name: "",
-                    ml: "",
-                    dose: "",
-                    frequency: "",
-                    quantity: "",
-                  })
-                }
-                variant="default"
-                className="printer"
-              >
-                <PlusIcon /> Add Medicine
-              </Button>
             </div>
 
             <div className="block space-y-4 md:hidden">
@@ -718,56 +625,6 @@ export default function SymtomForm({
                   </FormItem>
                 )}
               />
-            </div>
-            <div className="printer grid grid-cols-1 gap-4 md:grid-cols-2">
-              <LoadingButton
-                loading={ispending}
-                className="w-full"
-                type="submit"
-                disabled={!isDirty}
-              >
-                {isDirty ? "Update" : "Submit"}
-              </LoadingButton>
-
-              <Button
-                onClick={reactToPrintFn}
-                type="button"
-                disabled={ispending}
-              >
-                <Printer /> Print
-              </Button>
-              <LoadingButton
-                type="button"
-                disabled={loading}
-                loading={loading}
-                onClick={sendtodr}
-              >
-                <MessageCircleMore /> Send To Dr.Rajeev Sir
-              </LoadingButton>
-
-              <LoadingButton
-                type="button"
-                disabled={loadinga}
-                loading={loadinga}
-                onClick={sendtomec}
-              >
-                <MessageCircleMore /> Send To Medicine Counter
-              </LoadingButton>
-
-              <Button type="button" variant="default" className="w-full">
-                <Eye />
-                <Link href={prevLink}>
-                  {" "}
-                  Vew All {prescitonData.papatientName} diseases
-                </Link>
-              </Button>
-              <LoadingButton
-                type="button"
-                loading={ploding}
-                onClick={sendToPatient}
-              >
-                Send To Patient
-              </LoadingButton>
             </div>
           </form>
         </Form>

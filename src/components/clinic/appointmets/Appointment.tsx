@@ -96,20 +96,17 @@ export default function Appointment({ appt }: PostPorps) {
 
               <TableCell>{post.phoneNumber}</TableCell>
 
-              <TableCell>
-                {post.gendar}
-              </TableCell>
+              <TableCell>{post.gendar}</TableCell>
               <TableCell>{calculateAge(post.patientDOB)}</TableCell>
               <TableCell>{formatDate(post.patientDOB)}</TableCell>
               <TableCell>{post.consultationFees}</TableCell>
 
               <TableCell>{formatDate(post.appointmentDate)}</TableCell>
               <TableCell>{formatTime(post.createdAt)}</TableCell>
-              {user.isAdmin && (
-                <TableCell>
-                  <ApptMoreButton appt={post} />
-                </TableCell>
-              )}
+
+              <TableCell>
+                <ApptMoreButton appt={post} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

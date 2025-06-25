@@ -8,13 +8,14 @@ const client = twilio(accountSid, authToken);
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { casehistory, inpute } = body;
+  const { id, to } = body;
 
   try {
+
     const response = await client.messages.create({
-      to: `whatsapp:+919234942190`, // e.g., +91xxxxxxxxxx
+      to: `whatsapp:${to}`, // e.g., +91xxxxxxxxxx
       from: "whatsapp:+15557486713",
-      body: `A new prescription has been generated for Case History ID ${casehistory}:\n${inpute}`,
+      body: `Namaste! This is Dr. Rajeev's Homeopathy Clinic.\nPlease access your prescription here:\nhttps://drrajeevswellnessai.com/sendtoall/${id}`,
     });
 
     return NextResponse.json({ success: true, sid: response.sid });

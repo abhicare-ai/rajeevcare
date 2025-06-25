@@ -22,21 +22,13 @@ export async function GET(req: NextRequest) {
       where: {
         OR: [
           {
-            patientName: {
-              contains: searchTerm,
-              mode: "insensitive",
+            tokenNo: {
+              equals: Number(searchQuery), // match exact token number
             },
           },
           {
-            tokenNo: isNaN(Number(searchTerm))
-              ? undefined
-              : {
-                  equals: Number(searchTerm),
-                },
-          },
-          {
-            phoneNumber: {
-              contains: searchTerm,
+            pmsId: {
+              search: searchQuery,
               mode: "insensitive",
             },
           },

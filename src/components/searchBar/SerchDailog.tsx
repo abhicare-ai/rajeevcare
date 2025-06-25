@@ -34,7 +34,7 @@ export default function SerchDailog({ onclose, open }: SerchDailogProps) {
           <SearchIcon className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2 transform" />
           <input
             className="w-full rounded-none border-0 border-b-2 py-3 pr-12 pl-9 text-sm outline-0"
-            placeholder="Search Patient ID, Number, Name"
+            placeholder="Search Patient ID or Case History Id"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
