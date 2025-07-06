@@ -18,11 +18,11 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     pmsId,
     refrenshby,
     patientAddress,
+    patientEmial,
   } = createAppointmentSchema.parse(input);
 
   const { user } = await validateRequest();
   if (!user) throw Error("User not found");
-
 
   // ✅ Get latest token for this user
   const latest = await prisma.appointment.findFirst({
@@ -47,6 +47,7 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
       pmsId,
       refrenshby,
       patientAddress,
+      patientEmial,
     },
     include: getAppoimentDataInclude(user.id),
   });

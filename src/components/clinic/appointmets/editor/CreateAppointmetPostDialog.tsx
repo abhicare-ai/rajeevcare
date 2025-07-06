@@ -63,6 +63,7 @@ export default function CreateAppointmetPostDialog({
       pmsId: "",
       refrenshby: "",
       patientAddress: "",
+      patientEmial: "",
     },
   });
 
@@ -382,7 +383,21 @@ export default function CreateAppointmetPostDialog({
                   </FormItem>
                 )}
               />
+             
             </div>
+              <FormField
+              control={form.control}
+              name="patientEmial"
+              render={({ field }) => (
+                <FormItem className="!w-full">
+                  <FormLabel>Email </FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" {...field} type="email"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="patientAddress"
@@ -396,6 +411,7 @@ export default function CreateAppointmetPostDialog({
                 </FormItem>
               )}
             />
+           
             <LoadingButton
               loading={mutation.isPending}
               type="submit"

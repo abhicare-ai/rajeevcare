@@ -59,6 +59,7 @@ model Appointment {
   patientAddress   String
   pmsId            String
   refrenshby       String
+  patientEmial     String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -83,6 +84,7 @@ model Prisciption {
   DOB                 String
   Ai_Check_Up_Date    String
   caseidId            Int
+  patientEmial        String
 
   patientAddress String
   pmsId          String

@@ -73,6 +73,8 @@ export default async function Page({
         pmsId: prescitonData?.pmsId,
         refrenshby: prescitonData?.refrenshby,
         patientAddress: prescitonData?.patientAddress,
+        patientEmial: prescitonData?.patientEmial,
+
       }}
     />
   );

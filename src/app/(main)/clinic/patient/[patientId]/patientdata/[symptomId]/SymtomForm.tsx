@@ -50,6 +50,7 @@ interface SymtomFormProps {
     pmsId: string;
     refrenshby: string;
     patientAddress: string;
+    patientEmial: string;
   };
 }
 
@@ -114,7 +115,7 @@ export default function SymtomForm({
       if (!data) {
         toast.error("Failed to send message.");
       } else {
-        toast.success("Message sent successfully!");
+        toast.success(data.message || "Message sent successfully!");
       }
     }
     setloding(false);
@@ -131,7 +132,7 @@ export default function SymtomForm({
       if (!data) {
         toast.error("Failed to send message.");
       } else {
-        toast.success("Message sent successfully!");
+        toast.success(data.message || "Message sent successfully!");
       }
     }
     setlodinga(false);
@@ -159,11 +160,18 @@ export default function SymtomForm({
 
     try {
       setPloding(true);
-      await axios.post(`/api/patienwatsappsend`, {
+      const { data } = await axios.post(`/api/patienwatsappsend`, {
         id: patientDataId,
-        to: prescitonData.Patient_Number,
+        to: prescitonData.patientEmial,
+        casehistory: prescitonData.caseidIdx,
+        patienName: prescitonData.papatientName,
       });
-      toast.success("Message sent successfully!");
+
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success(data.message || "Message sent successfully!");
+      }
     } catch (error) {
       setPloding(false);
       toast.error("Failed to send message.");
@@ -194,6 +202,7 @@ export default function SymtomForm({
               </div>
               <p className="">DOB :- {prescitonData.DOB}</p>
               <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
+              <p className="">Patient Email :- {prescitonData.patientEmial}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
               <p className="">Patient Id :- {prescitonData.pmsId}</p>
 

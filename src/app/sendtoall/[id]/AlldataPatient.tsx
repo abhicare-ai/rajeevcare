@@ -28,7 +28,7 @@ import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
-import logo from "@/assets/web_logo_2.png"
+import logo from "@/assets/web_logo_2.png";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -50,6 +50,7 @@ interface SymtomFormProps {
     pmsId: string;
     refrenshby: string;
     patientAddress: string;
+    patientEmial: string;
   };
 }
 
@@ -88,28 +89,26 @@ export default function AlldataPatient({
 
   const contentRef = useRef<HTMLDivElement>(null);
 
-
-
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
         <div className="space-y-6">
-            <div className="flex gap-10 items-center md:flex-row flex-col">
-                      <Image src={logo} alt="logo" width={160}/>
-               <p className="text-center font-bold">
-            This is Dr. Rajeev's Homeopathy Clinic, ranked #2 in India. To
-            purchase your prescribed medicines, please visit:
-            <a
-              href={"https://www.drrajeevswellness.com/"}
-              target="_blank"
-              className="text-blue-500"
-            >
-              {" "}
-              https://www.drrajeevswellness.com/
-            </a>
-          </p>
-                    </div>
-        
+          <div className="flex flex-col items-center gap-10 md:flex-row">
+            <Image src={logo} alt="logo" width={160} />
+            <p className="text-center font-bold">
+              This is Dr. Rajeev's Homeopathy Clinic, ranked #2 in India. To
+              purchase your prescribed medicines, please visit:
+              <a
+                href={"https://www.drrajeevswellness.com/"}
+                target="_blank"
+                className="text-blue-500"
+              >
+                {" "}
+                https://www.drrajeevswellness.com/
+              </a>
+            </p>
+          </div>
+
           <p className="text-2xl font-bold">Personal Information</p>
 
           <div className="flex gap-5">
@@ -126,6 +125,7 @@ export default function AlldataPatient({
               </div>
               <p className="">DOB :- {prescitonData.DOB}</p>
               <p className="">Phone No. :- {prescitonData.Patient_Number}</p>
+              <p className="">Patient Email :- {prescitonData.patientEmial}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
               <p className="">Patient Id :- {prescitonData.pmsId}</p>
 

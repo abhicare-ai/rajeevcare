@@ -62,6 +62,7 @@ export default function GenerateQutions({
       pmsId: patientData.pmsId,
       refrenshby: patientData.refrenshby,
       patientAddress: patientData.patientAddress,
+      patientEmial: patientData.patientEmial,
     },
   });
 
@@ -289,7 +290,7 @@ export default function GenerateQutions({
                   </FormItem>
                 )}
               />
-               <FormField
+              <FormField
                 control={form.control}
                 name="refrenshby"
                 render={({ field }) => (
@@ -307,12 +308,30 @@ export default function GenerateQutions({
                   </FormItem>
                 )}
               />
-               <FormField
+              <FormField
                 control={form.control}
                 name="patientAddress"
                 render={({ field }) => (
                   <FormItem className="hidden !w-full">
                     <FormLabel> Case History Id </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="patientEmial"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Patient Name </FormLabel>
                     <FormControl>
                       <Input
                         {...field}
