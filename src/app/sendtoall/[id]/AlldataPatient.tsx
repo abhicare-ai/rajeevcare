@@ -150,11 +150,6 @@ export default function SymtomForm({
     }
   }, []);
 
-  const { user } = useAppSelector((state) => state.authSlice);
-  if (!user) {
-    throw Error(" You are not logged in");
-  }
-
   const [ploding, setPloding] = useState(false);
   const sendToPatient = async () => {
     const url = window.location.href;
