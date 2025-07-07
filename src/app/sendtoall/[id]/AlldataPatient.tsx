@@ -1,8 +1,7 @@
 "use client";
 
-import LoadingButton from "@/components/LoadingButton";
 import { TagsInput } from "@/components/TagsInput";
-import { Button } from "@/components/ui/button";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Form,
@@ -17,7 +16,7 @@ import {
   FinalPresciptionValues,
 } from "@/lib/vallidaion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Eye, MessageCircleMore, PlusIcon, Printer, XIcon } from "lucide-react";
+
 
 import { useFieldArray, useForm } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
@@ -27,8 +26,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
-import Image from "next/image";
-import logo from "@/assets/web_logo_2.png";
+import { useAppSelector } from "@/hooks/hooks";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -51,10 +49,15 @@ interface SymtomFormProps {
     refrenshby: string;
     patientAddress: string;
     patientEmial: string;
+
+    patientWeight: string;
+    patinetDiet: string;
+    branch: string;
+    bp: string;
   };
 }
 
-export default function AlldataPatient({
+export default function SymtomForm({
   finalData,
   prescitonData,
 }: SymtomFormProps) {
@@ -65,15 +68,25 @@ export default function AlldataPatient({
       Symptoms: finalData.symptoms || [],
       Diagnosis: finalData.diagnosis || [],
       Medicines: finalData.medicines || [],
-      Breakfast: finalData.dietPlan.breakfast || [],
-      Lunch: finalData.dietPlan.lunch || [],
-      Dinner: finalData.dietPlan.dinner || [],
-      Do: finalData.dietPlan.do || [],
-      DontDo: finalData.dietPlan.dontdo || [],
+
+      DietPlan: finalData.dietPlan || {
+        sunday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        monday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        tuesday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        wednesday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        thursday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        friday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        saturday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+      },
+
       Yoga: finalData.workoutPlan.yoga || [],
       Exercize: finalData.workoutPlan.exercise || [],
 
       Note: finalData.workoutPlan.note || "",
+
+      BloodTest: finalData.blooTest || [],
+      RediologyTest: finalData.rediologyTest || [],
+      UrineTest: finalData.urintest || [],
     },
   });
 
@@ -87,30 +100,150 @@ export default function AlldataPatient({
     formState: { isDirty },
   } = form;
 
+  const onSubmit = async (values: FinalPresciptionValues) => {};
+
   const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrintFn = useReactToPrint({ contentRef });
+
+  const [loading, setloding] = useState(false);
+  const sendtodr = async () => {
+    setloding(true);
+    if (typeof window !== "undefined") {
+      const { data } = await axios.post("/api/messagin", {
+        inpute: window.location.href,
+        casehistory: prescitonData.caseidIdx,
+      });
+
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success(data.message || "Message sent successfully!");
+      }
+    }
+    setloding(false);
+  };
+  const [loadinga, setlodinga] = useState(false);
+  const sendtomec = async () => {
+    setlodinga(true);
+    if (typeof window !== "undefined") {
+      const { data } = await axios.post("/api/sentocounter", {
+        inpute: window.location.href,
+        casehistory: prescitonData.caseidIdx,
+      });
+
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success(data.message || "Message sent successfully!");
+      }
+    }
+    setlodinga(false);
+  };
+
+  const [prevLink, setPrevLink] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const currentUrl = window.location.href;
+      const trimmedUrl = currentUrl.split("patientdata")[0];
+      setPrevLink(trimmedUrl);
+    }
+  }, []);
+
+  const { user } = useAppSelector((state) => state.authSlice);
+  if (!user) {
+    throw Error(" You are not logged in");
+  }
+
+  const [ploding, setPloding] = useState(false);
+  const sendToPatient = async () => {
+    const url = window.location.href;
+    const patientDataId = url.split("/patientdata/")[1]; // extracts part after /patientdata/
+
+    try {
+      setPloding(true);
+      const { data } = await axios.post(`/api/patienwatsappsend`, {
+        id: patientDataId,
+        to: prescitonData.patientEmial,
+        casehistory: prescitonData.caseidIdx,
+        patienName: prescitonData.papatientName,
+      });
+
+      if (!data) {
+        toast.error("Failed to send message.");
+      } else {
+        toast.success(data.message || "Message sent successfully!");
+      }
+    } catch (error) {
+      setPloding(false);
+      toast.error("Failed to send message.");
+    } finally {
+      setPloding(false);
+    }
+
+    console.log("Patient Data ID:", patientDataId);
+
+    // yahan se aage Twilio ya backend API call kar sakte ho
+  };
+
+  const days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ] as const;
+
+  const fieldArrays = days.reduce(
+    (acc, day) => {
+      acc[day] = {
+        breakfast: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.breakfast`,
+        }),
+        lunch: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.lunch`,
+        }),
+        dinner: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.dinner`,
+        }),
+        do: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.do`,
+        }),
+        dontdo: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.dontdo`,
+        }),
+      };
+      return acc;
+    },
+    {} as Record<(typeof days)[number], any>,
+  );
+
+  const bloodTestFields = useFieldArray({
+    control: form.control,
+    name: "BloodTest",
+  });
+
+  const rediologyTestFields = useFieldArray({
+    control: form.control,
+    name: "RediologyTest",
+  });
+
+  const urineTestFields = useFieldArray({
+    control: form.control,
+    name: "UrineTest",
+  });
 
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
         <div className="space-y-6">
-          <div className="flex flex-col items-center gap-10 md:flex-row">
-            <Image src={logo} alt="logo" width={160} />
-            <p className="text-center font-bold">
-              This is Dr. Rajeev's Homeopathy Clinic, ranked #2 in India. To
-              purchase your prescribed medicines, please visit:
-              <a
-                href={"https://www.drrajeevswellness.com/"}
-                target="_blank"
-                className="text-blue-500"
-              >
-                {" "}
-                https://www.drrajeevswellness.com/
-              </a>
-            </p>
-          </div>
-
-          <p className="text-2xl font-bold">Personal Information</p>
-
           <div className="flex gap-5">
             <div className="bg-secondary text-muted-foreground flex h-[45px] w-[45px] items-center justify-center rounded-full border font-bold uppercase">
               {prescitonData?.papatientName[0]}
@@ -128,6 +261,12 @@ export default function AlldataPatient({
               <p className="">Patient Email :- {prescitonData.patientEmial}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
               <p className="">Patient Id :- {prescitonData.pmsId}</p>
+              <p className="">Patient Diet :- {prescitonData.patinetDiet}</p>
+              <p className="">
+                Patient Weight :- {prescitonData.patientWeight}
+              </p>
+              <p className="">Patient BP :- {prescitonData.bp}</p>
+              <p className="">Branch :- {prescitonData.branch}</p>
 
               <p className="">
                 Chek Up Date :- {prescitonData.Ai_Check_Up_Date}
@@ -171,7 +310,7 @@ export default function AlldataPatient({
       <div className="space-y-6 rounded-md border p-3">
         <p className="text-2xl font-bold">Final</p>
         <Form {...form}>
-          <form className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <input
               type="hidden"
               {...form.register("id")}
@@ -451,34 +590,9 @@ export default function AlldataPatient({
                         </FormItem>
                       )}
                     />
-                    <Button
-                      type="button"
-                      onClick={() => remove(index)}
-                      variant="destructive"
-                      size="sm"
-                    >
-                      <XIcon />
-                    </Button>
                   </div>
                 </div>
               ))}
-
-              <Button
-                type="button"
-                onClick={() =>
-                  append({
-                    name: "",
-                    ml: "",
-                    dose: "",
-                    frequency: "",
-                    quantity: "",
-                  })
-                }
-                variant="default"
-                className="printer"
-              >
-                <PlusIcon /> Add Medicine
-              </Button>
             </div>
 
             {/* Medicine section with reponsove  end here*/}
@@ -486,93 +600,209 @@ export default function AlldataPatient({
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Diet
             </p>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="Breakfast"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Breakfast</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Lunch"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Lunch</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Dinner"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Dinner</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Do"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Do</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="DontDo"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Don't Do</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+
+            <Tabs defaultValue="sunday">
+              <TabsList>
+                {days.map((day) => (
+                  <TabsTrigger key={day} value={day}>
+                    {day.slice(0, 3).toUpperCase()}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {days.map((day) => (
+                <TabsContent key={day} value={day}>
+                  <div className="flex flex-col gap-6 md:flex-row md:gap-10">
+                    {["breakfast", "lunch"].map((meal) => (
+                      <div key={meal} className="w-full space-y-2">
+                        <p className="text-lg font-semibold capitalize">
+                          {meal}
+                        </p>
+                        {fieldArrays[day][meal].fields.map(
+                          (field: any, index: number) => (
+                            <div
+                              key={field.id}
+                              className="flex items-center gap-2"
+                            >
+                              <FormField
+                                control={form.control}
+                                name={`DietPlan.${day}.${meal as "breakfast" | "lunch"}.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem className="w-full space-y-1">
+                                    <FormControl>
+                                      <Textarea
+                                        {...field}
+                                        placeholder={`e.g. ${meal === "breakfast" ? "Oats" : "Veg curry"}`}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 🍽 Dinner */}
+                  <div className="mt-6 space-y-2">
+                    <p className="text-lg font-semibold">Dinner</p>
+                    {fieldArrays[day].dinner.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.dinner.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Khichdi"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ),
+                    )}
+                  </div>
+
+                  {/* ✅ Do */}
+                  <div className="mt-6 space-y-2">
+                    <p className="font-semibold text-green-600">Do</p>
+                    {fieldArrays[day].do.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.do.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Eat on time"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ),
+                    )}
+                  </div>
+
+                  {/* ❌ Don't Do */}
+                  <div className="mt-6 space-y-2">
+                    <p className="text-destructive font-semibold">Don't Do</p>
+                    {fieldArrays[day].dontdo.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.dontdo.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Avoid spicy food"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+            <p className="text-muted-foreground mt-6 text-[1.5rem] font-bold">
+              Tests
+            </p>
+
+            <Tabs defaultValue="blood">
+              <TabsList>
+                <TabsTrigger value="blood">Blood Test</TabsTrigger>
+                <TabsTrigger value="radiology">Radiology</TabsTrigger>
+                <TabsTrigger value="urine">Urine Test</TabsTrigger>
+              </TabsList>
+
+              {/* 🩸 Blood Test */}
+              <TabsContent value="blood" className="space-y-4 pt-4">
+                {bloodTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`BloodTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea {...field} placeholder="e.g. CBC, LFT" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+              </TabsContent>
+
+              {/* 🧲 Radiology Test */}
+              <TabsContent value="radiology" className="space-y-4 pt-4">
+                {rediologyTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`RediologyTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              placeholder="e.g. X-Ray, MRI"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+              </TabsContent>
+
+              {/* 🚽 Urine Test */}
+              <TabsContent value="urine" className="space-y-4 pt-4">
+                {urineTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`UrineTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              placeholder="e.g. Urine routine"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                ))}
+              </TabsContent>
+            </Tabs>
 
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Work Out

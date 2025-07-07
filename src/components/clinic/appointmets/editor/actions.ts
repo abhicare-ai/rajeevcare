@@ -19,6 +19,9 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
     refrenshby,
     patientAddress,
     patientEmial,
+    patientWeight,
+    patinetDiet,
+    bp
   } = createAppointmentSchema.parse(input);
 
   const { user } = await validateRequest();
@@ -48,6 +51,11 @@ export async function appoinment(input: CreateAppointmentSchemaValues) {
       refrenshby,
       patientAddress,
       patientEmial,
+
+      patientWeight,
+      patinetDiet,
+      branch: user.branch,
+      bp
     },
     include: getAppoimentDataInclude(user.id),
   });

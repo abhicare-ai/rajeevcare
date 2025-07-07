@@ -29,6 +29,13 @@ import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
 import { useAppSelector } from "@/hooks/hooks";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -51,6 +58,11 @@ interface SymtomFormProps {
     refrenshby: string;
     patientAddress: string;
     patientEmial: string;
+
+    patientWeight: string;
+    patinetDiet: string;
+    branch: string;
+    bp: string;
   };
 }
 
@@ -65,15 +77,25 @@ export default function SymtomForm({
       Symptoms: finalData.symptoms || [],
       Diagnosis: finalData.diagnosis || [],
       Medicines: finalData.medicines || [],
-      Breakfast: finalData.dietPlan.breakfast || [],
-      Lunch: finalData.dietPlan.lunch || [],
-      Dinner: finalData.dietPlan.dinner || [],
-      Do: finalData.dietPlan.do || [],
-      DontDo: finalData.dietPlan.dontdo || [],
+
+      DietPlan: finalData.dietPlan || {
+        sunday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        monday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        tuesday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        wednesday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        thursday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        friday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+        saturday: { breakfast: [], lunch: [], dinner: [], do: [], dontdo: [] },
+      },
+
       Yoga: finalData.workoutPlan.yoga || [],
       Exercize: finalData.workoutPlan.exercise || [],
 
       Note: finalData.workoutPlan.note || "",
+
+      BloodTest: finalData.blooTest || [],
+      RediologyTest: finalData.rediologyTest || [],
+      UrineTest: finalData.urintest || [],
     },
   });
 
@@ -121,11 +143,12 @@ export default function SymtomForm({
     setloding(false);
   };
   const [loadinga, setlodinga] = useState(false);
-  const sendtomec = async () => {
+  const handleSendToCounter = async (toEmail: string) => {
     setlodinga(true);
     if (typeof window !== "undefined") {
       const { data } = await axios.post("/api/sentocounter", {
         inpute: window.location.href,
+        to: toEmail,
         casehistory: prescitonData.caseidIdx,
       });
 
@@ -184,6 +207,60 @@ export default function SymtomForm({
     // yahan se aage Twilio ya backend API call kar sakte ho
   };
 
+  const days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ] as const;
+
+  const fieldArrays = days.reduce(
+    (acc, day) => {
+      acc[day] = {
+        breakfast: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.breakfast`,
+        }),
+        lunch: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.lunch`,
+        }),
+        dinner: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.dinner`,
+        }),
+        do: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.do`,
+        }),
+        dontdo: useFieldArray({
+          control: form.control,
+          name: `DietPlan.${day}.dontdo`,
+        }),
+      };
+      return acc;
+    },
+    {} as Record<(typeof days)[number], any>,
+  );
+
+  const bloodTestFields = useFieldArray({
+    control: form.control,
+    name: "BloodTest",
+  });
+
+  const rediologyTestFields = useFieldArray({
+    control: form.control,
+    name: "RediologyTest",
+  });
+
+  const urineTestFields = useFieldArray({
+    control: form.control,
+    name: "UrineTest",
+  });
+
   return (
     <div className="space-y-8 p-3" ref={contentRef}>
       <div className="bg-sidebar rounded-md border p-3">
@@ -205,6 +282,12 @@ export default function SymtomForm({
               <p className="">Patient Email :- {prescitonData.patientEmial}</p>
               <p className="">Case History Id :- {prescitonData.caseidIdx}</p>
               <p className="">Patient Id :- {prescitonData.pmsId}</p>
+              <p className="">Patient Diet :- {prescitonData.patinetDiet}</p>
+              <p className="">
+                Patient Weight :- {prescitonData.patientWeight}
+              </p>
+              <p className="">Patient BP :- {prescitonData.bp}</p>
+              <p className="">Branch :- {prescitonData.branch}</p>
 
               <p className="">
                 Chek Up Date :- {prescitonData.Ai_Check_Up_Date}
@@ -588,93 +671,312 @@ export default function SymtomForm({
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Diet
             </p>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <FormField
-                control={form.control}
-                name="Breakfast"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Breakfast</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Lunch"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Lunch</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Dinner"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Dinner</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="Do"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Do</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="DontDo"
-                render={({ field }) => (
-                  <FormItem className="!w-full space-y-2">
-                    <FormLabel className="font-bold">Don't Do</FormLabel>
-                    <FormControl>
-                      <TagsInput
-                        value={field.value}
-                        onValueChange={field.onChange}
-                        className="w-full"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+
+            <Tabs defaultValue="sunday">
+              <TabsList>
+                {days.map((day) => (
+                  <TabsTrigger key={day} value={day}>
+                    {day.slice(0, 3).toUpperCase()}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {days.map((day) => (
+                <TabsContent key={day} value={day}>
+                  <div className="flex flex-col gap-6 md:flex-row md:gap-10">
+                    {["breakfast", "lunch"].map((meal) => (
+                      <div key={meal} className="w-full space-y-2">
+                        <p className="text-lg font-semibold capitalize">
+                          {meal}
+                        </p>
+                        {fieldArrays[day][meal].fields.map(
+                          (field: any, index: number) => (
+                            <div
+                              key={field.id}
+                              className="flex items-center gap-2"
+                            >
+                              <FormField
+                                control={form.control}
+                                name={`DietPlan.${day}.${meal as "breakfast" | "lunch"}.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem className="w-full space-y-1">
+                                    <FormControl>
+                                      <Textarea
+                                        {...field}
+                                        placeholder={`e.g. ${meal === "breakfast" ? "Oats" : "Veg curry"}`}
+                                      />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <Button
+                                type="button"
+                                variant="destructive"
+                                onClick={() =>
+                                  fieldArrays[day][meal].remove(index)
+                                }
+                              >
+                                <XIcon />
+                              </Button>
+                            </div>
+                          ),
+                        )}
+                        <Button
+                          type="button"
+                          onClick={() =>
+                            fieldArrays[day][meal].append({ name: "" })
+                          }
+                        >
+                          + Add {meal}
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* 🍽 Dinner */}
+                  <div className="mt-6 space-y-2">
+                    <p className="text-lg font-semibold">Dinner</p>
+                    {fieldArrays[day].dinner.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.dinner.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Khichdi"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={() =>
+                              fieldArrays[day].dinner.remove(index)
+                            }
+                          >
+                            <XIcon />
+                          </Button>
+                        </div>
+                      ),
+                    )}
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        fieldArrays[day].dinner.append({ name: "" })
+                      }
+                    >
+                      + Add Dinner
+                    </Button>
+                  </div>
+
+                  {/* ✅ Do */}
+                  <div className="mt-6 space-y-2">
+                    <p className="font-semibold text-green-600">Do</p>
+                    {fieldArrays[day].do.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.do.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Eat on time"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={() => fieldArrays[day].do.remove(index)}
+                          >
+                            <XIcon />
+                          </Button>
+                        </div>
+                      ),
+                    )}
+                    <Button
+                      type="button"
+                      onClick={() => fieldArrays[day].do.append({ name: "" })}
+                    >
+                      + Add Do
+                    </Button>
+                  </div>
+
+                  {/* ❌ Don't Do */}
+                  <div className="mt-6 space-y-2">
+                    <p className="text-destructive font-semibold">Don't Do</p>
+                    {fieldArrays[day].dontdo.fields.map(
+                      (field: any, index: number) => (
+                        <div key={field.id} className="flex items-center gap-2">
+                          <FormField
+                            control={form.control}
+                            name={`DietPlan.${day}.dontdo.${index}.name`}
+                            render={({ field }) => (
+                              <FormItem className="w-full space-y-1">
+                                <FormControl>
+                                  <Textarea
+                                    {...field}
+                                    placeholder="e.g. Avoid spicy food"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            onClick={() =>
+                              fieldArrays[day].dontdo.remove(index)
+                            }
+                          >
+                            <XIcon />
+                          </Button>
+                        </div>
+                      ),
+                    )}
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        fieldArrays[day].dontdo.append({ name: "" })
+                      }
+                    >
+                      + Add Don't Do
+                    </Button>
+                  </div>
+                </TabsContent>
+              ))}
+            </Tabs>
+            <p className="text-muted-foreground mt-6 text-[1.5rem] font-bold">
+              Tests
+            </p>
+
+            <Tabs defaultValue="blood">
+              <TabsList>
+                <TabsTrigger value="blood">Blood Test</TabsTrigger>
+                <TabsTrigger value="radiology">Radiology</TabsTrigger>
+                <TabsTrigger value="urine">Urine Test</TabsTrigger>
+              </TabsList>
+
+              {/* 🩸 Blood Test */}
+              <TabsContent value="blood" className="space-y-4 pt-4">
+                {bloodTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`BloodTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea {...field} placeholder="e.g. CBC, LFT" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => bloodTestFields.remove(index)}
+                    >
+                      <XIcon />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  onClick={() => bloodTestFields.append({ name: "" })}
+                >
+                  + Add Blood Test
+                </Button>
+              </TabsContent>
+
+              {/* 🧲 Radiology Test */}
+              <TabsContent value="radiology" className="space-y-4 pt-4">
+                {rediologyTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`RediologyTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              placeholder="e.g. X-Ray, MRI"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => rediologyTestFields.remove(index)}
+                    >
+                      <XIcon />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  onClick={() => rediologyTestFields.append({ name: "" })}
+                >
+                  + Add Radiology Test
+                </Button>
+              </TabsContent>
+
+              {/* 🚽 Urine Test */}
+              <TabsContent value="urine" className="space-y-4 pt-4">
+                {urineTestFields.fields.map((field, index) => (
+                  <div key={field.id} className="flex items-center gap-2">
+                    <FormField
+                      control={form.control}
+                      name={`UrineTest.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem className="w-full space-y-1">
+                          <FormControl>
+                            <Textarea
+                              {...field}
+                              placeholder="e.g. Urine routine"
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => urineTestFields.remove(index)}
+                    >
+                      <XIcon />
+                    </Button>
+                  </div>
+                ))}
+                <Button
+                  type="button"
+                  onClick={() => urineTestFields.append({ name: "" })}
+                >
+                  + Add Urine Test
+                </Button>
+              </TabsContent>
+            </Tabs>
 
             <p className="text-muted-foreground text-[1.5rem] font-bold">
               Work Out
@@ -754,14 +1056,30 @@ export default function SymtomForm({
                 <MessageCircleMore /> Send To Dr.Rajeev Sir
               </LoadingButton>
 
-              <LoadingButton
+              {/* <LoadingButton
                 type="button"
                 disabled={loadinga}
                 loading={loadinga}
                 onClick={sendtomec}
               >
                 <MessageCircleMore /> Send To Medicine Counter
-              </LoadingButton>
+              </LoadingButton> */}
+              <Select onValueChange={handleSendToCounter} disabled={loading}>
+                <SelectTrigger disabled={loading}>
+                  <SelectValue placeholder="Send To Medicine Counter" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="counterahh@gmail.com">
+                    Ranchi Counter
+                  </SelectItem>
+                  <SelectItem value="patnacounter@gmail.com">
+                    Patna Counter
+                  </SelectItem>
+                  <SelectItem value="gaurcitycounter@gmail.com">
+                    Gaur City Counter
+                  </SelectItem>
+                </SelectContent>
+              </Select>
 
               <Button type="button" variant="default" className="w-full">
                 <Eye />

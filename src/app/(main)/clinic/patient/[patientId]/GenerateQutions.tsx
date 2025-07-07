@@ -63,6 +63,10 @@ export default function GenerateQutions({
       refrenshby: patientData.refrenshby,
       patientAddress: patientData.patientAddress,
       patientEmial: patientData.patientEmial,
+      patientWeight: patientData.patientWeight,
+      patinetDiet: patientData.patinetDiet,
+      branch: patientData.branch,
+      bp:patientData.bp
     },
   });
 
@@ -329,6 +333,78 @@ export default function GenerateQutions({
               <FormField
                 control={form.control}
                 name="patientEmial"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Patient Name </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="patientWeight"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Patient Name </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="patinetDiet"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Patient Name </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="branch"
+                render={({ field }) => (
+                  <FormItem className="hidden !w-full">
+                    <FormLabel>Patient Name </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={field.value}
+                        readOnly
+                        type="hidden"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bp"
                 render={({ field }) => (
                   <FormItem className="hidden !w-full">
                     <FormLabel>Patient Name </FormLabel>

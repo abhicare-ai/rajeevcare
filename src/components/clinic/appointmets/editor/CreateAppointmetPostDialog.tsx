@@ -64,6 +64,9 @@ export default function CreateAppointmetPostDialog({
       refrenshby: "",
       patientAddress: "",
       patientEmial: "",
+      patientWeight: "",
+      patinetDiet: "",
+      bp: "",
     },
   });
 
@@ -375,6 +378,7 @@ export default function CreateAppointmetPostDialog({
                         <SelectItem value="Friend">Friend</SelectItem>
                         <SelectItem value="Google">Google</SelectItem>
                         <SelectItem value="Facebook">Facebook</SelectItem>
+                        <SelectItem value="Family">Family</SelectItem>
                         <SelectItem value="Other">Other</SelectItem>
                       </SelectContent>
                     </Select>
@@ -383,21 +387,77 @@ export default function CreateAppointmetPostDialog({
                   </FormItem>
                 )}
               />
-             
             </div>
+            <div className="flex gap-5">
               <FormField
-              control={form.control}
-              name="patientEmial"
-              render={({ field }) => (
-                <FormItem className="!w-full">
-                  <FormLabel>Email </FormLabel>
-                  <FormControl>
-                    <Input placeholder="Email" {...field} type="email"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                control={form.control}
+                name="patientWeight"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>Patient Weight</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Patient Weight" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="patinetDiet"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>Diet</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl className="w-full">
+                        <SelectTrigger>
+                          <SelectValue placeholder="Diet" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Non Vegetarian">
+                          Non Vegetarian
+                        </SelectItem>
+                        <SelectItem value="Vegetarian">Vegetarian </SelectItem>
+                      </SelectContent>
+                    </Select>
+
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex gap-5">
+              <FormField
+                control={form.control}
+                name="patientEmial"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>Email </FormLabel>
+                    <FormControl>
+                      <Input placeholder="Email" {...field} type="email" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="bp"
+                render={({ field }) => (
+                  <FormItem className="!w-full">
+                    <FormLabel>BP </FormLabel>
+                    <FormControl>
+                      <Input placeholder="BP" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
             <FormField
               control={form.control}
               name="patientAddress"
@@ -411,7 +471,7 @@ export default function CreateAppointmetPostDialog({
                 </FormItem>
               )}
             />
-           
+
             <LoadingButton
               loading={mutation.isPending}
               type="submit"

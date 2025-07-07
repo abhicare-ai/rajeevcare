@@ -75,6 +75,11 @@ export default async function Page({
         patientAddress: prescitonData?.patientAddress,
         patientEmial: prescitonData?.patientEmial,
 
+        patinetDiet: prescitonData.patinetDiet,
+        branch: prescitonData.branch,
+        patientWeight: prescitonData.patientWeight,
+
+        bp: prescitonData.bp,
       }}
     />
   );

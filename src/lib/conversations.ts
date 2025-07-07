@@ -11,7 +11,10 @@ export type { Conversation };
 
 export interface PrescitopnTypes {
   summary: string;
-  qa: { question: string; answer: string }[];
+  qa: {
+    question: string;
+    answer: string;
+  }[];
   symptoms: string[];
   diagnosis: string[];
   medicines: {
@@ -22,17 +25,36 @@ export interface PrescitopnTypes {
     quantity: string;
   }[];
   dietPlan: {
-    breakfast: string[];
-    lunch: string[];
-    dinner: string[];
-    do: string[];
-    dontdo: string[];
+    sunday: DayDietPlan;
+    monday: DayDietPlan;
+    tuesday: DayDietPlan;
+    wednesday: DayDietPlan;
+    thursday: DayDietPlan;
+    friday: DayDietPlan;
+    saturday: DayDietPlan;
   };
   workoutPlan: {
     yoga: string[];
     exercise: string[];
     note: string;
   };
+  blooTest: {
+    name: string;
+  }[];
+  rediologyTest: {
+    name: string;
+  }[];
+  urintest: {
+    name: string;
+  }[];
+}
+
+interface DayDietPlan {
+  breakfast: { name: string }[];
+  lunch: { name: string }[];
+  dinner: { name: string }[];
+  do: { name: string }[];
+  dontdo: { name: string }[];
 }
 
 export interface detaForCove {

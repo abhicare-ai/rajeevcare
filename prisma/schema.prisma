@@ -61,6 +61,11 @@ model Appointment {
   refrenshby       String
   patientEmial     String
 
+  patientWeight String
+  patinetDiet   String
+  branch        String
+  bp            String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -89,6 +94,11 @@ model Prisciption {
   patientAddress String
   pmsId          String
   refrenshby     String
+  bp             String
+
+  patientWeight String
+  patinetDiet   String
+  branch        String
 
   presciption String?
 

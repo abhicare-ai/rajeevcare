@@ -25,6 +25,10 @@ export const createAppointmentSchema = z.object({
   refrenshby: requiredString,
   patientAddress: requiredString,
   patientEmial: requiredString.email("Invalid email"),
+  patientWeight: requiredString,
+  patinetDiet: requiredString,
+
+  bp: requiredString,
 });
 
 export type CreateAppointmentSchemaValues = z.infer<
@@ -49,6 +53,11 @@ export const generateQuationSchema = z.object({
   refrenshby: requiredString,
   patientAddress: requiredString,
   patientEmial: requiredString.email("Invalid email"),
+  patientWeight: requiredString,
+  patinetDiet: requiredString,
+  branch: requiredString,
+
+  bp: requiredString,
 });
 
 export type GenerateQuationValues = z.infer<typeof generateQuationSchema>;
@@ -61,6 +70,38 @@ const medicineSchema = z.object({
   quantity: requiredString,
 });
 
+const mealItemSchema = z.object({
+  name: requiredString,
+});
+
+const dayPlanSchema = z.object({
+  breakfast: z.array(mealItemSchema).min(1, "Add at least one breakfast item"),
+  lunch: z.array(mealItemSchema).min(1, "Add at least one lunch item"),
+  dinner: z.array(mealItemSchema).min(1, "Add at least one dinner item"),
+  do: z.array(mealItemSchema).min(1, "Add at least one 'do' item"),
+  dontdo: z.array(mealItemSchema).min(1, "Add at least one 'don't do' item"),
+});
+
+export const dietPlanSchema = z.object({
+  sunday: dayPlanSchema,
+  monday: dayPlanSchema,
+  tuesday: dayPlanSchema,
+  wednesday: dayPlanSchema,
+  thursday: dayPlanSchema,
+  friday: dayPlanSchema,
+  saturday: dayPlanSchema,
+});
+
+export const bloodTest = z.object({
+  name: z.string().trim(),
+});
+export const rediologyTest = z.object({
+  name: z.string().trim(),
+});
+export const urintestTest = z.object({
+  name: z.string().trim(),
+});
+
 export const finalPresciptionSchema = z.object({
   id: requiredString,
   Symptoms: z.array(z.string()).nonempty("Please at least one symptoms name "),
@@ -68,15 +109,13 @@ export const finalPresciptionSchema = z.object({
     .array(z.string())
     .nonempty("Please at least one diagnosis name "),
   Medicines: z.array(medicineSchema).min(1, "Add at least one medicine"),
-
-  Breakfast: z.array(z.string()).nonempty("Please at least one  diet paln "),
-  Lunch: z.array(z.string()).nonempty("Please at least one  diet paln "),
-  Dinner: z.array(z.string()).nonempty("Please at least one  diet paln "),
-  Do: z.array(z.string()).nonempty("Please at least one do diet paln "),
-  DontDo: z.array(z.string()).nonempty("Please at least one don't diet paln "),
+  DietPlan: dietPlanSchema,
   Yoga: z.array(z.string()).nonempty("Please at least one  yoga  "),
   Exercize: z.array(z.string()).nonempty("Please at least one  exercise  "),
   Note: z.string().trim(),
+  BloodTest: z.array(bloodTest).optional(),
+  RediologyTest: z.array(rediologyTest).optional(),
+  UrineTest: z.array(urintestTest).optional(),
 });
 
 export type FinalPresciptionValues = z.infer<typeof finalPresciptionSchema>;

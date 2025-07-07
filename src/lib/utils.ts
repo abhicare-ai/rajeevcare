@@ -84,8 +84,15 @@ export function safeParsePrescriptionAction(
   }
 }
 
-// Default empty fallback
 function getEmptyPrescription(): PrescitopnTypes {
+  const emptyDay = {
+    breakfast: [],
+    lunch: [],
+    dinner: [],
+    do: [],
+    dontdo: [],
+  };
+
   return {
     summary: "N/A",
     qa: [],
@@ -93,16 +100,21 @@ function getEmptyPrescription(): PrescitopnTypes {
     diagnosis: [],
     medicines: [],
     dietPlan: {
-      breakfast: [],
-      lunch: [],
-      dinner: [],
-      do: [],
-      dontdo: [],
+      sunday: { ...emptyDay },
+      monday: { ...emptyDay },
+      tuesday: { ...emptyDay },
+      wednesday: { ...emptyDay },
+      thursday: { ...emptyDay },
+      friday: { ...emptyDay },
+      saturday: { ...emptyDay },
     },
     workoutPlan: {
       yoga: [],
       exercise: [],
       note: "",
     },
+    blooTest: [],
+    rediologyTest: [],
+    urintest: [],
   };
 }

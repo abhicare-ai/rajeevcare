@@ -219,8 +219,11 @@ export const TagsInput = React.forwardRef<HTMLDivElement, TagsInputProps>(
             break;
 
           case "Enter":
+          case "Done":
+          case "Go":
+          case "Send":
             if (inputValue.trim() !== "") {
-              e.preventDefault();
+              e.preventDefault(); // ✅ prevent focus jump
               onValueChangeHandler(inputValue);
               setInputValue("");
             }
