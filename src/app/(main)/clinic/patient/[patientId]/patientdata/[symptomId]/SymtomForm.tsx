@@ -1064,8 +1064,8 @@ export default function SymtomForm({
               >
                 <MessageCircleMore /> Send To Medicine Counter
               </LoadingButton> */}
-              <Select onValueChange={handleSendToCounter} disabled={loading}>
-                <SelectTrigger disabled={loading}>
+              <Select onValueChange={handleSendToCounter} disabled={loadinga}>
+                <SelectTrigger disabled={loadinga} className="!w-full bg-primary">
                   <SelectValue placeholder="Send To Medicine Counter" />
                 </SelectTrigger>
                 <SelectContent>
