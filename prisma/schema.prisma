@@ -1,0 +1,147 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String  @id
+  email        String  @unique
+  passwordHash String
+  branch       String
+  avatarUrl    String?
+  isAdmin      Boolean @default(false)
+
+  sessions    Session[]
+  Appointment Appointment[]
+  Feedback    Feedback[]
+
+  createdAt DateTime @default(now())
+
+  @@map("users")
+}
+
+model Session {
+  id     String @id
+  userId String
+
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Appointment {
+  id      String @id @default(cuid())
+  userId  String
+  tokenNo Int
+
+  patinetAvatar    String?
+  phoneNumber      String
+  patientName      String
+  gendar           String
+  patientDOB       DateTime
+  appointmentDate  DateTime
+  consultationFees String
+  audio            String?
+  presciption      Json?
+  patientAddress   String
+  pmsId            String
+  refrenshby       String
+  patientEmial     String
+
+  patientWeight String
+  patinetDiet   String
+  branch        String
+  bp            String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Prisciption Prisciption[]
+  Feedback    Feedback[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("appointments")
+}
+
+model Prisciption {
+  id                  String   @id @default(cuid())
+  apptId              String
+  primary_complaint   String[]
+  duration_of_problem String
+  age                 String
+  gender              String
+  papatientName       String
+  Patient_Number      String
+  DOB                 String
+  Ai_Check_Up_Date    String
+  caseidId            Int
+  patientEmial        String
+
+  patientAddress String
+  pmsId          String
+  refrenshby     String
+  bp             String
+
+  patientWeight String
+  patinetDiet   String
+  branch        String
+
+  presciption String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Feedback    Feedback[]
+  attachments Media[]
+
+  appointment Appointment @relation(fields: [apptId], references: [id], onDelete: Cascade)
+
+  @@map("prisciptions")
+}
+
+model Media {
+  id           String       @id @default(cuid())
+  postId       String?
+  post         Prisciption? @relation(fields: [postId], references: [id], onDelete: SetNull)
+  type         MediaType
+  url          String
+  imgText      String
+  labReportFor String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum MediaType {
+  IMAGE
+  PDF
+}
+
+model Feedback {
+  id          String      @id @default(cuid())
+  content     String
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apptId      String
+  appointment Appointment @relation(fields: [apptId], references: [id], onDelete: Cascade)
+  deasesId    String
+  prisciption Prisciption @relation(fields: [deasesId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@map("feedbacks")
+}
