@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const imgegenrate = async (imgScript: any) => {
   const imgScriptPrompt = imgScript.map((v: any) => v.imagePrompt);
-  const publicFolderPath = path.join(process.cwd(),"src", "assets", "generated");
+  const publicFolderPath = path.join(process.cwd(),"public", "generated");
 
   // Ensure directory exists
   await fs.mkdir(publicFolderPath, { recursive: true });
