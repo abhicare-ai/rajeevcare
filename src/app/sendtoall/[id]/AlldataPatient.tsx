@@ -34,6 +34,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import Link from "next/link";
 import { Textarea } from "@/components/ui/textarea";
+
 import { useAppSelector } from "@/hooks/hooks";
 import {
   Select,
@@ -319,7 +320,7 @@ export default function SymtomForm({
           <AccordionItem value="item-1">
             <AccordionTrigger>Patient Case History</AccordionTrigger>
             <AccordionContent>
-              <Table className="w-[1000px] overflow-x-auto md:w-full">
+              <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">Summary</TableHead>
@@ -369,7 +370,7 @@ export default function SymtomForm({
               <AccordionItem value="item-2" ref={section1Ref}>
                 <AccordionTrigger>Patient Diagnosis</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Symptoms</TableHead>
@@ -393,6 +394,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Night fever, Headache for 10 days"
                                         />
@@ -429,6 +432,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Respiratory infection, Sinusitis"
                                         />
@@ -450,7 +455,7 @@ export default function SymtomForm({
               <AccordionItem value="item-3" ref={section2Ref}>
                 <AccordionTrigger>Test</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Blood Test</TableHead>
@@ -477,6 +482,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. CBC, LFT"
                                         />
@@ -513,6 +520,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. X-Ray, MRI"
                                         />
@@ -540,6 +549,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Urine routine"
                                         />
@@ -561,7 +572,7 @@ export default function SymtomForm({
               <AccordionItem value="item-4" ref={section3Ref}>
                 <AccordionTrigger>Medicine</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="w-8 border-r">#</TableHead>{" "}
@@ -589,6 +600,8 @@ export default function SymtomForm({
                                 <FormItem className="w-full space-y-1">
                                   <FormControl>
                                     <Textarea
+                                      className="cursor-default"
+                                      readOnly
                                       {...field}
                                       placeholder="e.g. Ferrum Phosphoricum 6X"
                                     />
@@ -608,6 +621,8 @@ export default function SymtomForm({
                                 <FormItem className="w-full space-y-1">
                                   <FormControl>
                                     <Textarea
+                                      className="cursor-default"
+                                      readOnly
                                       {...field}
                                       placeholder="e.g. 2 tablets"
                                     />
@@ -619,7 +634,7 @@ export default function SymtomForm({
                           </TableCell>
 
                           {/* Days */}
-                          <TableCell className="printer border-r">
+                          <TableCell className=" border-r">
                             <FormField
                               control={form.control}
                               name={`Medicines.${index}.day`}
@@ -627,6 +642,8 @@ export default function SymtomForm({
                                 <FormItem className="w-full space-y-1">
                                   <FormControl>
                                     <Textarea
+                                      className="cursor-default"
+                                      readOnly
                                       {...field}
                                       placeholder="e.g. 5 din"
                                     />
@@ -659,7 +676,7 @@ export default function SymtomForm({
               <AccordionItem value="item-5" ref={section4Ref}>
                 <AccordionTrigger>Wellness Product</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Name</TableHead>
@@ -682,6 +699,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Tulsi Drops, Ashwagandha Tablets"
                                         />
@@ -712,7 +731,7 @@ export default function SymtomForm({
               <AccordionItem value="item-6" ref={section5Ref}>
                 <AccordionTrigger>Diet</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Day</TableHead>
@@ -746,6 +765,8 @@ export default function SymtomForm({
                                       name={`DietPlan.${day}.breakfast.${index}.name`}
                                       render={({ field }) => (
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Poha"
                                         />
@@ -774,6 +795,8 @@ export default function SymtomForm({
                                       name={`DietPlan.${day}.lunch.${index}.name`}
                                       render={({ field }) => (
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Dal, Rice"
                                         />
@@ -802,6 +825,8 @@ export default function SymtomForm({
                                       name={`DietPlan.${day}.dinner.${index}.name`}
                                       render={({ field }) => (
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Khichdi"
                                         />
@@ -831,11 +856,15 @@ export default function SymtomForm({
               <AccordionItem value="item-7" ref={section6Ref}>
                 <AccordionTrigger>Work Out</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
-                        <TableHead className="border-r">Yoga</TableHead>
-                        <TableHead className="border-r">Exercise</TableHead>
+                        <TableHead className="border-r">
+                          Yoga (Click on yoga name to generate video)
+                        </TableHead>
+                        <TableHead className="border-r">
+                          Exercise (Click on Exercise name to generate video)
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -856,6 +885,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          readOnly
+                                          className="cursor-pointer"
                                           {...field}
                                           placeholder="e.g. Surya Namaskar"
                                           onClick={(v) =>
@@ -897,9 +928,11 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          readOnly
+                                          className="cursor-pointer"
                                           {...field}
                                           placeholder="e.g. Brisk walking"
-                                           onClick={(v) =>
+                                          onClick={(v) =>
                                             genrateVidio(v.currentTarget.value)
                                           }
                                         />
@@ -921,7 +954,7 @@ export default function SymtomForm({
               <AccordionItem value="item-8" ref={section7Ref}>
                 <AccordionTrigger>Special Note</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Do</TableHead>
@@ -947,6 +980,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Take rest properly"
                                         />
@@ -985,6 +1020,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Avoid cold drinks"
                                         />
@@ -1014,6 +1051,8 @@ export default function SymtomForm({
                                     <FormItem className="w-full space-y-1">
                                       <FormControl>
                                         <Textarea
+                                          className="cursor-default"
+                                          readOnly
                                           {...field}
                                           placeholder="e.g. Repeat medicine if needed"
                                         />
@@ -1082,7 +1121,11 @@ export default function SymtomForm({
         </Accordion>
       </div>
       {value && (
-        <GenrateVidio value={value} onclose={() => setShowDeletDialog(false)} open={showDeletDailog}/>
+        <GenrateVidio
+          value={value}
+          onclose={() => setShowDeletDialog(false)}
+          open={showDeletDailog}
+        />
       )}
     </div>
   );

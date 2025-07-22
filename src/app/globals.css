@@ -146,6 +146,13 @@ body {
   .borderB {
     border-bottom: 1px solid oklch(0.92 0.004 286.32) !important;
   }
+   .printable-table {
+    overflow: visible !important;
+    max-height: none !important;
+     width: 100% !important;
+  }
+
+  
 }
 
 *:hover::-webkit-scrollbar-thumb {

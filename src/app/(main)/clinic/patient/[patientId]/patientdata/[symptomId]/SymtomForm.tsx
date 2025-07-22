@@ -338,7 +338,7 @@ export default function SymtomForm({
   const handlePrintSection7 = useReactToPrint({
     contentRef: section7Ref,
   });
-  
+
   return (
     <div className="space-y-8 p-3">
       <div className="bg-sidebar rounded-md border p-3">
@@ -393,7 +393,7 @@ export default function SymtomForm({
           <AccordionItem value="item-1">
             <AccordionTrigger>Patient Case History</AccordionTrigger>
             <AccordionContent>
-              <Table  className="w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">Summary</TableHead>
@@ -554,7 +554,7 @@ export default function SymtomForm({
               <AccordionItem value="item-3" ref={section2Ref}>
                 <AccordionTrigger>Test</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Blood Test</TableHead>
@@ -716,7 +716,7 @@ export default function SymtomForm({
               <AccordionItem value="item-4" ref={section3Ref}>
                 <AccordionTrigger>Medicine</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="w-8 border-r">#</TableHead>{" "}
@@ -842,7 +842,7 @@ export default function SymtomForm({
               <AccordionItem value="item-5" ref={section4Ref}>
                 <AccordionTrigger>Wellness Product</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Name</TableHead>
@@ -914,7 +914,7 @@ export default function SymtomForm({
               <AccordionItem value="item-6" ref={section5Ref}>
                 <AccordionTrigger>Diet</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Day</TableHead>
@@ -1091,7 +1091,7 @@ export default function SymtomForm({
               <AccordionItem value="item-7" ref={section6Ref}>
                 <AccordionTrigger>Work Out</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Yoga</TableHead>
@@ -1212,7 +1212,7 @@ export default function SymtomForm({
               <AccordionItem value="item-8" ref={section7Ref}>
                 <AccordionTrigger>Special Note</AccordionTrigger>
                 <AccordionContent>
-                  <Table  className="w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Do</TableHead>
