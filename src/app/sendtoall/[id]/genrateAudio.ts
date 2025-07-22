@@ -33,7 +33,7 @@ export const genrateAudio = async (audioScript: any) => {
 
   // ✅ Generate unique filename
   const uniqueFilename = `azure-speech-${uuidv4()}.mp3`;
-  const filePath = path.resolve("./public", uniqueFilename);
+  const filePath = path.resolve("./xyz", uniqueFilename);
 
   fs.writeFileSync(filePath, audioBuffer);
 
