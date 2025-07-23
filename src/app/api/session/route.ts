@@ -17,7 +17,8 @@ export async function POST(req: Request) {
       lab_report,
     } = body;
 
-    console.log(lab_report)
+    const labReportText = typeof lab_report === 'string' ? lab_report : JSON.stringify(lab_report);
+    console.log(labReportText)
     const primary_complaint_sec = primary_complaint.join(", ");
 
     const instructions =
@@ -29,12 +30,12 @@ Sabse pehle patient se yeh do lines alag alag turn me puchho:
 1. "Namaste ${papatientName} ji, main hoon Dr. Mridula from Dr. Rajeev Clinic se."
 2. "Aapko ${duration_of_problem} se ${primary_complaint_sec} ki dikkat ho rahi hai na?"
 3. Agar ${primary_complaint_sec} me 2 ya usse zyada bimariyon ka zikr ho — jaise “fever,vomiting” — toh GPT ek hi baar me dono ke bare me mixed nahi bole, balki pehle pehli bimari (jaise fever) ko poori tarah samjhe (follow-up questions pooche), fir dusri bimari (jaise vomiting) ke liye alag se sawal kare.
-4.  📄 Report Use  (${lab_report}) esme  report milega:
+4.  📄 Report Use  (${labReportText}) esme  report milega:
 Agar latest  report milti hai, to sabse pehle patient ko politely inform karo :
 
 🗣️ "Mujhe aapki ek recent report mil gayi hai, main use dekh rahi hoon. "
 
-Uske baad  report ke content ko achhe se samjho (jo tool (${lab_report}) se milega), aur agar usme kuch abnormal values dikhein (jaise:  
+Uske baad  report ke content ko achhe se samjho (jo tool (${labReportText}) se milega), aur agar usme kuch abnormal values dikhein (jaise:  
 - "Hemoglobin 0.5" — jo kaafi kam hai),  
 to pehle us par comment karo:
 
