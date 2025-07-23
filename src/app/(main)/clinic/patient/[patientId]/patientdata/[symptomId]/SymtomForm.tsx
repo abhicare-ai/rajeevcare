@@ -1451,7 +1451,7 @@ export default function SymtomForm({
                         className="w-full"
                       >
                         <MessageCircleMore className="mr-2 h-4 w-4" /> Dr.
-                        Rajeev
+                        Rajeev Sir
                       </LoadingButton>
                     </TableCell>
 
@@ -1469,13 +1469,13 @@ export default function SymtomForm({
                         </SelectTrigger>
                         <SelectContent>
                           <SelectItem value="counterahh@gmail.com">
-                            Ranchi
+                            Ranchi Medicine Counter
                           </SelectItem>
                           <SelectItem value="patnacounter@gmail.com">
-                            Patna
+                            Patna Medicine Counter
                           </SelectItem>
                           <SelectItem value="gaurcitycounter@gmail.com">
-                            Gaur City
+                            Gaur City Medicine Counter
                           </SelectItem>
                         </SelectContent>
                       </Select>

@@ -87,11 +87,29 @@ export default function GenrateVidio({
     if (!loading) {
       onclose();
     }
+    setVidioScript(undefined)
+    setAudioDuration(undefined)
+    setDuration(undefined)
   };
 
+
+
+  const [isMdUp, setIsMdUp] = useState(false);
+
+  useEffect(() => {
+    const checkMedia = () => {
+      setIsMdUp(window.matchMedia("(min-width: 768px)").matches);
+    };
+    checkMedia();
+
+    window.addEventListener("resize", checkMedia);
+    return () => window.removeEventListener("resize", checkMedia);
+  }, []);
+
+  const compositionWidth = isMdUp ? 350 : 250;
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="max-w-[800px]">
+    <Dialog open={open} onOpenChange={handleOpenChange} modal={true}>
+      <DialogContent className="max-w-[800px]" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader className="space-y-6">
           <DialogTitle className="text-center font-bold">
             Create Video About ("{value}")
@@ -103,7 +121,7 @@ export default function GenrateVidio({
             <Player
               component={RemotionVidio}
               durationInFrames={Math.floor((audiDuration ?? 60) * 30)}
-              compositionWidth={350}
+              compositionWidth={compositionWidth}
               compositionHeight={400}
               fps={30}
               inputProps={{
