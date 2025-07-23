@@ -17,6 +17,7 @@ export async function POST(req: Request) {
       lab_report,
     } = body;
 
+    console.log(lab_report)
     const primary_complaint_sec = primary_complaint.join(", ");
 
     const instructions =

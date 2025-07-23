@@ -97,6 +97,7 @@ export default function GenrateVidio({
             Create Video About ("{value}")
           </DialogTitle>
         </DialogHeader>
+        {/* <img src="../../../../public/generated/img-f1518b3b-f147-4cce-a805-fe1e841e404d.png"/> */}
         {vidioScript && vidioScript.length > 0 && (
           <div className="flex w-full items-center justify-center">
             <Player
