@@ -1468,13 +1468,13 @@ export default function SymtomForm({
                           <SelectValue placeholder="To Counter" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="counterahh@gmail.com">
+                          <SelectItem value="medicine.ranchi@rajeevclinic.com">
                             Ranchi Medicine Counter
                           </SelectItem>
-                          <SelectItem value="patnacounter@gmail.com">
+                          <SelectItem value="medicine.patna@rajeevclinic.com">
                             Patna Medicine Counter
                           </SelectItem>
-                          <SelectItem value="gaurcitycounter@gmail.com">
+                          <SelectItem value="medicine.gaurcity@rajeevclinic.com">
                             Gaur City Medicine Counter
                           </SelectItem>
                         </SelectContent>
