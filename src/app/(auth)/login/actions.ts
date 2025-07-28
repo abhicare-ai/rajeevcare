@@ -14,7 +14,7 @@ export async function login(
   credential: LoginValues,
 ): Promise<{ error: string }> {
   try {
-    // const { email, branch, password } = loginSchema.parse(credential);
+    const { email, branch, password } = loginSchema.parse(credential);
 
     // //login...........
     // const existingUser = await prisma.user.findFirst({
