@@ -520,9 +520,10 @@ A9)  Testicular Cancer
 Zarurat na ho to kuch bhi suggest na kare — section blank chhode.
 
 
-
+❌  Do not add any extra text, explanations, or formatting.
+   
 Format strictly like this:
-//json//{
+{
   summary: string,
   qa: [{ question: string, answer: string }],
   symptoms: [
