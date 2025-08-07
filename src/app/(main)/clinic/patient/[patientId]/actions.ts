@@ -1,6 +1,7 @@
 "use server";
 import { validateRequest } from "@/authSlice";
 import { OpenAI } from "@/hooks/openAI";
+
 import { generateAvatarUri } from "@/lib/avatar";
 import { Conversation, PrescitopnTypes } from "@/lib/conversations";
 import { prisma } from "@/lib/prisma";
@@ -13,6 +14,8 @@ import {
 } from "@/lib/vallidaion";
 import { vectorStore } from "@/lib/vectorStore";
 import { StreamClient } from "@stream-io/node-sdk";
+import axios from "axios";
+import { console } from "inspector";
 
 export async function generateDeasesQuations(
   input: GenerateQuationValues,
@@ -138,7 +141,7 @@ Ai Q/A And Presciptions: ${result.presciption}
 
 export async function conversationWithAI(conversation: {
   patientId?: string;
-  message?: Conversation[];
+  message?: Conversation[] | string;
 
   values?: FinalPresciptionValues;
 }) {
@@ -154,11 +157,37 @@ export async function conversationWithAI(conversation: {
   });
 
   if (message) {
-    const formattedMessages = message
-      .map(
-        (msg) => `${msg.role === "user" ? "Patient" : "Doctor"}: ${msg.text}`,
-      )
-      .join("\n");
+    // const formattedMessages = message
+    //   .map(
+    //     (msg) => `${msg.role === "user" ? "Patient" : "Doctor"}: ${msg.text}`,
+    //   )
+    //   .join("\n");
+
+    let formattedMessages = "";
+
+    // ✅ Handle if message is array
+    if (Array.isArray(message)) {
+      formattedMessages = message
+        .map(
+          (msg) => `${msg.role === "user" ? "Patient" : "Doctor"}: ${msg.text}`,
+        )
+        .join("\n");
+    }
+
+    // ✅ Handle if message is a string (non-AI transcription)
+    else if (typeof message === "string") {
+      formattedMessages = `Patient: ${message}`;
+    }
+    console.log("formattedMessages", formattedMessages);
+    console.log("message", message);
+       console.log("typeof", typeof message);
+    const { data } = await axios.post("http://drrajeevswellnessai.com/api/wallness", {
+      diseaseName: JSON.stringify(
+        findProsciptionData?.primary_complaint.join(", "),
+      ),
+    });
+    const wellnessProductsJson = JSON.stringify(data.products);
+    console.log("wellnessProductsJson", wellnessProductsJson);
 
     const PriscitonsResult = await OpenAI.getChatCompletions(
       process.env.AZURE_DEPLOYMENT_COMPLETIONS_NAME!,
@@ -183,128 +212,313 @@ Your task is to **understand and cleanly interpret** this voice-style conversati
 Yeh diet patient ke preference ${findProsciptionData?.patinetDiet} ke basis par automatically decide hoga.
 
 
-🧠 Patient ke conversation (${formattedMessages}) ke basis par AI ko ye decide karna hai ki:
+🧠 Patient ke conversation (${formattedMessages}) ke basis par AI ko ye decide karna hai ki:\
+🧠 IMPORTANT: 
+- wellness priducts me name or link dono hona chahiye.
+- ${wellnessProductsJson} wellness product ka name or link esme se ${wellnessProductsJson} aa rha hai apne se mat kuch wallness prodcut me dalana smja n 
+❌ ${wellnessProductsJson} agar ye null ya empty array hai to wellness product ko blank hi rakhna. 
+  
 
-1. **Blood Test**  
-   Agar patient ke symptoms ya disease se lagta hai ki infection, thyroid, blood sugar, ya vitamin deficiency ho sakti hai, to AI khud se suggest kare:
-   - CBC  
-   - ESR  
-   - Thyroid (T3, T4, TSH)  
-   - FBS / PPBS  
-   - CRP  
-   - Vitamin D / B12  
-   ✅ Agar zarurat ho to suggest kare  
-   ❌ Agar nahi ho to blank chhode
+A) X-Ray
+    1) Chest P A
+    2) P N S
+    3) Pelvic
+    4) Cervical Spine AP & LAT
+    5) Lumbar Spine AP & LAT
+    6) Knee (Right & Left) AP & LAT
+    7) Tomography (OPG)
 
-2. **Urine Test**  
-   Agar symptoms me urine infection, kidney problem ya burning urination type ki dikkat ho to suggest kare:
-   - Urine Routine  
-   - Urine Culture  
-   ✅ Zarurat ho to suggest kare  
-   ❌ Nahi ho to blank chhode
+B) Fluro Contrast Studies
+    1) Hysterosalpingogram (HSG)
+    2) Barium Swallow
+    3) Barium Follow Through
+    4) Small Bowel Enema
+    5) IVP
 
-3. **Radiology Test**  
-   Agar patient ke symptoms se lagta hai ki imaging ki zarurat hai (jaise chest pain, joint pain, swelling, back pain, etc.), tabhi neeche diye gaye **Radiology Test options** me se relevant tests suggest kare:
+C) Ultrasound  
+    1) Whole Abdomen  
+    2) Upper Abdomen  
+    3) K U B  
+    4) Kidney  
+    5) Neck  
+    6) Thyroid  
+    7) Breast  
+    8) Musculoskeletal Ultrasound - Shoulder  
+    9) Musculoskeletal Ultrasound - Elbow  
+    10) Musculoskeletal Ultrasound - Wrist  
+    11) Musculoskeletal Ultrasound - Hip  
+    12) Musculoskeletal Ultrasound - Knee  
+    13) Musculoskeletal Ultrasound - Ankle  
+    14) Musculoskeletal Ultrasound - Soft Tissue  
+    15) Ultrasound IV Contrast Study
 
-   ✅ Radiology Tests (select only from below image options):
+D) US Doppler Study  
+    1) Both Carotid & Vertebral  
+    2) Single Limb Arterial / Venous (Right/Left) (Upper / Lower)  
+    3) Both Limb Arterial / Venous (Upper / Lower)  
+    4) Scrotal  
+    5) Renal  
+    6) Transrectal  
+    7) Penile  
 
-X-RAY  
-- Chest PA  
-- PNS  
-- Pelvic  
-- Cervical Spine AP & LAT  
-- Lumbar Spine AP & LAT  
-- Knee (Right & Left) AP & LAT  
-- PAN Tomography (OPG)  
-- Others  
+ E) C.T. Scan  
+    1) Brain  
+    2) Chest  
+    3) Upper Abdomen  
+    4) Lower Abdomen  
+    5) Whole Abdomen  
+    6) Spine  
+    7) P N S  
+    8) Neck  
+    9) KUB  
+   10) Angio Neck Vessels  
+   11) Angio Intracranial Vessels  
+   12) Pulmonary Angio  
+   13) Aortogram  
+   14) Abdominal Angio  
+   15) Peripheral Angio  
+   
+F) M.R.I.  
+    1) Brain  
+    2) M R I Spine  
+    3) MRI Chest  
+    4) MRI Angio  
+    5) MRI Abdomen  
+    6) M R C P  
+    7) MRI Pelvis  
+    8) M S K  
+    9) MRI KUB  
 
-FLURO CONTRAST STUDIES  
-- Hysterosalpingogram (HSG)  
-- Barium Swallow  
-- Barium Follow Through  
-- Small Bowel Enema  
+G) Nuclear Medicine
+    1) Thyroid Imaging (Tc-99m)
+    2) Thyroid Uptake (I-131)
+    3) I-131 Whole Body Scan
+    4) Rest MUGA
+    5) Bone Whole Body Scan
+    6) (BULIDA) Hepato Biliary Scan
+    7) Myocardial Perfusion Study (Rest Only)
+    8) Myocardial Perfusion Study (Rest & Stress)
+    9) GE Reflux
+   10) Lung Perfusion Scan / Lung Ventilation Scan
+   11) GI Bleeds / Meckel’s Diverticulum
+   12) DMSA Scan
+   13) Diuretic Renal Scan (DTPA)
 
-ULTRASOUND  
-- Upper Abdomen  
-- Lower Abdomen  
-- Whole Abdomen  
-- KUB  
-- Neck  
-- Thyroid  
-- Breast  
+H) General Fever Panel  
+    1) CBC (Complete Blood Count)  
+    2) ESR (Erythrocyte Sedimentation Rate)  
+    3) CRP (C-Reactive Protein)  
+    4) Widal Test  
+    5) Dengue IgG/IgM  
+    6) Malaria Antigen  
+    7) Typhidot  
+    8) Blood Culture  
+    9) Procalcitonin (for sepsis) 
 
-Musculo Skeletal Ultrasound  
-- Shoulder  
-- Elbow  
-- Knee  
-- Hip  
-- Ankle  
-- Soft Tissue  
-- Ultrasound by Contrast Study  
-- Others  
+I) Skin Allergy Panel  
+    1) IgE Total  
+    2) CBC with Eosinophil count  
+    3) ANA (Antinuclear Antibody – for autoimmune skin disorders)  
+    4) Vitamin D, B12  
+    5) Patch Test (for specific allergy)  
+    6) Food Allergy Panel (IgG-based)  
 
-DOPPLER STUDY  
-- Both Carotid & Vertebral  
-- Upper Limb Arterial / Venous (Right/Left)  
-- Lower Limb Arterial / Venous (Upper / Lower)  
-- Abdominal  
-- Renal  
-- Scrotal  
-- Transrectal  
-- Others  
+J) ENT / Respiratory Panel  
+    1) AEC (Absolute Eosinophil Count)  
+    2) Total IgE  
+    3) Chest X-ray  
+    4) Nasal Swab Culture  
+    5) COVID-19 RTPCR or Antibody  
+    6) CRP  
+    7) TB Gold or Mantoux Test  
 
-C.T. SCAN (Plain / Contrast)  
-- Brain  
-- Chest  
-- Upper Abdomen  
-- Lower Abdomen  
-- Whole Abdomen  
-- Spine  
-- PNS  
-- Neck  
-- KUB  
-- Angio Neck Vessels  
-- Angio Intracranial Vessels  
-- Pulmonary Angio  
-- Abdominal Angio  
-- Peripheral Angio  
-- Others  
+K) Gastro Liver Panel
+    1) LFT (Liver Function Test – SGOT, SGPT, Bilirubin, ALP)
+    2) Amylase & Lipase (for pancreas)
+    3) H. Pylori IgG / Stool Antigen
+    4) Stool Routine & Culture
+    5) Hepatitis B (HBsAg), Hepatitis C (HCV)
+    6) PT-INR (Liver clotting function)
+    7) Albumin, Globulin ratio
 
-MRI (Plain / Contrast)  
-- R.L.  
-- MRI Brain  
-- MRI Spine  
-- MRI Chest  
-- MRI Angio  
-- MRI Abdomen  
-- MRI K C P  
-- MRI Pelvis  
-- M S K  
-- MRI KUB  
-- Others  
+L) Neuro / Psych Panel
+    1) Serum Electrolytes (Na, K, Ca, Mg)
+    2) Vitamin B12 (for neuropathy)
+    3) TSH (Hypothyroid-related depression/anxiety)
+    4) Serum Cortisol (for stress/fatigue)
+    5) EEG / MRI (as supportive, not blood test)
+    6) Folic Acid
+    7) HbA1c (for diabetic neuropathy)
 
-NUCLEAR MEDICINE  
-- Thyroid Imaging (Tc99m)  
-- Thyroid Uptake (I-131)  
-- I-131 Whole Body Scan  
-- Rest MUGA  
-- Bone Whole Body Scan  
-- (BULIDA) Hepato Biliary Scan  
-- Myocardial Perfusion Study (Rest Only)  
-- Myocardial Perfusion Study (Rest & Stress)  
-- GE Reflux  
-- Lung Perfusion Scan / Lung Ventilation Scan  
-- L.E. / Bleeds / Meckel's Diverticulum  
-- DMSA Scan  
-- Diuretic Renal Scan (DTPA)  
-- Others  
+M) Ortho / Rheuma / Joint Pain Panel
+    1) RA Factor (Rheumatoid Arthritis)
+    2) Anti-CCP
+    3) CRP, ESR
+    4) Uric Acid (Gout)
+    5) HLA B27 (Ankylosing Spondylitis)
+    6) ANA Profile (Lupus, SLE)
+    7) Vitamin D, Calcium, PTH
 
-   ❌ Agar koi Radiology test ki zarurat nahi hai to is section ko blank hi rakhe
+N) Gynecology / Hormonal Disorders
+     1) CBC
+     2) TSH, FT3, FT4
+     3) FSH, LH
+     4) Prolactin
+     5) AMH (Ovarian reserve)
+     6) Progesterone / Estradiol
+     7) HbA1c (if PCOD)
+     8) USG Pelvis (non-blood but essential) 
+
+O) Thyroid & Endocrinology
+     1) T3, T4, TSH
+     2) Anti-TPO (Autoimmune thyroiditis)
+     3) Vitamin D, Calcium
+     4) Fasting & PP Blood Sugar
+     5) HbA1c
+     6) Lipid Profile
+     7) Insulin (Fasting/C-Peptide if required)
+
+P) Diabetes & Metabolic
+     1) FBS (Fasting Blood Sugar)
+     2) PPBS (Postprandial Blood Sugar)
+     3) HbA1c
+     4) Insulin (fasting or post meal)
+     5) Lipid Profile
+     6) Microalbuminuria
+     7) Serum Creatinine, Urea (Kidney status)
+
+Q) Urology / Kidney / Prostate
+     1) KFT (Kidney Function Test – Urea, Creatinine)
+     2) Urine Routine & Microscopy
+     3) Urine Culture
+     4) PSA (Prostate Specific Antigen)
+     5) Microalbuminuria
+     6) Sodium, Potassium
+     7) Calcium, Uric Acid
+     8) Cystatin C (Advanced kidney marker)
+     
+U) Pediatrics / Autism / ADHD
+     1) Vitamin D
+     2) Vitamin B12
+     3) Serum Ferritin
+     4) Lead, Mercury (Heavy Metal Test if regression)
+     5) Thyroid Profile
+     6) CBC + ESR
+     7) EEG, MRI Brain (if seizures or delay)
+     8) Stool for parasites (if GI complaints)
+
+V) Reproductive / Sexual Health
+     1) VDRL / TPHA (Syphilis)
+     2) HIV I & II
+     3) HBsAg
+     4) HCV
+     5) Semen Analysis
+     6) FSH, LH, Testosterone (Male)
+     7) Prolactin, Estradiol (Female)
+     8) Urine Culture / Swab Culture
+
+W) Cardiology (BP, Cholesterol, Heart Disease)
+     1) Lipid Profile
+     2) ECG (not blood but essential)
+     3) Troponin I or T (For acute chest pain)
+     4) CRP (hsCRP for inflammation risk)
+     5) Homocysteine
+     6) Blood Sugar & HbA1c
+     7) TSH (Thyroid affects heart rhythm)
+
+X)  Oncology / Tumor Screening (As per Symptoms)
+      1) CBC 
+      2) ESR 
+      3) LDH 
+      4) CA-125 (Ovary)
+      5) PSA (Prostate)
+      6) AFP (Liver) 
+      7) CEA (Colon, Breast) 
+      8) CA 19-9 (Pancreas)
+
+Y)  Pre-Operative / Routine Full Body Check
+      1) CBC
+      2) Blood Group
+      3) LFT + KFT
+      4) RBS + HbA1c
+      5) ECG + Chest X-ray
+      6) HIV, HBsAg, HCV
+      7) Urine R/M
+      8) PT/INR
+
+Z)  General Oncology
+      1) CBC – Anemia, WBC ↑↓, Platelets ↓
+      2) ESR / CRP – Inflammation markers
+      3) LDH (Lactate Dehydrogenase) – Non-specific tumor activity
+      4) Ferritin – Inflammation or malignancy
+      5) β2-Microglobulin – Multiple myeloma, lymphoma
+
+A1)  Breast Cancer
+      1) CA 15-3 – Most common marker
+      2) CEA (Carcinoembryonic Antigen) – Also used in colon & breast
+      3) HER2/neu – Serum or tissue-based
+      4) Estrogen / Progesterone Receptor (ER/PR) – Immunohistochemistry (IHC)
+      5) BRCA1 & BRCA2 Gene Testing – For genetic predisposition
+
+A2)  Ovarian Cancer
+      1) CA 125 – Primary marker
+      2) HE4 (Human Epididymis Protein 4)
+      3) OVA1 Panel – Advanced test
+      4) AFP – If germ cell tumor suspected
+      5) CEA – If mucinous type
+
+A3)  Cervical / Uterine Cancer
+      1) SCC (Squamous Cell Carcinoma Antigen)
+      2) CA 125 – If endometrial cancer suspected
+      3) HPV DNA Typing – Not a blood test, but important
+      4) CEA – If spread suspected
+
+A4)  Prostate Cancer
+      1) PSA (Total & Free)
+      2) PAP (Prostatic Acid Phosphatase)
+      3) PSA Density / Velocity
+  
+A5)  Liver Cancer
+      1) AFP (Alpha-Fetoprotein)
+      2) LFT (SGOT, SGPT, ALP, GGT, Bilirubin)
+      3) CEA & CA 19-9
+      4) Hepatitis B/C Testing
+
+A6)  Pancreatic Cancer
+      1) CA 19-9
+      2) CEA
+      3) Amylase/Lipase
+      4) BRCA2 mutation
+
+A7)  Colorectal Cancer
+      1) CEA (Carcinoembryonic Antigen)
+      2) CA 19-9
+      3) FOBT (Stool occult blood)
+      4) KRAS, NRAS mutation
+
+A8)  Lung Cancer
+      1) NSE (Neuron Specific Enolase)
+      2) ProGRP (Pro-gastrin releasing peptide)
+      3) CYFRA 21-1
+      4) CEA 
+      5) EGFR, ALK mutation
+
+A9)  Testicular Cancer 
+      1) AFP (Alpha-Fetoprotein)
+      2) β-hCG (Beta Human Chorionic Gonadotropin)
+      3) LDH
+      4) Ultrasound
+
+
+   ❌ Agar koi  test ki zarurat nahi hai to is section ko blank hi rakho
 
 ---
 
+
+
 📌 Sirf wahi tests suggest kare jo symptoms se medically justified ho.  
 Zarurat na ho to kuch bhi suggest na kare — section blank chhode.
+
 
 
 Format strictly like this:
@@ -377,11 +591,6 @@ Format strictly like this:
       },
     ],
   },
-  blooTest: [
-    {
-      name: string,
-    },
-  ],
   rediologyTest: [
     {
       name: string,
@@ -395,6 +604,7 @@ Format strictly like this:
   wallnessProduct: [
     {
       name: string,
+      link: string,
     },
   ],
   specialnotes: {
@@ -414,7 +624,42 @@ Format strictly like this:
       },
     ],
   },
-  labreportFor:string[]
+  labreportFor:string[],
+
+  XRayTest: string[],
+  FluroContrastStudies: string[],
+  UltrasoundTest: string[],
+  USDopplerStudy: string[],
+  CTScanTest: string[],
+  MRItest: string[],
+  NuclearMedicineTest: string[],
+  GeneralFeverPanel: string[],
+  SkinAllergyPanel: string[],
+  EntRespiratoryPanel: string[],
+  GastroLiverPanel: string[],
+  NeuroPsychPanel: string[],
+  OrthoRheumaPanel: string[],
+
+  GynecologyHormonalDisorders: string[],
+  ThyroidEndocrinology: string[],
+  DiabetesMetabolic: string[],
+  UrologyKidneyProstate: string[],
+  PediatricsAutismADHD: string[],
+  ReproductiveSexualHealth: string[],
+  Cardiology: string[],
+  OncologyTumorScreening: string[],
+  PreOperativeFullBodyCheck: string[],
+  GeneralOncology: string[],
+  BreastCancer: string[],
+  OvarianCancer: string[],
+  CervicalUterineCancer: string[],
+
+   ProstateCancer: string[],
+   LiverCancer: string[],
+   PancreaticCancer: string[],
+   ColorectalCancer: string[],
+   LungCancer: string[],
+   TesticularCancer: string[],
 };
 
 
@@ -509,10 +754,69 @@ Ai Q/A And Presciptions: ${result.presciption}
     if ("Diagnosis" in values) newPrescription.diagnosis = values.Diagnosis;
     if ("Medicines" in values) newPrescription.medicines = values.Medicines;
     if ("DietPlan" in values) newPrescription.dietPlan = values.DietPlan;
-    if ("BloodTest" in values) newPrescription.blooTest = values.BloodTest;
-    if ("RediologyTest" in values)
-      newPrescription.rediologyTest = values.RediologyTest;
-    if ("UrineTest" in values) newPrescription.urintest = values.UrineTest;
+    if ("XRayTest" in values) newPrescription.XRayTest = values.XRayTest;
+    if ("FluroContrastStudies" in values)
+      newPrescription.FluroContrastStudies = values.FluroContrastStudies;
+    if ("UltrasoundTest" in values)
+      newPrescription.UltrasoundTest = values.UltrasoundTest;
+    if ("USDopplerStudy" in values)
+      newPrescription.USDopplerStudy = values.USDopplerStudy;
+    if ("CTScanTest" in values) newPrescription.CTScanTest = values.CTScanTest;
+    if ("MRItest" in values) newPrescription.MRItest = values.MRItest;
+    if ("NuclearMedicineTest" in values)
+      newPrescription.NuclearMedicineTest = values.NuclearMedicineTest;
+    if ("GeneralFeverPanel" in values)
+      newPrescription.GeneralFeverPanel = values.GeneralFeverPanel;
+    if ("SkinAllergyPanel" in values)
+      newPrescription.SkinAllergyPanel = values.SkinAllergyPanel;
+    if ("EntRespiratoryPanel" in values)
+      newPrescription.EntRespiratoryPanel = values.EntRespiratoryPanel;
+    if ("GastroLiverPanel" in values)
+      newPrescription.GastroLiverPanel = values.GastroLiverPanel;
+    if ("NeuroPsychPanel" in values)
+      newPrescription.NeuroPsychPanel = values.NeuroPsychPanel;
+    if ("OrthoRheumaPanel" in values)
+      newPrescription.OrthoRheumaPanel = values.OrthoRheumaPanel;
+    if ("GynecologyHormonalDisorders" in values)
+      newPrescription.GynecologyHormonalDisorders =
+        values.GynecologyHormonalDisorders;
+    if ("ThyroidEndocrinology" in values)
+      newPrescription.ThyroidEndocrinology = values.ThyroidEndocrinology;
+    if ("DiabetesMetabolic" in values)
+      newPrescription.DiabetesMetabolic = values.DiabetesMetabolic;
+    if ("UrologyKidneyProstate" in values)
+      newPrescription.UrologyKidneyProstate = values.UrologyKidneyProstate;
+    if ("PediatricsAutismADHD" in values)
+      newPrescription.PediatricsAutismADHD = values.PediatricsAutismADHD;
+    if ("ReproductiveSexualHealth" in values)
+      newPrescription.ReproductiveSexualHealth =
+        values.ReproductiveSexualHealth;
+    if ("Cardiology" in values) newPrescription.Cardiology = values.Cardiology;
+    if ("OncologyTumorScreening" in values)
+      newPrescription.OncologyTumorScreening = values.OncologyTumorScreening;
+    if ("PreOperativeFullBodyCheck" in values)
+      newPrescription.PreOperativeFullBodyCheck =
+        values.PreOperativeFullBodyCheck;
+    if ("GeneralOncology" in values)
+      newPrescription.GeneralOncology = values.GeneralOncology;
+    if ("BreastCancer" in values)
+      newPrescription.BreastCancer = values.BreastCancer;
+    if ("OvarianCancer" in values)
+      newPrescription.OvarianCancer = values.OvarianCancer;
+    if ("CervicalUterineCancer" in values)
+      newPrescription.CervicalUterineCancer = values.CervicalUterineCancer;
+    if ("ProstateCancer" in values)
+      newPrescription.ProstateCancer = values.ProstateCancer;
+    if ("LiverCancer" in values)
+      newPrescription.LiverCancer = values.LiverCancer;
+    if ("PancreaticCancer" in values)
+      newPrescription.PancreaticCancer = values.PancreaticCancer;
+    if ("ColorectalCancer" in values)
+      newPrescription.ColorectalCancer = values.ColorectalCancer;
+    if ("LungCancer" in values) newPrescription.LungCancer = values.LungCancer;
+    if ("TesticularCancer" in values)
+      newPrescription.TesticularCancer = values.TesticularCancer;
+
     if ("WorkoutPlan" in values)
       newPrescription.workoutPlan = values.WorkoutPlan;
     if ("WallnessProduct" in values)

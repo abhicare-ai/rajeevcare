@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { conversationWithAI } from "./actions";
 import { detaForCove } from "@/lib/conversations";
 import { useEffect, useState } from "react";
-import { Tool } from "@langchain/core/tools";
+import { HashLoader } from "react-spinners";
 
 interface VapiSpeechDialogBoxProps {
   open: boolean;
@@ -80,18 +80,6 @@ export default function OpenAISpeechDialog({
     fetchLatest();
   }, [compaintData, patientData]);
 
-  //   const tools: Tool[] = [
-  //   {
-  //     type: "function",
-  //     name: "get_latest_lab_report",
-  //     description: "Fetch the latest lab report for the patient based on complaint and appointment ID.",
-  //     parameters: {
-  //       type: "object",
-  //       properties: {}, // GPT se koi input nahi le rahe
-  //     },
-  //   },
-  // ];
-
   const {
     status,
     currentVolume,
@@ -107,17 +95,39 @@ export default function OpenAISpeechDialog({
 
   const router = useRouter();
 
+  const [lodingState, setLoadingState] = useState(false);
   const AIMessageHandler = async () => {
-    const res = await conversationWithAI({
-      patientId: compaintData.id,
-      message: conversation,
-    });
-    if (res) {
-      router.push(`/clinic/patient/${patientData.id}`);
+    try {
+      setLoadingState(true);
+      const res = await conversationWithAI({
+        patientId: compaintData.id,
+        message: conversation,
+      });
+
+      if (res) {
+        router.push(`/clinic/patient/${patientData.id}`);
+      }
+    } catch (error) {
+      setLoadingState(false);
+      console.error(error);
+
+      console.error("Error in AIMessageHandler:", error);
+    } finally {
+      setLoadingState(false);
     }
   };
   return (
     <>
+      {lodingState && (
+        <div className="fixed top-0 right-0 z-[999] flex h-screen w-full items-center justify-center bg-black/80">
+          <div className="space-y-5">
+            <HashLoader color="#FFFF00" className="mx-auto" />
+            <p className="text-center text-3xl font-bold text-white">
+              Please wait! Don't refresh
+            </p>
+          </div>
+        </div>
+      )}
       <Dialog open={open} onOpenChange={handleDialogClose}>
         <DialogContent className={`md:!max-w-[900px]`}>
           <DialogHeader className="space-y-6">

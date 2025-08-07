@@ -1,9 +1,7 @@
 "use client";
 
 import LoadingButton from "@/components/LoadingButton";
-import { TagsInput } from "@/components/TagsInput";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Form,
   FormControl,
@@ -50,6 +48,41 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Image from "next/image";
+import {
+  BreastCancer,
+  Cardiology,
+  CervicalUterineCancer,
+  ColorectalCancer,
+  CTScanTest,
+  DiabetesMetabolic,
+  EntRespiratoryPanel,
+  FluroContrastStudies,
+  GastroLiverPanel,
+  GeneralFeverPanel,
+  GeneralOncology,
+  GynecologyHormonalDisorders,
+  LiverCancer,
+  LungCancer,
+  MRItest,
+  NeuroPsychPanel,
+  NuclearMedicineTest,
+  OncologyTumorScreening,
+  OrthoRheumaPanel,
+  OvarianCancer,
+  PancreaticCancer,
+  PediatricsAutismADHD,
+  PreOperativeFullBodyCheck,
+  ProstateCancer,
+  ReproductiveSexualHealth,
+  SkinAllergyPanel,
+  TesticularCancer,
+  ThyroidEndocrinology,
+  UltrasoundTest,
+  UrologyKidneyProstate,
+  USDopplerStudy,
+  XRayTest,
+} from "./TestName";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface SymtomFormProps {
   finalData: PrescitopnTypes;
@@ -114,9 +147,43 @@ export default function SymtomForm({
         note: [],
       },
       WallnessProduct: finalData.wallnessProduct || [],
-      BloodTest: finalData.blooTest || [],
-      RediologyTest: finalData.rediologyTest || [],
-      UrineTest: finalData.urintest || [],
+
+      XRayTest: finalData.XRayTest || [],
+      FluroContrastStudies: finalData.FluroContrastStudies || [],
+      UltrasoundTest: finalData.UltrasoundTest || [],
+      USDopplerStudy: finalData.USDopplerStudy || [],
+      CTScanTest: finalData.CTScanTest || [],
+      MRItest: finalData.MRItest || [],
+      NuclearMedicineTest: finalData.NuclearMedicineTest || [],
+
+      GeneralFeverPanel: finalData.GeneralFeverPanel || [],
+      SkinAllergyPanel: finalData.SkinAllergyPanel || [],
+      EntRespiratoryPanel: finalData.EntRespiratoryPanel || [],
+      GastroLiverPanel: finalData.GastroLiverPanel || [],
+      NeuroPsychPanel: finalData.NeuroPsychPanel || [],
+      OrthoRheumaPanel: finalData.OrthoRheumaPanel || [],
+      GynecologyHormonalDisorders: finalData.GynecologyHormonalDisorders || [],
+      ThyroidEndocrinology: finalData.ThyroidEndocrinology || [],
+      DiabetesMetabolic: finalData.DiabetesMetabolic || [],
+      UrologyKidneyProstate: finalData.UrologyKidneyProstate || [],
+
+      PediatricsAutismADHD: finalData.PediatricsAutismADHD || [],
+      ReproductiveSexualHealth: finalData.ReproductiveSexualHealth || [],
+      Cardiology: finalData.Cardiology || [],
+
+      OncologyTumorScreening: finalData.OncologyTumorScreening || [],
+      PreOperativeFullBodyCheck: finalData.PreOperativeFullBodyCheck || [],
+
+      GeneralOncology: finalData.GeneralOncology || [],
+      BreastCancer: finalData.BreastCancer || [],
+      OvarianCancer: finalData.OvarianCancer || [],
+      CervicalUterineCancer: finalData.CervicalUterineCancer || [],
+      ProstateCancer: finalData.ProstateCancer || [],
+      LiverCancer: finalData.LiverCancer || [],
+      PancreaticCancer: finalData.PancreaticCancer || [],
+      ColorectalCancer: finalData.ColorectalCancer || [],
+      LungCancer: finalData.LungCancer || [],
+      TesticularCancer: finalData.TesticularCancer || [],
     },
   });
   const [ispending, startTransation] = useTransition();
@@ -249,21 +316,6 @@ export default function SymtomForm({
     },
     {} as Record<(typeof days)[number], any>,
   );
-
-  const bloodTestFields = useFieldArray({
-    control: form.control,
-    name: "BloodTest",
-  });
-
-  const rediologyTestFields = useFieldArray({
-    control: form.control,
-    name: "RediologyTest",
-  });
-
-  const urineTestFields = useFieldArray({
-    control: form.control,
-    name: "UrineTest",
-  });
 
   const symtemFields = useFieldArray({
     control: form.control,
@@ -551,161 +603,1373 @@ export default function SymtomForm({
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-3" ref={section2Ref}>
-                <AccordionTrigger>Test</AccordionTrigger>
+              <AccordionItem value="item-3">
+                <AccordionTrigger>Rediology Test</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+                  <Table className="">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
-                        <TableHead className="border-r">Blood Test</TableHead>
-                        <TableHead className="border-r">
-                          Radiology Test
+                        <TableHead className="border-r font-bold">
+                          X-Ray
                         </TableHead>
-                        <TableHead>Urine Test</TableHead>
+                        <TableHead className="border-r font-bold">
+                          Fluro Contrast Studies
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Ultrasound
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          US Doppler Study
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          C.T. Scan (Plain / Contrast)
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          M.R.I. (Plain / Contrast)
+                        </TableHead>
+
+                        <TableHead className="font-bold">
+                          Nuclear Medicine
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       <TableRow className="align-top">
-                        <TableCell className="borderB space-y-4 border-r align-top whitespace-normal">
-                          {bloodTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`BloodTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          {...field}
-                                          placeholder="e.g. CBC, LFT"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                <Button
-                                  type="button"
-                                  variant="destructive"
-                                  className="printer"
-                                  onClick={() => bloodTestFields.remove(index)}
-                                >
-                                  <XIcon />
-                                </Button>
-                              </div>
-                            </div>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {XRayTest.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="XRayTest"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
                           ))}
-                          <div className="printer flex gap-5">
-                            <Button
-                              type="button"
-                              className="printer"
-                              onClick={() =>
-                                bloodTestFields.append({ name: "" })
-                              }
-                            >
-                              + Add Blood Test
-                            </Button>
-                            <Button
-                              onClick={handlePrintSection2}
-                              type="button"
-                              className="printer"
-                            >
-                              <Printer className="mr-2 h-4 w-4" /> Print
-                            </Button>
-                          </div>
                         </TableCell>
-                        <TableCell className="borderB space-y-4 border-r align-top whitespace-normal">
-                          {rediologyTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`RediologyTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          {...field}
-                                          placeholder="e.g. X-Ray, MRI"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                <Button
-                                  type="button"
-                                  variant="destructive"
-                                  className="printer"
-                                  onClick={() =>
-                                    rediologyTestFields.remove(index)
-                                  }
-                                >
-                                  <XIcon />
-                                </Button>
-                              </div>
-                            </div>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {FluroContrastStudies.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="FluroContrastStudies"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
                           ))}
-                          <Button
-                            type="button"
-                            className="printer"
-                            onClick={() =>
-                              rediologyTestFields.append({ name: "" })
-                            }
-                          >
-                            + Add Radiology Test
-                          </Button>
                         </TableCell>
-                        <TableCell className="borderB space-y-4 align-top whitespace-normal">
-                          {urineTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`UrineTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          {...field}
-                                          placeholder="e.g. Urine routine"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                <Button
-                                  type="button"
-                                  variant="destructive"
-                                  className="printer"
-                                  onClick={() => urineTestFields.remove(index)}
-                                >
-                                  <XIcon />
-                                </Button>
-                              </div>
-                            </div>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {UltrasoundTest.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="UltrasoundTest"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
                           ))}
-                          <Button
-                            type="button"
-                            className="printer"
-                            onClick={() => urineTestFields.append({ name: "" })}
-                          >
-                            + Add Urine Test
-                          </Button>
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {USDopplerStudy.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="USDopplerStudy"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {CTScanTest.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="CTScanTest"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {MRItest.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="MRItest"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 align-top whitespace-normal">
+                          {NuclearMedicineTest.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="NuclearMedicineTest"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-20">
+                <AccordionTrigger>Blood Test</AccordionTrigger>
+                <AccordionContent>
+                  <Table>
+                    <TableHeader className="bg-sidebar">
+                      <TableRow>
+                        <TableHead className="border-r font-bold">
+                          General & Fever Panel
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Skin & Allergy Department
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          ENT & Respiratory
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Gastrointestinal / Liver
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Neurology / Psychology
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Orthopedic / Rheumatology / Joint Pain
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Gynecology / Hormonal Disorders
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Thyroid & Endocrinology
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Diabetes & Metabolic
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Urology / Kidney / Prostate
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Pediatrics / Autism / ADHD
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Reproductive / Sexual Health
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Cardiology (BP, Cholesterol, Heart Disease)
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Oncology / Tumor Screening (As per Symptoms)
+                        </TableHead>
+                        <TableHead className="font-bold">
+                          Pre-Operative / Routine Full Body Check
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="align-top">
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {GeneralFeverPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="GeneralFeverPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {SkinAllergyPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="SkinAllergyPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {EntRespiratoryPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="EntRespiratoryPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {GastroLiverPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="GastroLiverPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {NeuroPsychPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="NeuroPsychPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {OrthoRheumaPanel.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="OrthoRheumaPanel"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {GynecologyHormonalDisorders.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="GynecologyHormonalDisorders"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {ThyroidEndocrinology.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="ThyroidEndocrinology"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {DiabetesMetabolic.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="DiabetesMetabolic"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {UrologyKidneyProstate.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="UrologyKidneyProstate"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {PediatricsAutismADHD.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="PediatricsAutismADHD"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {ReproductiveSexualHealth.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="ReproductiveSexualHealth"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {Cardiology.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="Cardiology"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>{" "}
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {OncologyTumorScreening.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="OncologyTumorScreening"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 align-top whitespace-normal">
+                          {PreOperativeFullBodyCheck.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="PreOperativeFullBodyCheck"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="item-21">
+                <AccordionTrigger>Blood Cancer Test</AccordionTrigger>
+                <AccordionContent>
+                  <Table>
+                    <TableHeader className="bg-sidebar">
+                      <TableRow>
+                        <TableHead className="border-r font-bold">
+                          General Oncology
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Breast Cancer
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Ovarian Cancer
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Cervical / Uterine Cancer
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Prostate Cancer
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Liver Cancer
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Pancreatic Cancer
+                        </TableHead>
+
+                        <TableHead className="border-r font-bold">
+                          Colorectal Cancer
+                        </TableHead>
+                        <TableHead className="border-r font-bold">
+                          Lung Cancer
+                        </TableHead>
+                        <TableHead className="font-bold">
+                          Testicular Cancer
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow className="align-top">
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {GeneralOncology.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="GeneralOncology"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {BreastCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="BreastCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {OvarianCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="OvarianCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {CervicalUterineCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="CervicalUterineCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {ProstateCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="ProstateCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {LiverCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="LiverCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {PancreaticCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="PancreaticCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {ColorectalCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="ColorectalCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 border-r align-top whitespace-normal">
+                          {LungCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="LungCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
+                        </TableCell>
+                        <TableCell className="borderB space-y-5 align-top whitespace-normal">
+                          {TesticularCancer.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="TesticularCancer"
+                              render={({ field }) => {
+                                return (
+                                  <FormItem
+                                    key={item.id}
+                                    className="flex flex-row items-center gap-2"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.id)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([
+                                                ...(field.value ?? []),
+                                                item.id,
+                                              ])
+                                            : field.onChange(
+                                                field.value?.filter(
+                                                  (value) => value !== item.id,
+                                                ),
+                                              );
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="cursor-pointer text-sm font-normal">
+                                      {item.testname}
+                                    </FormLabel>
+                                  </FormItem>
+                                );
+                              }}
+                            />
+                          ))}
                         </TableCell>
                       </TableRow>
                     </TableBody>
@@ -845,65 +2109,98 @@ export default function SymtomForm({
                   <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
+                        <TableHead className="w-8 border-r">#</TableHead>{" "}
+                        {/* 👈 Index column */}
                         <TableHead className="border-r">Name</TableHead>
+                        <TableHead className="border-r">Link</TableHead>
+                        <TableHead className="printer">Action</TableHead>
                       </TableRow>
                     </TableHeader>
+
                     <TableBody>
-                      <TableRow className="align-top">
-                        <TableCell className="borderB space-y-4 border-r align-top whitespace-normal">
-                          {walnessproductFields.fields.map((field, index) => (
-                            <div
-                              className="flex items-center gap-2.5"
-                              key={field.id}
-                            >
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div className="flex w-full items-center gap-2">
-                                <FormField
-                                  control={form.control}
-                                  name={`WallnessProduct.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          {...field}
-                                          placeholder="e.g. Tulsi Drops, Ashwagandha Tablets"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                                <Button
-                                  type="button"
-                                  variant="destructive"
-                                  className="printer"
-                                  onClick={() =>
-                                    walnessproductFields.remove(index)
-                                  }
-                                >
-                                  <XIcon />
-                                </Button>
-                              </div>
-                            </div>
-                          ))}
-                          <div className="flex gap-5">
+                      {walnessproductFields.fields.map((field, index) => (
+                        <TableRow key={field.id}>
+                          {/* 👇 Index Cell */}
+                          <TableCell className="text-muted-foreground borderB border-r font-bold">
+                            {index + 1}
+                          </TableCell>
+
+                          {/* Dose */}
+                          <TableCell className="borderB border-r">
+                            <FormField
+                              control={form.control}
+                              name={`WallnessProduct.${index}.name`}
+                              render={({ field }) => (
+                                <FormItem className="w-full space-y-1">
+                                  <FormControl>
+                                    <Textarea
+                                      {...field}
+                                      placeholder="e.g. Tulsi Drops, Ashwagandha Tablets"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </TableCell>
+
+                          {/* Days */}
+                          <TableCell className="printer border-r">
+                            <FormField
+                              control={form.control}
+                              name={`WallnessProduct.${index}.link`}
+                              render={({ field }) => (
+                                <FormItem className="w-full space-y-1">
+                                  <FormControl>
+                                    <Textarea
+                                      {...field}
+                                      placeholder="e.g. https://www.drrajeevswellness.com/"
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </TableCell>
+
+                          {/* Action */}
+                          <TableCell>
                             <Button
                               type="button"
+                              variant="destructive"
                               className="printer"
-                              onClick={() =>
-                                walnessproductFields.append({ name: "" })
-                              }
+                              onClick={() => walnessproductFields.remove(index)}
                             >
-                              + Add Product
+                              <XIcon />
                             </Button>
-                            <Button
-                              onClick={handlePrintSection4}
-                              type="button"
-                              className="printer"
-                            >
-                              <Printer className="mr-2 h-4 w-4" /> Print
-                            </Button>
-                          </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+
+                      {/* Add Button */}
+                      <TableRow>
+                        <TableCell colSpan={1}>
+                          <Button
+                            type="button"
+                            onClick={() =>
+                              walnessproductFields.append({
+                                name: "",
+                                link: "",
+                              })
+                            }
+                            className="printer"
+                          >
+                            + Add Medicine
+                          </Button>
+                        </TableCell>
+                        <TableCell colSpan={4}>
+                          <Button
+                            onClick={handlePrintSection3}
+                            type="button"
+                            className="printer"
+                          >
+                            <Printer className="mr-2 h-4 w-4" /> Print
+                          </Button>
                         </TableCell>
                       </TableRow>
                     </TableBody>

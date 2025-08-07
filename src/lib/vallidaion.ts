@@ -80,7 +80,6 @@ const dayPlanSchema = z.object({
   breakfast: z.array(mealItemSchema).min(1, "Add at least one breakfast item"),
   lunch: z.array(mealItemSchema).min(1, "Add at least one lunch item"),
   dinner: z.array(mealItemSchema).min(1, "Add at least one dinner item"),
- 
 });
 
 export const dietPlanSchema = z.object({
@@ -111,6 +110,7 @@ const diagnosis = z.object({
 
 const wallnessProduct = z.object({
   name: requiredString,
+  link: requiredString,
 });
 const namedArray = z.array(z.object({ name: requiredString }));
 
@@ -137,10 +137,45 @@ export const finalPresciptionSchema = z.object({
     .array(wallnessProduct)
     .nonempty("Please at least one  wallness Product"),
   Specialnotes: specialNotesSchema,
-  BloodTest: z.array(bloodTest).optional(),
-  RediologyTest: z.array(rediologyTest).optional(),
-  UrineTest: z.array(urintestTest).optional(),
-  LabReportFor: z.array(z.string().optional()).optional()
+  LabReportFor: z.array(z.string().optional()).optional(),
+
+  XRayTest: z.array(z.string()).optional(),
+  FluroContrastStudies: z.array(z.string()).optional(),
+  UltrasoundTest: z.array(z.string()).optional(),
+  USDopplerStudy: z.array(z.string()).optional(),
+  CTScanTest: z.array(z.string()).optional(),
+  MRItest: z.array(z.string()).optional(),
+  NuclearMedicineTest: z.array(z.string()).optional(),
+
+  //brod test
+  GeneralFeverPanel: z.array(z.string()).optional(),
+  SkinAllergyPanel: z.array(z.string()).optional(),
+  EntRespiratoryPanel: z.array(z.string()).optional(),
+  GastroLiverPanel: z.array(z.string()).optional(),
+  NeuroPsychPanel: z.array(z.string()).optional(),
+  OrthoRheumaPanel: z.array(z.string()).optional(),
+
+  GynecologyHormonalDisorders: z.array(z.string()).optional(),
+  ThyroidEndocrinology: z.array(z.string()).optional(),
+  DiabetesMetabolic: z.array(z.string()).optional(),
+  UrologyKidneyProstate: z.array(z.string()).optional(),
+  PediatricsAutismADHD: z.array(z.string()).optional(),
+  ReproductiveSexualHealth: z.array(z.string()).optional(),
+  Cardiology: z.array(z.string()).optional(),
+
+  OncologyTumorScreening: z.array(z.string()).optional(),
+  PreOperativeFullBodyCheck: z.array(z.string()).optional(),
+
+  GeneralOncology: z.array(z.string()).optional(),
+  BreastCancer: z.array(z.string()).optional(),
+  OvarianCancer: z.array(z.string()).optional(),
+  CervicalUterineCancer: z.array(z.string()).optional(),
+  ProstateCancer: z.array(z.string()).optional(),
+  LiverCancer: z.array(z.string()).optional(),
+  PancreaticCancer: z.array(z.string()).optional(),
+  ColorectalCancer: z.array(z.string()).optional(),
+  LungCancer: z.array(z.string()).optional(),
+  TesticularCancer: z.array(z.string()).optional(),
 });
 
 export type FinalPresciptionValues = z.infer<typeof finalPresciptionSchema>;

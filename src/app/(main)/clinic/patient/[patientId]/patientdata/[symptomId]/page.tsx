@@ -47,9 +47,9 @@ export default async function Page({
     where: {
       id: symptomId,
     },
-    include:{
-      attachments:true
-    }
+    include: {
+      attachments: true,
+    },
   });
   if (!prescitonData) {
     return {};

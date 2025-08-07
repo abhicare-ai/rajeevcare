@@ -6,13 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import aiTestImg from "@/assets/ai-Bj-G7DKh.png";
-import menualTestImg from "@/assets/books-CBYtHSs0.png";
+import menualTestImg from "@/assets/d3f913b8dd27fac04b26c2c9a903610d.jpg";
 import Image from "next/image";
 import { useState } from "react";
 import AiSpeechDialogBox from "./AiSpeechDialogBox";
 import { AppoinmentData } from "@/lib/types";
 import GenerateQutions from "./GenerateQutions";
 import VidioCallDialogQautin from "./patientdata/VidioCallDialogQautin";
+import GenerateQutionsWithDoctor from "./GenerateQutionsWithDoctor";
 
 interface DeasesGenerationDialogBoxProps {
   open: boolean;
@@ -41,22 +42,22 @@ export default function DeasesGenerationDialogBox({
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-5">
-            {/* <div
+            <div
               className="flex cursor-pointer flex-col items-center gap-5 rounded-md border p-3 shadow-md sm:flex-row"
               onClick={() => {
                 onclose();
                 setShowDeletDialog(true);
               }}
             >
-              <Image src={aiTestImg} alt="aitextimg" width={100} height={100} />
+              <Image src={menualTestImg} alt="aitextimg" width={100} height={100} />
               <div>
-                <h3 className="text-2xl font-bold">With AI </h3>
+                <h3 className="text-2xl font-bold">With Doctor </h3>
                 <p className="text-muted-foreground">
-                  Elevate patient care with AI-driven prescriptions for tailored
+                  Elevate patient care with Doctor prescriptions for tailored
                   treatments.
                 </p>
               </div>
-            </div> */}
+            </div>
             <div
               className="flex cursor-pointer flex-col items-center gap-5 rounded-md border p-3 shadow-md sm:flex-row"
               onClick={() => {
@@ -78,7 +79,7 @@ export default function DeasesGenerationDialogBox({
         </DialogContent>
       </Dialog>
 
-      <VidioCallDialogQautin
+      <GenerateQutionsWithDoctor
         onclose={() => setShowDeletDialog(false)}
         open={showDeletDailog}
         patientData={patientData}

@@ -119,6 +119,9 @@ export default function SymtomForm({
       BloodTest: finalData.blooTest || [],
       RediologyTest: finalData.rediologyTest || [],
       UrineTest: finalData.urintest || [],
+
+
+      XRayTest: finalData.x || [],
     },
   });
 
@@ -320,7 +323,7 @@ export default function SymtomForm({
           <AccordionItem value="item-1">
             <AccordionTrigger>Patient Case History</AccordionTrigger>
             <AccordionContent>
-              <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">Summary</TableHead>
@@ -370,7 +373,7 @@ export default function SymtomForm({
               <AccordionItem value="item-2" ref={section1Ref}>
                 <AccordionTrigger>Patient Diagnosis</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Symptoms</TableHead>
@@ -455,7 +458,7 @@ export default function SymtomForm({
               <AccordionItem value="item-3" ref={section2Ref}>
                 <AccordionTrigger>Test</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Blood Test</TableHead>
@@ -572,7 +575,7 @@ export default function SymtomForm({
               <AccordionItem value="item-4" ref={section3Ref}>
                 <AccordionTrigger>Medicine</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="w-8 border-r">#</TableHead>{" "}
@@ -634,7 +637,7 @@ export default function SymtomForm({
                           </TableCell>
 
                           {/* Days */}
-                          <TableCell className=" border-r">
+                          <TableCell className="border-r">
                             <FormField
                               control={form.control}
                               name={`Medicines.${index}.day`}
@@ -674,12 +677,17 @@ export default function SymtomForm({
               </AccordionItem>
 
               <AccordionItem value="item-5" ref={section4Ref}>
-                <AccordionTrigger>Wellness Product</AccordionTrigger>
+                <AccordionTrigger>
+                  Wellness Product (Dr. Rajeev Kumar ke suggestion par – aapko
+                  ye kharidna hi hai)
+                </AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
-                        <TableHead className="border-r">Name</TableHead>
+                        <TableHead className="border-r">
+                          Name (Click on medicine name to buy)
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -692,23 +700,29 @@ export default function SymtomForm({
                             >
                               <div className="font-bold">{index + 1}</div>{" "}
                               <div className="flex w-full items-center gap-2">
-                                <FormField
-                                  control={form.control}
-                                  name={`WallnessProduct.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          className="cursor-default"
-                                          readOnly
-                                          {...field}
-                                          placeholder="e.g. Tulsi Drops, Ashwagandha Tablets"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
+                                <a
+                                  href={field.link}
+                                  target="_blank"
+                                  className="w-full"
+                                >
+                                  <FormField
+                                    control={form.control}
+                                    name={`WallnessProduct.${index}.name`}
+                                    render={({ field }) => (
+                                      <FormItem className="w-full space-y-1">
+                                        <FormControl>
+                                          <Textarea
+                                            className="cursor-pointer"
+                                            readOnly
+                                            {...field}
+                                            placeholder="e.g. Tulsi Drops, Ashwagandha Tablets"
+                                          />
+                                        </FormControl>
+                                        <FormMessage />
+                                      </FormItem>
+                                    )}
+                                  />
+                                </a>
                               </div>
                             </div>
                           ))}
@@ -731,7 +745,7 @@ export default function SymtomForm({
               <AccordionItem value="item-6" ref={section5Ref}>
                 <AccordionTrigger>Diet</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Day</TableHead>
@@ -856,7 +870,7 @@ export default function SymtomForm({
               <AccordionItem value="item-7" ref={section6Ref}>
                 <AccordionTrigger>Work Out</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">
@@ -954,7 +968,7 @@ export default function SymtomForm({
               <AccordionItem value="item-8" ref={section7Ref}>
                 <AccordionTrigger>Special Note</AccordionTrigger>
                 <AccordionContent>
-                  <Table className="w-[1000px] overflow-x-auto md:w-full printable-table">
+                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
                     <TableHeader className="bg-sidebar">
                       <TableRow>
                         <TableHead className="border-r">Do</TableHead>

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
 import {
   Dialog,
@@ -16,17 +16,23 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import LoadingButton from "@/components/LoadingButton";
 import { AppoinmentData } from "@/lib/types";
+import { detaForCove } from "@/lib/conversations";
+import axios from "axios";
+import { conversationWithAI } from "./actions";
+import { HashLoader } from "react-spinners";
 
 interface AiSpeechDialogBoxProps {
   open: boolean;
   onclose: () => void;
   patientData: AppoinmentData;
+  compaintData: detaForCove;
 }
 
 export default function AiSpeechDialogBox({
   open,
   onclose,
   patientData,
+  compaintData,
 }: AiSpeechDialogBoxProps) {
   const [second, setSecond] = useState(0);
   const [minute, setMinute] = useState(0);
@@ -142,6 +148,7 @@ export default function AiSpeechDialogBox({
     resetRecording();
   };
 
+  const [lodingState, setLoadingState] = useState(false);
   const handleSubmitClick = () => {
     const recorder = mediaRecorderRef.current;
     resetTimer();
@@ -161,51 +168,43 @@ export default function AiSpeechDialogBox({
           type: "audio/webm",
         });
 
-        
+        try {
+          const formData = new FormData();
+          formData.append("audio", file);
+
+          const { data } = await axios.post(`/api/transcribe`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+          if (data) {
+            try {
+              setLoadingState(true);
+              const res = await conversationWithAI({
+                patientId: compaintData.id,
+                message: data,
+              });
+
+              if (res) {
+                router.push(`/clinic/patient/${patientData.id}`);
+              }
+            } catch (error) {
+              setLoadingState(false);
+            } finally {
+              setLoadingState(false);
+            }
+          }
+          const url = URL.createObjectURL(audioBlob);
+          setAudioUrl(url);
+          setShowAudio(true);
+        } catch (error) {
+          console.error("Upload failed", error);
+        } finally {
+          setIsSubmitPending(false);
+        }
       };
     }
   };
-
-  // const handleSubmitClick = () => {
-  //   const recorder = mediaRecorderRef.current;
-  //   resetTimer();
-  //   audioChunksRef.current = [];
-  //   setIsRecording(false);
-  //   setIsPaused(false);
-  //   if (recorder && recorder.state !== "inactive") {
-  //     setIsSubmitPending(true);
-  //     recorder.stop();
-
-  //     recorder.onstop = async () => {
-  //       const audioBlob = new Blob(audioChunksRef.current, {
-  //         type: "audio/webm",
-  //       });
-
-  //       const file = new File([audioBlob], "recording.webm", {
-  //         type: "audio/webm",
-  //       });
-
-  //       try {
-  //         const formData = new FormData();
-  //         formData.append("audio", file);
-
-  //         await axios.post(`/api/trascript`, formData, {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //           },
-  //         });
-
-  //         const url = URL.createObjectURL(audioBlob);
-  //         setAudioUrl(url);
-  //         setShowAudio(true);
-  //       } catch (error) {
-  //         console.error("Upload failed", error);
-  //       } finally {
-  //         setIsSubmitPending(false);
-  //       }
-  //     };
-  //   }
-  // };
 
   const handleStartClick = () => {
     startRecording();
@@ -222,77 +221,89 @@ export default function AiSpeechDialogBox({
   const isSubmitEnabled = second >= 10;
 
   return (
-    <Dialog open={open} onOpenChange={handleDialogClose}>
-      <DialogContent>
-        <DialogHeader className="space-y-6">
-          <DialogTitle className="text-center">
-            Prescription Generator with AI
-          </DialogTitle>
-        </DialogHeader>
-
-        <div className="flex flex-col items-center justify-center gap-5">
-          {isRecording && !isPaused ? (
-            <Image
-              src="/aiassisatnt.gif" // Animated GIF path
-              alt="aiAssistantGif"
-              width={110}
-              height={110}
-              unoptimized
-              className="brightness-[1.1] hue-rotate-[30deg] saturate-[1] sepia filter"
-            />
-          ) : (
-            <Image
-              src={aiSiriAssistsnt} // Static image import
-              alt="aiAssistantStill"
-              width={110}
-              height={110}
-              unoptimized
-              className="brightness-[1.1] hue-rotate-[30deg] saturate-[1] sepia filter"
-            />
-          )}
-
-          <p className="text-muted-foreground text-2xl font-bold">
-            {formatTime(hour)}:{formatTime(minute)}:{formatTime(second)}
-          </p>
-
-          <div className="flex gap-3">
-            <Button
-              onClick={handleStartClick}
-              disabled={isRecording || isPaused}
-              variant="secondary"
-            >
-              Start
-            </Button>
-
-            <Button
-              onClick={handlePauseClick}
-              disabled={!isRecording}
-              variant="secondary"
-            >
-              {isPaused ? "Resume" : "Pause"}
-            </Button>
-
-            <Button onClick={handleResetClick} variant="outline">
-              Reset
-            </Button>
-
-            <LoadingButton
-              onClick={handleSubmitClick}
-              disabled={!isSubmitEnabled || isSubmitPending}
-              loading={isSubmitPending}
-            >
-              continue
-            </LoadingButton>
+    <>
+      {lodingState && (
+        <div className="fixed top-0 right-0 z-[999] flex h-screen w-full items-center justify-center bg-black/80">
+          <div className="space-y-5">
+            <HashLoader color="#FFFF00" className="mx-auto" />
+            <p className="text-center text-3xl font-bold text-white">
+              Please wait! Don't refresh
+            </p>
           </div>
-
-          {showAudio && audioUrl && (
-            <audio className="mt-4" controls>
-              <source src={audioUrl} type="audio/webm" />
-              Your browser does not support audio.
-            </audio>
-          )}
         </div>
-      </DialogContent>
-    </Dialog>
+      )}
+      <Dialog open={open} onOpenChange={handleDialogClose}>
+        <DialogContent>
+          <DialogHeader className="space-y-6">
+            <DialogTitle className="text-center">
+              Prescription Generator with AI
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="flex flex-col items-center justify-center gap-5">
+            {isRecording && !isPaused ? (
+              <Image
+                src="/Siri.gif" // Animated GIF path
+                alt="aiAssistantGif"
+                width={110}
+                height={110}
+                unoptimized
+                className="brightness-[1.1] hue-rotate-[30deg] saturate-[1] sepia filter"
+              />
+            ) : (
+              <Image
+                src={aiSiriAssistsnt} // Static image import
+                alt="aiAssistantStill"
+                width={110}
+                height={110}
+                unoptimized
+                className="brightness-[1.1] hue-rotate-[30deg] saturate-[1] sepia filter"
+              />
+            )}
+
+            <p className="text-muted-foreground text-2xl font-bold">
+              {formatTime(hour)}:{formatTime(minute)}:{formatTime(second)}
+            </p>
+
+            <div className="flex gap-3">
+              <Button
+                onClick={handleStartClick}
+                disabled={isRecording || isPaused}
+                variant="secondary"
+              >
+                Start
+              </Button>
+
+              <Button
+                onClick={handlePauseClick}
+                disabled={!isRecording}
+                variant="secondary"
+              >
+                {isPaused ? "Resume" : "Pause"}
+              </Button>
+
+              <Button onClick={handleResetClick} variant="outline">
+                Reset
+              </Button>
+
+              <LoadingButton
+                onClick={handleSubmitClick}
+                disabled={!isSubmitEnabled || isSubmitPending}
+                loading={isSubmitPending}
+              >
+                continue
+              </LoadingButton>
+            </div>
+
+            {showAudio && audioUrl && (
+              <audio className="mt-4" controls>
+                <source src={audioUrl} type="audio/webm" />
+                Your browser does not support audio.
+              </audio>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

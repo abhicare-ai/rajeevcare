@@ -85,9 +85,6 @@ export function safeParsePrescriptionAction(
 }
 
 function getEmptyPrescription(): PrescitopnTypes {
-  const emptyMeal = [{ name: "" }];
-  const emptySection = [{ name: "" }];
-
   const emptyDietDay = {
     breakfast: [],
     lunch: [],
@@ -113,9 +110,7 @@ function getEmptyPrescription(): PrescitopnTypes {
       yoga: [],
       exercise: [],
     },
-    blooTest: [],
-    rediologyTest: [],
-    urintest: [],
+
     wallnessProduct: [],
     specialnotes: {
       note: [],
@@ -123,6 +118,42 @@ function getEmptyPrescription(): PrescitopnTypes {
       dontdo: [],
     },
     labreportFor: [],
-    attachments:[]
+    attachments: [],
+
+    XRayTest: [],
+    FluroContrastStudies: [],
+    UltrasoundTest: [],
+    USDopplerStudy: [],
+    CTScanTest: [],
+    MRItest: [],
+    NuclearMedicineTest: [],
+
+    GeneralFeverPanel: [],
+    SkinAllergyPanel: [],
+    EntRespiratoryPanel: [],
+    GastroLiverPanel: [],
+    NeuroPsychPanel: [],
+    OrthoRheumaPanel: [],
+
+    GynecologyHormonalDisorders: [],
+    ThyroidEndocrinology: [],
+    DiabetesMetabolic: [],
+    UrologyKidneyProstate: [],
+    PediatricsAutismADHD: [],
+    ReproductiveSexualHealth: [],
+    Cardiology: [],
+    OncologyTumorScreening: [],
+    PreOperativeFullBodyCheck: [],
+    GeneralOncology: [],
+    BreastCancer: [],
+    OvarianCancer: [],
+    CervicalUterineCancer: [],
+
+    ProstateCancer: [],
+    LiverCancer: [],
+    PancreaticCancer: [],
+    ColorectalCancer: [],
+    LungCancer: [],
+    TesticularCancer: [],
   };
 }

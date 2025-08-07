@@ -43,15 +43,6 @@ export interface PrescitopnTypes {
       name: string;
     }[];
   };
-  blooTest: {
-    name: string;
-  }[];
-  rediologyTest: {
-    name: string;
-  }[];
-  urintest: {
-    name: string;
-  }[];
   wallnessProduct: {
     name: string;
   }[];
@@ -67,7 +58,43 @@ export interface PrescitopnTypes {
     }[];
   };
   labreportFor: string[];
-  attachments:[]
+  attachments: [];
+
+  XRayTest?: string[];
+  FluroContrastStudies?: string[];
+  UltrasoundTest?: string[];
+  USDopplerStudy?: string[];
+  CTScanTest?: string[];
+  MRItest?: string[];
+  NuclearMedicineTest?: string[];
+
+  GeneralFeverPanel?: string[];
+  SkinAllergyPanel?: string[];
+  EntRespiratoryPanel?: string[];
+  GastroLiverPanel?: string[];
+  NeuroPsychPanel?: string[];
+  OrthoRheumaPanel?: string[];
+
+  GynecologyHormonalDisorders?: string[];
+  ThyroidEndocrinology?: string[];
+  DiabetesMetabolic?: string[];
+  UrologyKidneyProstate?: string[];
+  PediatricsAutismADHD?: string[];
+  ReproductiveSexualHealth?: string[];
+  Cardiology?: string[];
+  OncologyTumorScreening?: string[];
+  PreOperativeFullBodyCheck?: string[];
+
+  GeneralOncology?: string[];
+  BreastCancer?: string[];
+  OvarianCancer?: string[];
+  CervicalUterineCancer?: string[];
+  ProstateCancer?: string[];
+  LiverCancer?: string[];
+  PancreaticCancer?: string[];
+  ColorectalCancer?: string[];
+  LungCancer?: string[];
+  TesticularCancer?: string[];
 }
 
 interface DietDay {
