@@ -31,7 +31,6 @@ import LoadingButton from "@/components/LoadingButton";
 
 import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
-import OpenAISpeechDialog from "./OpenAISpeechDialog";
 import useMediaUplods, {
   Attachment,
 } from "@/components/clinic/appointmets/editor/useMediaUplods";

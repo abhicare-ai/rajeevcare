@@ -9,10 +9,10 @@ import aiTestImg from "@/assets/ai-Bj-G7DKh.png";
 import menualTestImg from "@/assets/d3f913b8dd27fac04b26c2c9a903610d.jpg";
 import Image from "next/image";
 import { useState } from "react";
-import AiSpeechDialogBox from "./AiSpeechDialogBox";
+
 import { AppoinmentData } from "@/lib/types";
 import GenerateQutions from "./GenerateQutions";
-import VidioCallDialogQautin from "./patientdata/VidioCallDialogQautin";
+
 import GenerateQutionsWithDoctor from "./GenerateQutionsWithDoctor";
 
 interface DeasesGenerationDialogBoxProps {
