@@ -116,12 +116,7 @@ export default function SymtomForm({
         note: [],
       },
       WallnessProduct: finalData.wallnessProduct || [],
-      BloodTest: finalData.blooTest || [],
-      RediologyTest: finalData.rediologyTest || [],
-      UrineTest: finalData.urintest || [],
-
-
-      XRayTest: finalData.x || [],
+    
     },
   });
 
@@ -156,20 +151,7 @@ export default function SymtomForm({
     {} as Record<(typeof days)[number], any>,
   );
 
-  const bloodTestFields = useFieldArray({
-    control: form.control,
-    name: "BloodTest",
-  });
 
-  const rediologyTestFields = useFieldArray({
-    control: form.control,
-    name: "RediologyTest",
-  });
-
-  const urineTestFields = useFieldArray({
-    control: form.control,
-    name: "UrineTest",
-  });
 
   const symtemFields = useFieldArray({
     control: form.control,
@@ -455,122 +437,7 @@ export default function SymtomForm({
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="item-3" ref={section2Ref}>
-                <AccordionTrigger>Test</AccordionTrigger>
-                <AccordionContent>
-                  <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
-                    <TableHeader className="bg-sidebar">
-                      <TableRow>
-                        <TableHead className="border-r">Blood Test</TableHead>
-                        <TableHead className="border-r">
-                          Radiology Test
-                        </TableHead>
-                        <TableHead>Urine Test</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="align-top">
-                        <TableCell className="borderB space-y-4 border-r align-top whitespace-normal">
-                          {bloodTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`BloodTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          className="cursor-default"
-                                          readOnly
-                                          {...field}
-                                          placeholder="e.g. CBC, LFT"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                          <div className="printer flex gap-5">
-                            <Button
-                              onClick={handlePrintSection2}
-                              type="button"
-                              className="printer"
-                            >
-                              <Printer className="mr-2 h-4 w-4" /> Print
-                            </Button>
-                          </div>
-                        </TableCell>
-                        <TableCell className="borderB space-y-4 border-r align-top whitespace-normal">
-                          {rediologyTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`RediologyTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          className="cursor-default"
-                                          readOnly
-                                          {...field}
-                                          placeholder="e.g. X-Ray, MRI"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </TableCell>
-                        <TableCell className="borderB space-y-4 align-top whitespace-normal">
-                          {urineTestFields.fields.map((field, index) => (
-                            <div className="flex items-center gap-2.5">
-                              <div className="font-bold">{index + 1}</div>{" "}
-                              <div
-                                key={field.id}
-                                className="flex w-full items-center gap-2"
-                              >
-                                <FormField
-                                  control={form.control}
-                                  name={`UrineTest.${index}.name`}
-                                  render={({ field }) => (
-                                    <FormItem className="w-full space-y-1">
-                                      <FormControl>
-                                        <Textarea
-                                          className="cursor-default"
-                                          readOnly
-                                          {...field}
-                                          placeholder="e.g. Urine routine"
-                                        />
-                                      </FormControl>
-                                      <FormMessage />
-                                    </FormItem>
-                                  )}
-                                />
-                              </div>
-                            </div>
-                          ))}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </AccordionContent>
-              </AccordionItem>
+             
 
               <AccordionItem value="item-4" ref={section3Ref}>
                 <AccordionTrigger>Medicine</AccordionTrigger>
