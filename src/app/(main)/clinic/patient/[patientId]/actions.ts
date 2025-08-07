@@ -181,13 +181,13 @@ export async function conversationWithAI(conversation: {
     console.log("formattedMessages", formattedMessages);
     console.log("message", message);
        console.log("typeof", typeof message);
-    // const { data } = await axios.post("http://drrajeevswellnessai.com/api/wallness", {
-    //   diseaseName: JSON.stringify(
-    //     findProsciptionData?.primary_complaint.join(", "),
-    //   ),
-    // });
-    // const wellnessProductsJson = JSON.stringify(data.products);
-    // console.log("wellnessProductsJson", wellnessProductsJson);
+    const { data } = await axios.post("https://drrajeevswellnessai.com/api/wallness", {
+      diseaseName: JSON.stringify(
+        findProsciptionData?.primary_complaint.join(", "),
+      ),
+    });
+    const wellnessProductsJson = JSON.stringify(data.products);
+    console.log("wellnessProductsJson", wellnessProductsJson);
 
     const PriscitonsResult = await OpenAI.getChatCompletions(
       process.env.AZURE_DEPLOYMENT_COMPLETIONS_NAME!,
@@ -213,12 +213,11 @@ Yeh diet patient ke preference ${findProsciptionData?.patinetDiet} ke basis par 
 
 
 🧠 Patient ke conversation (${formattedMessages}) ke basis par AI ko ye decide karna hai ki:\
-
-
-
-
-
-
+🧠 IMPORTANT: 
+- wellness priducts me name or link dono hona chahiye.
+- ${wellnessProductsJson} wellness product ka name or link esme se ${wellnessProductsJson} aa rha hai apne se mat kuch wallness prodcut me dalana smja n 
+❌ ${wellnessProductsJson} agar ye null ya empty array hai to wellness product ko blank hi rakhna. 
+  
 
 A) X-Ray
     1) Chest P A
