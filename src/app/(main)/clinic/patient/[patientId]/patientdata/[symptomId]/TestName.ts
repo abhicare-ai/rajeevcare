@@ -388,3 +388,15 @@ export const TesticularCancer: textTypes[] = [
   { id: "LDH", testname: "LDH" },
   { id: "Ultrasound", testname: "Ultrasound" },
 ];
+
+export const urineTest: textTypes[] = [
+  { id: "Urine Routine & Microscopy (R/M)", testname: "Urine Routine & Microscopy (R/M)" },
+  { id: "Urine Culture & Sensitivity (C/S)", testname: "Urine Culture & Sensitivity (C/S)" },
+  { id: "Urine Pregnancy Test (UPT)", testname: "Urine Pregnancy Test (UPT)" },
+  { id: "Urine Ketone Bodies", testname: "Urine Ketone Bodies" },
+  { id: "Urine Sugar", testname: "Urine Sugar" },
+  { id: "Urine Protein", testname: "Urine Protein" },
+  { id: "Urine pH", testname: "Urine pH" },
+  { id: "Urine Specific Gravity", testname: "Urine Specific Gravity" },
+  { id: "Urine Microscopy", testname: "Urine Microscopy" },
+];

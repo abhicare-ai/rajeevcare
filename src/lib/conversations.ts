@@ -95,6 +95,7 @@ export interface PrescitopnTypes {
   ColorectalCancer?: string[];
   LungCancer?: string[];
   TesticularCancer?: string[];
+  urineTest?: string[];
 }
 
 interface DietDay {

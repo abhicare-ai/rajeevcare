@@ -155,5 +155,6 @@ function getEmptyPrescription(): PrescitopnTypes {
     ColorectalCancer: [],
     LungCancer: [],
     TesticularCancer: [],
+    urineTest: [],
   };
 }

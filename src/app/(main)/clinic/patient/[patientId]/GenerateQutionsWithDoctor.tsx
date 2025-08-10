@@ -457,7 +457,7 @@ export default function GenerateQutionsWithDoctor({
                   </FormItem>
                 )}
               />
-              <div className="flex">
+              <div className="flex gap-5">
                 <div className="w-1/2">
                   {isUploading && (
                     <>

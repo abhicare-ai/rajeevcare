@@ -15,7 +15,7 @@ interface PrescriptionEmailProps {
   patientName: string;
 }
 
-export default function SetTocounter({
+export default function SentToLab({
   link,
   patientName,
 }: PrescriptionEmailProps) {
@@ -37,19 +37,19 @@ export default function SetTocounter({
 
       <Section>
         <Row>
-          <Heading as="h2">Dear Medicine Counter,</Heading>
+          <Heading as="h2">Dear Lab,</Heading>
         </Row>
 
         <Row>
           <Text>
-            A new medicine has been generated for Case History ID{" "}
+            A new lab report has been generated for Case History ID{" "}
             <strong>{patientName}</strong>.
           </Text>
         </Row>
 
         <Row>
           <Text>
-            Please click the button below to view the full Medicine details.
+            Please click the button below to view the full lab details.
           </Text>
         </Row>
 

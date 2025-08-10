@@ -509,6 +509,17 @@ A9)  Testicular Cancer
       3) LDH
       4) Ultrasound
 
+A10)  Urine Test
+      1) Urine Routine & Microscopy (R/M)
+      2) Urine Culture & Sensitivity (C/S)
+      3) Urine Pregnancy Test (UPT)
+      4) Urine Ketone Bodies
+      5) Urine Sugar
+      6) Urine Protein
+      7) Urine pH
+      8) Urine Specific Gravity
+      9) Urine Microscopy
+
 
    ❌ Agar koi  test ki zarurat nahi hai to is section ko blank hi rakho
 
@@ -661,6 +672,7 @@ Format strictly like this:
    ColorectalCancer: string[],
    LungCancer: string[],
    TesticularCancer: string[],
+   urineTest: string[],
 };
 
 
@@ -817,6 +829,8 @@ Ai Q/A And Presciptions: ${result.presciption}
     if ("LungCancer" in values) newPrescription.LungCancer = values.LungCancer;
     if ("TesticularCancer" in values)
       newPrescription.TesticularCancer = values.TesticularCancer;
+    if ("urineTest" in values)
+      newPrescription.urineTest = values.urineTest;
 
     if ("WorkoutPlan" in values)
       newPrescription.workoutPlan = values.WorkoutPlan;

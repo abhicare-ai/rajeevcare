@@ -60,7 +60,7 @@ export async function POST(req: Request) {
 
   // ✅ Email Options
   const mailOptions = {
-    from: `"Dr. Rajeev's Wellness AI" <${process.env.EMAIL_USER}>`,
+    from: `"Dr. Rajeev's Wellness" <${process.env.EMAIL_USER}>`,
     to: to,
     subject: `Your Prescription is Ready – Case ID: ${casehistory}`,
     html: emailHtml,

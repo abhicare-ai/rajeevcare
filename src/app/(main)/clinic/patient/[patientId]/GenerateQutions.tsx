@@ -121,7 +121,7 @@ export default function GenerateQutions({
         <DialogContent className="!h-[500px] overflow-y-auto">
           <DialogHeader className="space-y-6">
             <DialogTitle className="text-center font-bold">
-              Prescription Generator with Doctor
+              Prescription Generator with AI
             </DialogTitle>
           </DialogHeader>
           {!!attachment.length && (
@@ -456,7 +456,7 @@ export default function GenerateQutions({
                   </FormItem>
                 )}
               />
-              <div className="flex">
+              <div className="flex gap-5">
                 <div className="w-1/2">
                   {isUploading && (
                     <>

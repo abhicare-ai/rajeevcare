@@ -1,4 +1,3 @@
-
 "use client";
 import {
   Dialog,
@@ -9,7 +8,7 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
-import aiSiriAssistsnt from "@/assets/asse.png";
+import aiSiriAssistsnt from "@/assets/assistent.png";
 
 // import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -211,10 +210,10 @@ export default function AiSpeechDialogBox({
   };
 
   const handleDialogClose = () => {
-    resetTimer();
-    resetRecording();
-    setShowAudio(false);
-    setAudioUrl(null);
+    // resetTimer();
+    // resetRecording();
+    // setShowAudio(false);
+    // setAudioUrl(null);
     onclose();
   };
 
@@ -236,7 +235,7 @@ export default function AiSpeechDialogBox({
         <DialogContent>
           <DialogHeader className="space-y-6">
             <DialogTitle className="text-center">
-              Prescription Generator with AI
+              Prescription Generator with Doctor
             </DialogTitle>
           </DialogHeader>
 
@@ -265,7 +264,7 @@ export default function AiSpeechDialogBox({
               {formatTime(hour)}:{formatTime(minute)}:{formatTime(second)}
             </p>
 
-            <div className="flex gap-3">
+            <div className="grid gap-3 lg:grid-cols-4 grid-cols-3">
               <Button
                 onClick={handleStartClick}
                 disabled={isRecording || isPaused}
@@ -288,7 +287,7 @@ export default function AiSpeechDialogBox({
 
               <LoadingButton
                 onClick={handleSubmitClick}
-                disabled={!isSubmitEnabled || isSubmitPending}
+                disabled={isSubmitPending}
                 loading={isSubmitPending}
               >
                 continue

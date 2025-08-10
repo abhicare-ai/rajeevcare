@@ -109,6 +109,7 @@ model Prisciption {
   attachments Media[]
 
   appointment Appointment @relation(fields: [apptId], references: [id], onDelete: Cascade)
+  Doctor      Doctor?
 
   @@map("prisciptions")
 }
@@ -144,4 +145,124 @@ model Feedback {
   createdAt DateTime @default(now())
 
   @@map("feedbacks")
+}
+
+model Doctor {
+  id                  String @id @default(cuid())
+  prisciptionId       String @unique
+  atientFullName      String
+  age                 String
+  gender              String
+  marital_Status      String
+  address             String
+  contact_Number      String
+  occupation          String
+  date_of_Case_Taking String
+
+  //2
+  list_complaints_in_order_of_priority String[]
+  when_did_it_start                    String
+  how_long_has_it_persisted            String
+  progression                          String
+  sequence                             String
+  associated_symptoms                  String
+
+  //3 
+  what_increases_the_problem String
+  time                       String
+  Position                   String
+  Emotions                   String
+  What                       String
+
+  //4
+  Temperament String
+  Fears       String
+  Anxiety     String
+  Confidence  String
+  Social      String
+  Dreams      String
+  Past        String
+
+  // 5. Physical Generals
+  Appetite         String
+  Thirst           String
+  Food_Cravings    String
+  Food_Aversions   String
+  Sweat            String
+  Sleep            String
+  Stool            String
+  Urine            String
+  Thermal_Reaction String
+
+  // 6. Particular Symptoms
+  Specific_Organ_or_System      String
+  Type_of_Pain_or_Sensation     String
+  Timing_and_Frequency          String
+  Influencing_Factors           String
+  Visible_Swelling_or_Discharge String
+
+  // 7. Concomitant Symptoms
+  Accompanying_Symptoms String
+
+  // 8. Causation (Trigger Factors)
+  Trigger_Factors        String
+  Physical_Trauma        String
+  Emotional_Shock        String
+  Environmental_Exposure String
+  Diet_or_Climate_Change String
+
+  // 9. Thermal Reaction
+  Temperature_Sensitivity String
+  Comfort_Preferences     String
+  Seasonal_Reaction       String
+
+  // 10. Past Medical History
+  Childhood_Diseases     String
+  Previous_Illnesses     String
+  Accidents_or_Surgeries String
+  Long_Term_Medications  String
+
+  // 11. Family History
+  Hereditary_Illnesses String
+
+  // 12. Menstrual / Sexual History
+  Age_at_First_Menses    String
+  Menstrual_Cycle        String
+  Menstrual_Pain_or_Flow String
+  Leucorrhoea            String
+  Sexual_History         String
+
+  // 13. Personal History
+  Diet              String
+  Addictions        String
+  Daily_Routine     String
+  Physical_Activity String
+  Sleep_Habits      String
+  Allergies         String
+
+  // 14. Physician’s Observation
+  Physical_Appearance String
+  Posture_and_Gait    String
+  Facial_Expression   String
+  Speech              String
+  Behavior            String
+
+  // 15. Clinical Diagnosis & Reports
+  Investigation_Reports     String
+  Current_or_Past_Diagnoses String
+  Current_Medications       String
+
+  // 16. Totality of Symptoms & Remedy Selection
+  Summary_of_Symptoms String
+  Remedy_Prescribed   String
+  Name_of_remedy      String
+
+  Potency                String
+  Repetition_Schedule    String
+  Follow_Up_Instructions String
+
+  Prisciption Prisciption @relation(fields: [prisciptionId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
+
+  @@map("doctors")
 }

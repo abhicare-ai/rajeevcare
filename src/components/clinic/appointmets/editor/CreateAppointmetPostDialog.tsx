@@ -96,14 +96,14 @@ export default function CreateAppointmetPostDialog({
   }
   return (
     <Dialog open={open} onOpenChange={handlerOpenChange}>
-      <DialogContent>
+      <DialogContent className="!h-[500px] overflow-y-auto">
         <DialogHeader className="space-y-6">
           <DialogTitle className="text-center">Create Appointment </DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="phoneNumber"
@@ -136,7 +136,7 @@ export default function CreateAppointmetPostDialog({
               />
             </div>
 
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="gendar"
@@ -239,7 +239,7 @@ export default function CreateAppointmetPostDialog({
               />
             </div>
 
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="appointmentDate"
@@ -344,7 +344,7 @@ export default function CreateAppointmetPostDialog({
                 )}
               />
             </div>
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="pmsId"
@@ -388,7 +388,7 @@ export default function CreateAppointmetPostDialog({
                 )}
               />
             </div>
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="patientWeight"
@@ -430,7 +430,7 @@ export default function CreateAppointmetPostDialog({
                 )}
               />
             </div>
-            <div className="flex gap-5">
+            <div className=" md:flex-row flex-col flex gap-5 items-center">
               <FormField
                 control={form.control}
                 name="patientEmial"

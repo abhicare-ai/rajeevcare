@@ -35,7 +35,7 @@ import nodemailer from "nodemailer";
 import SetTocounter from "../../../../email/SetTocounter";
 export async function POST(req: Request) {
   const body = await req.json();
-  const { casehistory, inpute, to } = body;
+  const { casehistory, to ,id} = body;
   // ✅ Nodemailer Transporter Setup for Zoho Mail
     const transporter = nodemailer.createTransport({
       host: "smtp.zoho.com", // ✅ Ensure it's smtp.zoho.com  smtp.gmail.com
@@ -49,14 +49,14 @@ export async function POST(req: Request) {
 
   const emailHtml = await render(
     SetTocounter({
-      link: inpute,
+      link: `https://drrajeevswellnessai.com/senttocounter/${id}`,
       patientName: casehistory,
     }),
   );
 
   // ✅ Email Options
   const mailOptions = {
-    from: `"Dr. Rajeev's Wellness AI" <${process.env.EMAIL_USER}>`,
+    from: `"Dr. Rajeev's Wellness" <${process.env.EMAIL_USER}>`,
     to: to,
     subject: `New Prescription Generated – Case History ID: ${casehistory}`,
     html: emailHtml,

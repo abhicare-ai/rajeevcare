@@ -176,6 +176,7 @@ export const finalPresciptionSchema = z.object({
   ColorectalCancer: z.array(z.string()).optional(),
   LungCancer: z.array(z.string()).optional(),
   TesticularCancer: z.array(z.string()).optional(),
+  urineTest: z.array(z.string()).optional(),
 });
 
 export type FinalPresciptionValues = z.infer<typeof finalPresciptionSchema>;
@@ -183,3 +184,127 @@ export type FinalPresciptionValues = z.infer<typeof finalPresciptionSchema>;
 export const createFeedBackSchema = z.object({
   content: requiredString,
 });
+
+export const doctorSchema = z.object({
+  id: z.string().trim(),
+  //1
+  atientFullName: requiredString,
+  age: requiredString,
+  gender: requiredString,
+  marital_Status: requiredString,
+  address: requiredString,
+  contact_Number: requiredString,
+  occupation: requiredString,
+  date_of_Case_Taking: requiredString,
+
+  //2
+  list_complaints_in_order_of_priority:z
+    .array(z.string())
+    .nonempty("Please at least one disease name "),
+  when_did_it_start:requiredString,
+  how_long_has_it_persisted:requiredString,
+  progression:requiredString,
+  sequence:requiredString,
+  associated_symptoms:requiredString,
+
+  //3 
+  what_increases_the_problem:requiredString,
+  time: requiredString,
+  Position :requiredString,
+  Emotions:requiredString,
+  What:requiredString,
+
+  //4
+  Temperament:requiredString,
+  Fears :requiredString,
+  Anxiety :requiredString,
+  Confidence :requiredString,
+  Social :requiredString,
+  Dreams :requiredString,
+  Past :requiredString,
+
+
+
+  // 5. Physical Generals
+Appetite: requiredString,
+Thirst: requiredString,
+Food_Cravings: requiredString,
+Food_Aversions: requiredString,
+Sweat: requiredString,
+Sleep: requiredString,
+Stool: requiredString,
+Urine: requiredString,
+Thermal_Reaction: requiredString,
+
+// 6. Particular Symptoms
+Specific_Organ_or_System: requiredString,
+Type_of_Pain_or_Sensation: requiredString,
+Timing_and_Frequency: requiredString,
+Influencing_Factors: requiredString,
+Visible_Swelling_or_Discharge: requiredString,
+
+// 7. Concomitant Symptoms
+Accompanying_Symptoms: requiredString,
+
+// 8. Causation (Trigger Factors)
+Trigger_Factors: requiredString,
+Physical_Trauma: requiredString,
+Emotional_Shock: requiredString,
+Environmental_Exposure: requiredString,
+Diet_or_Climate_Change: requiredString,
+
+// 9. Thermal Reaction
+Temperature_Sensitivity: requiredString,
+Comfort_Preferences: requiredString,
+Seasonal_Reaction: requiredString,
+
+// 10. Past Medical History
+Childhood_Diseases: requiredString,
+Previous_Illnesses: requiredString,
+Accidents_or_Surgeries: requiredString,
+Long_Term_Medications: requiredString,
+
+// 11. Family History
+Hereditary_Illnesses: requiredString,
+
+// 12. Menstrual / Sexual History
+Age_at_First_Menses: requiredString,
+Menstrual_Cycle: requiredString,
+Menstrual_Pain_or_Flow: requiredString,
+Leucorrhoea: requiredString,
+Sexual_History: requiredString,
+
+// 13. Personal History
+Diet: requiredString,
+Addictions: requiredString,
+Daily_Routine: requiredString,
+Physical_Activity: requiredString,
+Sleep_Habits: requiredString,
+Allergies: requiredString,
+
+// 14. Physician’s Observation
+Physical_Appearance: requiredString,
+Posture_and_Gait: requiredString,
+Facial_Expression: requiredString,
+Speech: requiredString,
+Behavior: requiredString,
+
+// 15. Clinical Diagnosis & Reports
+Investigation_Reports: requiredString,
+Current_or_Past_Diagnoses: requiredString,
+Current_Medications: requiredString,
+
+// 16. Totality of Symptoms & Remedy Selection
+Summary_of_Symptoms: requiredString,
+Remedy_Prescribed: requiredString,
+Name_of_remedy:requiredString,
+
+Potency: requiredString,
+Repetition_Schedule: requiredString,
+Follow_Up_Instructions: requiredString,
+
+
+
+});
+
+export type DoctorValues = z.infer<typeof doctorSchema>;
