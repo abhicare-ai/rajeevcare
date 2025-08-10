@@ -8,7 +8,7 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useRef, useState } from "react";
-import aiSiriAssistsnt from "@/assets/assistent.png";
+
 
 // import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -251,7 +251,7 @@ export default function AiSpeechDialogBox({
               />
             ) : (
               <Image
-                src={aiSiriAssistsnt} // Static image import
+                src='/assistent.png' // Static image import
                 alt="aiAssistantStill"
                 width={110}
                 height={110}
