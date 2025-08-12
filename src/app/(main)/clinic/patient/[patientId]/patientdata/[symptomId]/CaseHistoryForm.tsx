@@ -172,7 +172,7 @@ export default function CaseHistoryForm({
         date_of_Case_Taking: doctorData.date_of_Case_Taking || "",
 
         list_complaints_in_order_of_priority:
-          doctorData.list_complaints_in_order_of_priority || [],
+          doctorData.list_complaints_in_order_of_priority || "",
         when_did_it_start: doctorData.when_did_it_start || "",
         how_long_has_it_persisted: doctorData.how_long_has_it_persisted || "",
         progression: doctorData.progression || "",
