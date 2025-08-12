@@ -116,7 +116,6 @@ export default function SymtomForm({
         note: [],
       },
       WallnessProduct: finalData.wallnessProduct || [],
-    
     },
   });
 
@@ -150,8 +149,6 @@ export default function SymtomForm({
     },
     {} as Record<(typeof days)[number], any>,
   );
-
-
 
   const symtemFields = useFieldArray({
     control: form.control,
@@ -302,49 +299,6 @@ export default function SymtomForm({
 
       <div className="rounded-md border">
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
-            <AccordionTrigger>Patient Case History</AccordionTrigger>
-            <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
-                <TableHeader className="bg-sidebar">
-                  <TableRow>
-                    <TableHead className="border-r">Summary</TableHead>
-                    <TableHead>Patient Conversation</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody className="align-top">
-                  <TableRow>
-                    <TableCell className="border-r align-top whitespace-normal md:w-[600px]">
-                      {finalData.summary}
-                    </TableCell>
-                    <TableCell className="whitespace-normal">
-                      {finalData.qa.map(
-                        (
-                          v: { question: string; answer: string },
-                          i: number,
-                        ) => (
-                          <div key={i} className="mb-4 space-y-1">
-                            <p>
-                              <span className="text-primary font-bold">
-                                Doctor:
-                              </span>{" "}
-                              {v.question}
-                            </p>
-                            <p>
-                              <span className="font-bold text-green-500">
-                                Patient:
-                              </span>{" "}
-                              {v.answer}
-                            </p>
-                          </div>
-                        ),
-                      )}
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </AccordionContent>
-          </AccordionItem>
           <Form {...form}>
             <form>
               <input
@@ -436,8 +390,6 @@ export default function SymtomForm({
                   </Table>
                 </AccordionContent>
               </AccordionItem>
-
-             
 
               <AccordionItem value="item-4" ref={section3Ref}>
                 <AccordionTrigger>Medicine</AccordionTrigger>
@@ -945,52 +897,6 @@ export default function SymtomForm({
                               </div>
                             </div>
                           ))}
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-9">
-                <AccordionTrigger>
-                  Lab Report Image That's Given By Patient
-                </AccordionTrigger>
-                <AccordionContent>
-                  <Table>
-                    <TableHeader className="bg-sidebar">
-                      <TableRow>
-                        <TableHead className="border-r">Image Link</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow className="align-top">
-                        {/* ✅ Image */}
-                        <TableCell className="border-r align-top whitespace-normal">
-                          {finalData?.attachments.length >= 1 ? (
-                            <div className="flex flex-wrap gap-4">
-                              {finalData?.attachments?.map(
-                                (v: any, i: number) => (
-                                  <a
-                                    key={i}
-                                    href={v.url}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="block max-w-[160px] sm:max-w-[200px] md:max-w-[240px]"
-                                  >
-                                    <Image
-                                      src={v.url}
-                                      width={400}
-                                      height={400}
-                                      alt={`attachment-${i}`}
-                                      className="h-[400px] w-full rounded object-cover shadow"
-                                    />
-                                  </a>
-                                ),
-                              )}
-                            </div>
-                          ) : (
-                            <div>No Lab Report Image Given By Patient</div>
-                          )}
                         </TableCell>
                       </TableRow>
                     </TableBody>

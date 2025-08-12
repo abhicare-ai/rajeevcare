@@ -160,7 +160,7 @@ model Doctor {
   date_of_Case_Taking String
 
   //2
-  list_complaints_in_order_of_priority String[]
+  list_complaints_in_order_of_priority String
   when_did_it_start                    String
   how_long_has_it_persisted            String
   progression                          String

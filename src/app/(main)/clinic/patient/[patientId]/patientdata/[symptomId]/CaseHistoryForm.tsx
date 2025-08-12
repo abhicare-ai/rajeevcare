@@ -55,7 +55,7 @@ export default function CaseHistoryForm({
       date_of_Case_Taking: "",
 
       // 2
-      list_complaints_in_order_of_priority: [],
+      list_complaints_in_order_of_priority: "",
       when_did_it_start: "",
       how_long_has_it_persisted: "",
       progression: "",
@@ -287,7 +287,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-1">
             <AccordionTrigger>General Information</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">Patient Name</TableHead>
@@ -440,7 +440,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-2">
             <AccordionTrigger> Chief Complaints</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -473,12 +473,7 @@ export default function CaseHistoryForm({
                         render={({ field }) => (
                           <FormItem>
                             <FormControl>
-                              <TagsInput
-                                value={field.value}
-                                onValueChange={field.onChange}
-                                placeholder="Enter Primary Complaint"
-                                className="w-full"
-                              />
+                              <Textarea {...field} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -568,7 +563,7 @@ export default function CaseHistoryForm({
               Modalities (Aggravation & Amelioration)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -674,7 +669,7 @@ export default function CaseHistoryForm({
               Mind Symptoms (Mental State & Personality)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -811,7 +806,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-5">
             <AccordionTrigger> Physical Generals</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -978,7 +973,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-6">
             <AccordionTrigger> Particular Symptoms</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1083,7 +1078,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-7">
             <AccordionTrigger> Concomitant Symptoms</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1118,7 +1113,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-8">
             <AccordionTrigger> Causation (Trigger Factors)</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1222,7 +1217,7 @@ export default function CaseHistoryForm({
               Thermal Reaction (Sensitivity to Temperature)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1292,7 +1287,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-10">
             <AccordionTrigger> Past Medical History</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1378,7 +1373,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-11">
             <AccordionTrigger> Family History</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table  overflow-x-auto w-[3000px]">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1417,7 +1412,7 @@ export default function CaseHistoryForm({
               Menstrual / Sexual History (if applicable)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1520,7 +1515,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-13">
             <AccordionTrigger> Personal History</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1640,7 +1635,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-14">
             <AccordionTrigger> Physician’s Observation</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1741,7 +1736,7 @@ export default function CaseHistoryForm({
           <AccordionItem value="item-15">
             <AccordionTrigger>Clinical Diagnosis & Reports</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1814,7 +1809,7 @@ export default function CaseHistoryForm({
               Totality of Symptoms & Remedy Selection
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">

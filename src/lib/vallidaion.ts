@@ -198,9 +198,7 @@ export const doctorSchema = z.object({
   date_of_Case_Taking: requiredString,
 
   //2
-  list_complaints_in_order_of_priority:z
-    .array(z.string())
-    .nonempty("Please at least one disease name "),
+  list_complaints_in_order_of_priority:requiredString,
   when_did_it_start:requiredString,
   how_long_has_it_persisted:requiredString,
   progression:requiredString,
