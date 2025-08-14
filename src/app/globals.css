@@ -150,6 +150,11 @@ body {
     overflow: visible !important;
     max-height: none !important;
      width: 100% !important;
+
+  }
+
+  .w{
+    width: 50% !important;
   }
 
   

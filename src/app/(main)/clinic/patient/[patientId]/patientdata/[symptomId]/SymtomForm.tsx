@@ -120,7 +120,6 @@ export default function SymtomForm({
   finalData,
   prescitonData,
 }: SymtomFormProps) {
-
   const form = useForm<FinalPresciptionValues>({
     resolver: zodResolver(finalPresciptionSchema),
     defaultValues: {
@@ -194,8 +193,6 @@ export default function SymtomForm({
   const {
     formState: { isDirty },
   } = form;
-
-
 
   const onSubmit = async (values: FinalPresciptionValues) => {
     console.log("✅ Final Submitted Values:", values);
@@ -415,6 +412,11 @@ export default function SymtomForm({
   const section5Ref = useRef<HTMLDivElement>(null);
   const section6Ref = useRef<HTMLDivElement>(null);
   const section7Ref = useRef<HTMLDivElement>(null);
+  const section10Ref = useRef<HTMLDivElement>(null);
+  const section21Ref = useRef<HTMLDivElement>(null);
+  const section22Ref = useRef<HTMLDivElement>(null);
+  const section23Ref = useRef<HTMLDivElement>(null);
+  const section24Ref = useRef<HTMLDivElement>(null);
   // 👇 React to Print functions for each
   const handlePrintSection1 = useReactToPrint({
     contentRef: section1Ref,
@@ -436,6 +438,24 @@ export default function SymtomForm({
   });
   const handlePrintSection7 = useReactToPrint({
     contentRef: section7Ref,
+  });
+
+  const handlePrintSection20 = useReactToPrint({
+    contentRef: section10Ref,
+  });
+  const handlePrintSection21 = useReactToPrint({
+    contentRef: section21Ref,
+  });
+  const handlePrintSection22 = useReactToPrint({
+    contentRef: section22Ref,
+  });
+
+  const handlePrintSection23 = useReactToPrint({
+    contentRef: section23Ref,
+  });
+
+  const handlePrintSection24 = useReactToPrint({
+    contentRef: section24Ref,
   });
 
   return (
@@ -506,7 +526,7 @@ export default function SymtomForm({
 
           <div className="rounded-md border">
             <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
+              <AccordionItem value="item-1" ref={section10Ref}>
                 <AccordionTrigger>Patient Case History</AccordionTrigger>
                 <AccordionContent>
                   <Table className="printable-table w-[1000px] overflow-x-auto md:w-full">
@@ -518,7 +538,7 @@ export default function SymtomForm({
                     </TableHeader>
                     <TableBody className="align-top">
                       <TableRow>
-                        <TableCell className="border-r align-top whitespace-normal md:w-[600px]">
+                        <TableCell className="w border-r align-top whitespace-normal md:w-[600px]">
                           {finalData.summary}
                         </TableCell>
                         <TableCell className="whitespace-normal">
@@ -545,10 +565,22 @@ export default function SymtomForm({
                           )}
                         </TableCell>
                       </TableRow>
+                      <TableRow>
+                        <TableCell colSpan={2}>
+                          <Button
+                            onClick={handlePrintSection20}
+                            type="button"
+                            className="printer"
+                          >
+                            <Printer className="mr-2 h-4 w-4" /> Print
+                          </Button>
+                        </TableCell>
+                      </TableRow>
                     </TableBody>
                   </Table>
                 </AccordionContent>
               </AccordionItem>
+
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
                   <input
@@ -673,10 +705,10 @@ export default function SymtomForm({
                     </AccordionContent>
                   </AccordionItem>
 
-                  <AccordionItem value="item-3">
+                  <AccordionItem value="item-3" ref={section21Ref}>
                     <AccordionTrigger>Rediology Test</AccordionTrigger>
                     <AccordionContent>
-                      <Table className="">
+                      <Table className="printable-table">
                         <TableHeader className="bg-sidebar">
                           <TableRow>
                             <TableHead className="border-r font-bold">
@@ -996,15 +1028,26 @@ export default function SymtomForm({
                               ))}
                             </TableCell>
                           </TableRow>
+                          <TableRow>
+                            <TableCell className="w-full">
+                              <Button
+                                onClick={handlePrintSection21}
+                                type="button"
+                                className="printer"
+                              >
+                                <Printer className="mr-2 h-4 w-4" /> Print
+                              </Button>
+                            </TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </AccordionContent>
                   </AccordionItem>
 
-                  <AccordionItem value="item-20">
+                  <AccordionItem value="item-20" ref={section22Ref}>
                     <AccordionTrigger>Blood Test</AccordionTrigger>
                     <AccordionContent>
-                      <Table>
+                      <Table className="printable-table">
                         <TableHeader className="bg-sidebar">
                           <TableRow>
                             <TableHead className="border-r font-bold">
@@ -1677,15 +1720,26 @@ export default function SymtomForm({
                               ))}
                             </TableCell>
                           </TableRow>
+                          <TableRow>
+                            <TableCell className="w-full">
+                              <Button
+                                onClick={handlePrintSection22}
+                                type="button"
+                                className="printer"
+                              >
+                                <Printer className="mr-2 h-4 w-4" /> Print
+                              </Button>
+                            </TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </AccordionContent>
                   </AccordionItem>
 
-                  <AccordionItem value="item-21">
+                  <AccordionItem value="item-21" ref={section23Ref}>
                     <AccordionTrigger>Blood Cancer Test</AccordionTrigger>
                     <AccordionContent>
-                      <Table>
+                      <Table className="printable-table">
                         <TableHeader className="bg-sidebar">
                           <TableRow>
                             <TableHead className="border-r font-bold">
@@ -2138,15 +2192,26 @@ export default function SymtomForm({
                               ))}
                             </TableCell>
                           </TableRow>
+                          <TableRow>
+                            <TableCell className="w-full">
+                              <Button
+                                onClick={handlePrintSection23}
+                                type="button"
+                                className="printer"
+                              >
+                                <Printer className="mr-2 h-4 w-4" /> Print
+                              </Button>
+                            </TableCell>
+                          </TableRow>
                         </TableBody>
                       </Table>
                     </AccordionContent>
                   </AccordionItem>
 
-                  <AccordionItem value="item-22">
+                  <AccordionItem value="item-22" ref={section24Ref}>
                     <AccordionTrigger>Urine Test</AccordionTrigger>
                     <AccordionContent>
-                      <Table className="">
+                      <Table className="printable-table">
                         <TableHeader className="bg-sidebar">
                           <TableRow>
                             <TableHead className="border-r font-bold">
@@ -2196,6 +2261,17 @@ export default function SymtomForm({
                                   }}
                                 />
                               ))}
+                            </TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell className="w-full">
+                              <Button
+                                onClick={handlePrintSection24}
+                                type="button"
+                                className="printer"
+                              >
+                                <Printer className="mr-2 h-4 w-4" /> Print
+                              </Button>
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -3100,7 +3176,7 @@ export default function SymtomForm({
         </div>
       </TabsContent>
       <TabsContent value="2">
-        <CaseHostory id={prescitonData.id}/>
+        <CaseHostory id={prescitonData.id} />
       </TabsContent>
     </Tabs>
   );

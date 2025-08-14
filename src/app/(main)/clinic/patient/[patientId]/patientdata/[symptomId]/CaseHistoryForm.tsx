@@ -24,12 +24,15 @@ import {
 } from "@/components/ui/table";
 import { doctorSchema, DoctorValues } from "@/lib/vallidaion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useTransition } from "react";
+import { useEffect, useRef, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { doctor } from "./actions";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { TagsInput } from "@/components/TagsInput";
+import { useReactToPrint } from "react-to-print";
+import { Button } from "@/components/ui/button";
+import { Printer } from "lucide-react";
 
 interface CaseHistoryFormProps {
   doctorData: any;
@@ -277,17 +280,95 @@ export default function CaseHistoryForm({
   const {
     formState: { isDirty },
   } = form;
+  const section1Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection1 = useReactToPrint({
+    contentRef: section1Ref,
+  });
 
+  const section2Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection2 = useReactToPrint({
+    contentRef: section2Ref,
+  });
+
+  const section3Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection3 = useReactToPrint({
+    contentRef: section3Ref,
+  });
+
+  const section4Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection4 = useReactToPrint({
+    contentRef: section4Ref,
+  });
+
+  const section5Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection5 = useReactToPrint({
+    contentRef: section5Ref,
+  });
+
+  const section6Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection6 = useReactToPrint({
+    contentRef: section6Ref,
+  });
+
+  const section7Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection7 = useReactToPrint({
+    contentRef: section7Ref,
+  });
+
+  const section8Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection8 = useReactToPrint({
+    contentRef: section8Ref,
+  });
+
+  const section9Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection9 = useReactToPrint({
+    contentRef: section9Ref,
+  });
+
+  const section10Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection10 = useReactToPrint({
+    contentRef: section10Ref,
+  });
+
+  const section11Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection11 = useReactToPrint({
+    contentRef: section11Ref,
+  });
+
+  const section12Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection12 = useReactToPrint({
+    contentRef: section12Ref,
+  });
+
+  const section13Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection13 = useReactToPrint({
+    contentRef: section13Ref,
+  });
+
+  const section14Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection14 = useReactToPrint({
+    contentRef: section14Ref,
+  });
+
+  const section15Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection15 = useReactToPrint({
+    contentRef: section15Ref,
+  });
+
+  const section16Ref = useRef<HTMLDivElement>(null);
+  const handlePrintSection16 = useReactToPrint({
+    contentRef: section16Ref,
+  });
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <input type="hidden" {...form.register("id")} value={id} />
 
         <Accordion type="single" collapsible>
-          <AccordionItem value="item-1">
+          <AccordionItem value="item-1" ref={section1Ref}>
             <AccordionTrigger>General Information</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto">
+              <Table className="printable-table w-[3000px] overflow-x-auto printable-table ">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">Patient Name</TableHead>
@@ -432,15 +513,27 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+ <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection1}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                 
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-2">
+          <AccordionItem value="item-2" ref={section2Ref}>
             <AccordionTrigger> Chief Complaints</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -552,18 +645,29 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection2}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-3">
+          <AccordionItem value="item-3" ref={section3Ref}>
             <AccordionTrigger>
               {" "}
               Modalities (Aggravation & Amelioration)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -659,17 +763,28 @@ export default function CaseHistoryForm({
                     </TableCell>
                   </TableRow>
                 </TableBody>
+                 <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection3}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-4">
+          <AccordionItem value="item-4" ref={section4Ref}>
             <AccordionTrigger>
               {" "}
               Mind Symptoms (Mental State & Personality)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -798,15 +913,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection4}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-5">
+          <AccordionItem value="item-5" ref={section5Ref}>
             <AccordionTrigger> Physical Generals</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -965,15 +1091,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection5}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-6">
+          <AccordionItem value="item-6" ref={section6Ref}>
             <AccordionTrigger> Particular Symptoms</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1070,15 +1207,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection6}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-7">
+          <AccordionItem value="item-7" ref={section7Ref}>
             <AccordionTrigger> Concomitant Symptoms</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1105,15 +1253,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection7}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-8">
+          <AccordionItem value="item-8" ref={section8Ref}>
             <AccordionTrigger> Causation (Trigger Factors)</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1206,18 +1365,29 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection8}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-9">
+          <AccordionItem value="item-9" ref={section9Ref}>
             <AccordionTrigger>
               {" "}
               Thermal Reaction (Sensitivity to Temperature)
             </AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1279,15 +1449,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection9}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-10">
+          <AccordionItem value="item-10" ref={section10Ref}>
             <AccordionTrigger> Past Medical History</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table w-[3000px] overflow-x-auto ">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1365,15 +1546,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection10}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-11">
+          <AccordionItem value="item-11" ref={section11Ref}>
             <AccordionTrigger> Family History</AccordionTrigger>
             <AccordionContent>
-              <Table className="printable-table  overflow-x-auto w-[3000px]">
+              <Table className="printable-table w-[3000px] overflow-x-auto">
                 <TableHeader className="bg-sidebar">
                   <TableRow>
                     <TableHead className="border-r">
@@ -1401,12 +1593,23 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection11}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-12">
+          <AccordionItem value="item-12" ref={section12Ref}>
             <AccordionTrigger>
               {" "}
               Menstrual / Sexual History (if applicable)
@@ -1507,12 +1710,26 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection12}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
+
+
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-13">
+          <AccordionItem value="item-13" ref={section13Ref}>
             <AccordionTrigger> Personal History</AccordionTrigger>
             <AccordionContent>
               <Table className="printable-table w-[3000px] overflow-x-auto">
@@ -1627,12 +1844,24 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection13}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-14">
+          <AccordionItem value="item-14" ref={section14Ref}>
             <AccordionTrigger> Physician’s Observation</AccordionTrigger>
             <AccordionContent>
               <Table className="printable-table w-[3000px] overflow-x-auto">
@@ -1728,12 +1957,24 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection14}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-15">
+          <AccordionItem value="item-15" ref={section15Ref}>
             <AccordionTrigger>Clinical Diagnosis & Reports</AccordionTrigger>
             <AccordionContent>
               <Table className="printable-table w-[3000px] overflow-x-auto">
@@ -1798,12 +2039,24 @@ export default function CaseHistoryForm({
                       />
                     </TableCell>
                   </TableRow>
+
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection15}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </AccordionContent>
           </AccordionItem>
 
-          <AccordionItem value="item-16">
+          <AccordionItem value="item-16" ref={section16Ref}>
             <AccordionTrigger>
               {" "}
               Totality of Symptoms & Remedy Selection
@@ -1917,6 +2170,18 @@ export default function CaseHistoryForm({
                           </FormItem>
                         )}
                       />
+                    </TableCell>
+                  </TableRow>
+
+                   <TableRow>
+                    <TableCell >
+                      <Button
+                        onClick={handlePrintSection16}
+                        type="button"
+                        className="printer"
+                      >
+                        <Printer className="mr-2 h-4 w-4" /> Print
+                      </Button>
                     </TableCell>
                   </TableRow>
                 </TableBody>
