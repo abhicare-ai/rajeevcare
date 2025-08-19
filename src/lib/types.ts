@@ -13,6 +13,7 @@ export function getUserDataSelect() {
     _count: {
       select: {
         Appointment: true,
+
       },
     },
   } satisfies Prisma.UserSelect;
@@ -75,6 +76,11 @@ export function getAppoimentDataSelect(PasentId: string) {
         apptId: PasentId,
       },
     },
+    Doctor:{
+      where:{
+        prisciptionId:PasentId
+      }
+    },
     user: {
       select: getUserDataSelect(),
     },
@@ -134,3 +140,26 @@ export interface FeedbacksPage {
   previousCursor: string | null;
 }
 
+
+
+
+
+//// ..................
+
+export function getDoctorDataInclude(appoinmetId: string) {
+  return {
+   Doctor: {
+      select: getAppoimentDataSelect(appoinmetId),
+    },
+  } satisfies Prisma.DoctorInclude;
+}
+
+//main deta sara deta yaha pe hai
+export type DoctornData = Prisma.DoctorGetPayload<{
+  include: ReturnType<typeof getDoctorDataInclude>;
+}>;
+
+export interface DoctorPage {
+  prisciption: DoctornData[];
+  nextCursor: string | null;
+}

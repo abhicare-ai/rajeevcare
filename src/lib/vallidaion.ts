@@ -186,11 +186,9 @@ export const createFeedBackSchema = z.object({
 });
 
 export const doctorSchema = z.object({
-  id: z.string().trim(),
   //1
   atientFullName: requiredString,
-  age: requiredString,
-  gender: requiredString,
+
   marital_Status: requiredString,
   address: requiredString,
   contact_Number: requiredString,
@@ -198,7 +196,9 @@ export const doctorSchema = z.object({
   date_of_Case_Taking: requiredString,
 
   //2
-  list_complaints_in_order_of_priority:requiredString,
+  list_complaints_in_order_of_priority:z
+    .array(z.string())
+    .nonempty("Please at least one disease name "),
   when_did_it_start:requiredString,
   how_long_has_it_persisted:requiredString,
   progression:requiredString,
@@ -303,6 +303,59 @@ Follow_Up_Instructions: requiredString,
 
 
 
+
+  id: requiredString,
+  papatientName: requiredString,
+  Patient_Number: requiredString,
+  DOB: requiredString,
+  Ai_Check_Up_Date: requiredString,
+  caseidId: z.number(),
+
+  pmsId: requiredString,
+  refrenshby: requiredString,
+  patientAddress: requiredString,
+  patientEmial: requiredString.email("Invalid email"),
+  patientWeight: requiredString,
+  patinetDiet: requiredString,
+  branch: requiredString,
+
+  bp: requiredString,
+    age: requiredString,
+      gender: requiredString,
+
 });
 
 export type DoctorValues = z.infer<typeof doctorSchema>;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

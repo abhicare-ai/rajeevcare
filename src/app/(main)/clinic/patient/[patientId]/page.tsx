@@ -4,7 +4,8 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import PatientDeases from "@/components/patient/patientId/PatientDeases";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import PatientDeasesForm from "@/components/patient/patientId/PatientDeasesForm";
 
 const getUser = cache(async (patientId: string) => {
   const user = await prisma.appointment.findFirst({
@@ -53,5 +54,16 @@ export default async function Page({
     );
   const pateint = await getUser(patientId);
 
-  return <PatientDeases patinetId={pateint.id} />;
+  return (
+
+    <Tabs defaultValue="account" >
+  <TabsList>
+    <TabsTrigger value="account">With Ai</TabsTrigger>
+    <TabsTrigger value="password">With Form</TabsTrigger>
+  </TabsList>
+  <TabsContent value="account"><PatientDeases patinetId={pateint.id} /></TabsContent>
+  <TabsContent value="password"><PatientDeasesForm patinetId={pateint.id} /></TabsContent>
+</Tabs>
+  )
+  
 }

@@ -4,7 +4,7 @@ export async function POST(req: Request) {
   const { id } = await req.json();
 
   const data = await prisma.doctor.findFirst({
-    where: { prisciptionId: id },
+    where: { id: id },
   });
 
   return new Response(JSON.stringify(data), {

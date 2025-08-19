@@ -92,10 +92,7 @@ interface SymtomFormProps {
   finalData: PrescitopnTypes;
   prescitonData: {
     id: string;
-    apptId: string;
-
-    primary_complaint: string[];
-    duration_of_problem: string;
+   
     age: string;
     gender: string;
     papatientName: string;
@@ -117,11 +114,11 @@ interface SymtomFormProps {
   };
 }
 
-export default function SymtomForm({
+export default function AlldataPatient({
   finalData,
   prescitonData,
 }: SymtomFormProps) {
-  console.log("finalData", finalData);
+  console.log("finalData", finalData.symptoms);
   const form = useForm<FinalPresciptionValues>({
     resolver: zodResolver(finalPresciptionSchema),
     defaultValues: {

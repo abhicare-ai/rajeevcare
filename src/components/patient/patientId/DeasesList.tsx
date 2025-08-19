@@ -9,7 +9,6 @@ import { useState } from "react";
 
 interface DeasesListProps {
   deasesList: PrisciptionData;
-  // prescition:PrisciptionData
 }
 
 export default function DeasesList({ deasesList }: DeasesListProps) {
@@ -70,12 +69,15 @@ interface FeedBackButtonProps {
   onClick: () => void;
 }
 function FeedBackButton({ presciton, onClick }: FeedBackButtonProps) {
-  console.log(presciton)
+  console.log(presciton);
   return (
-    <button onClick={onClick} className="flex items-center gap-2 cursor-pointer">
+    <button
+      onClick={onClick}
+      className="flex cursor-pointer items-center gap-2"
+    >
       <MessageSquare className="size-5" />
       <span className="text-sm font-medium tabular-nums">
-        {presciton._count.Feedback} {" "}
+        {presciton._count.Feedback}{" "}
         <span className="hidden sm:inline">Feedbacks</span>
       </span>
     </button>

@@ -72,7 +72,8 @@ model Appointment {
   Prisciption Prisciption[]
   Feedback    Feedback[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Doctor Doctor[]
 
   @@map("appointments")
 }
@@ -109,7 +110,6 @@ model Prisciption {
   attachments Media[]
 
   appointment Appointment @relation(fields: [apptId], references: [id], onDelete: Cascade)
-  Doctor      Doctor?
 
   @@map("prisciptions")
 }
@@ -148,11 +148,10 @@ model Feedback {
 }
 
 model Doctor {
-  id                  String @id @default(cuid())
-  prisciptionId       String @unique
-  atientFullName      String
-  age                 String
-  gender              String
+  id             String @id @default(cuid())
+  prisciptionId  String
+  atientFullName String
+
   marital_Status      String
   address             String
   contact_Number      String
@@ -160,7 +159,7 @@ model Doctor {
   date_of_Case_Taking String
 
   //2
-  list_complaints_in_order_of_priority String
+  list_complaints_in_order_of_priority String[]
   when_did_it_start                    String
   how_long_has_it_persisted            String
   progression                          String
@@ -261,7 +260,26 @@ model Doctor {
   Repetition_Schedule    String
   Follow_Up_Instructions String
 
-  Prisciption Prisciption @relation(fields: [prisciptionId], references: [id], onDelete: Cascade)
+  papatientName    String
+  Patient_Number   String
+  DOB              String
+  Ai_Check_Up_Date String
+  caseidId         Int
+  patientEmial     String
+
+  patientAddress String
+  pmsId          String
+  refrenshby     String
+  bp             String
+
+  patientWeight String
+  patinetDiet   String
+  branch        String
+  age           String
+  gender        String
+
+  presciption String?
+  Doctor      Appointment @relation(fields: [prisciptionId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
 
   @@map("doctors")
