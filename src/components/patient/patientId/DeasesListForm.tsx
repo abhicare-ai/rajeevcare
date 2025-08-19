@@ -8,7 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 interface DeasesListProps {
-  deasesList: DoctornData;
+  deasesList: any;
  
 }
 
