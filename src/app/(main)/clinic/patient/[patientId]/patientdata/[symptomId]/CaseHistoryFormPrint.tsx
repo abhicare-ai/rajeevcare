@@ -24,7 +24,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { doctorSchema, DoctorValues } from "@/lib/vallidaion";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Printer } from "lucide-react";
+import { Heart, Printer } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useReactToPrint } from "react-to-print";
@@ -161,6 +161,8 @@ export default function CaseHistoryFormPrint({
     },
   });
 
+  const values = form.getValues();
+
   useEffect(() => {
     if (doctorData && !form.formState.isDirty) {
       form.reset({
@@ -273,1600 +275,664 @@ export default function CaseHistoryFormPrint({
   return (
     <Dialog open={open} onOpenChange={handleDialogClose}>
       <DialogContent className={`h-[500px] overflow-auto md:!max-w-[900px]`}>
-        <DialogHeader className="space-y-6 hidden">
+        <DialogHeader className="hidden space-y-6">
           <DialogTitle className="text-center font-bold">Form Data</DialogTitle>
         </DialogHeader>
-        <div className="rounded-md border" ref={section16Ref}>
-          <h1 className="text-center font-bold text-lg">Form Data</h1>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="printable-table border">
-                <h3 className="bg-primary p-3 font-bold">
-                  General Information
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Patient Name</h3>
-                    <FormField
-                      control={form.control}
-                      name="atientFullName"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Age</h3>
-                    <FormField
-                      control={form.control}
-                      name="age"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Gender</h3>
-                    <FormField
-                      control={form.control}
-                      name="gender"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Marital Status</h3>
-                    <FormField
-                      control={form.control}
-                      name="marital_Status"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Address</h3>
-                    <FormField
-                      control={form.control}
-                      name="address"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Contact Number</h3>
-                    <FormField
-                      control={form.control}
-                      name="contact_Number"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Occupation</h3>
-                    <FormField
-                      control={form.control}
-                      name="occupation"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Date Of Case Taking</h3>
-                    <FormField
-                      control={form.control}
-                      name="date_of_Case_Taking"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">Chief Complaints</h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      List complaints in order of priority
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="list_complaints_in_order_of_priority"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Onset: When did it start?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="when_did_it_start"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Duration: How long has it persisted?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="how_long_has_it_persisted"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Progression: Improving / worsening / unchanged?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="progression"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Sequence: Which symptom came first?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="sequence"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Associated symptoms?</h3>
-                    <FormField
-                      control={form.control}
-                      name="associated_symptoms"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Modalities (Aggravation & Amelioration)
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* What increases the problem? */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      What increases the problem?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="what_increases_the_problem"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Time */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Time (morning, evening, night)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="time"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Position */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Position (standing, lying down, walking, etc.)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Position"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Emotions, weather, stress, food, exertion */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Emotions, weather, stress, food, exertion
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Emotions"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* What relieves the symptoms? */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      What relieves the symptoms?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="What"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Mind Symptoms (Mental State & Personality)
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Temperament */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Temperament (angry, anxious, calm, irritable, sensitive)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Temperament"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Fears */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Fears (darkness, disease, height, death, etc.)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Fears"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Anxiety / Depression / Irritability */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Anxiety / Depression / Irritability
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Anxiety"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Confidence / Communication style */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Confidence / Communication style
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Confidence"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Social behavior */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Social behavior with family, society, crowds
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Social"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Dreams */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Dreams (falling, running, flying, frightening, recurring)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Dreams"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Past emotional trauma */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Past emotional trauma, grief, insult
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Past"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">Physical Generals</h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Appetite */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Appetite (normal, low, increased)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Appetite"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Thirst */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Thirst (quantity, frequency, type of water)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Thirst"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Food Cravings */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Food cravings</h3>
-                    <FormField
-                      control={form.control}
-                      name="Food_Cravings"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Food Aversions */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Food aversions</h3>
-                    <FormField
-                      control={form.control}
-                      name="Food_Aversions"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Sweat */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Sweat (amount, area, odor, staining)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Sweat"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Sleep */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Sleep (quality, position, talking, refreshed or not)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Sleep"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Stool */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Stool (frequency, color, consistency, ease of passing)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Stool"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Urine */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Urine (frequency, color, burning, urgency)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Urine"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Thermal Reaction */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Thermal reaction (feels hot or chilly generally)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Thermal_Reaction"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Print Button */}
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Particular Symptoms
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Specific organ/system affected */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Specific organ/system affected
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Specific_Organ_or_System"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Type of pain or sensation */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Type of pain or sensation (burning, cramping, dull,
-                      shooting, etc.)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Type_of_Pain_or_Sensation"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Timing and frequency */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Timing and frequency</h3>
-                    <FormField
-                      control={form.control}
-                      name="Timing_and_Frequency"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Factors influencing the complaint */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Factors influencing the complaint (posture, weather,
-                      motion, rest)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Influencing_Factors"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Any visible swelling, discharge, deformity */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Any visible swelling, discharge, deformity
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Visible_Swelling_or_Discharge"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Concomitant Symptoms
-                </h3>
-                <div className="grid grid-cols-1 gap-4 p-2">
-                  {/* Accompanying Symptoms */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      What other symptoms accompany the chief complaint? (e.g.,
-                      nausea with headache, anxiety with palpitations)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Accompanying_Symptoms"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Causation (Trigger Factors)
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* What triggered the disease/complaint */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      What triggered the disease/complaint?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Trigger_Factors"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Physical trauma */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Physical trauma</h3>
-                    <FormField
-                      control={form.control}
-                      name="Physical_Trauma"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Emotional shock, grief, insult */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Emotional shock, grief, insult
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Emotional_Shock"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Exposure to cold/heat */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Exposure to cold/heat
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Environmental_Exposure"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Diet, change of place or climate */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Diet, change of place or climate
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Diet_or_Climate_Change"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Thermal Reaction (Sensitivity to Temperature)
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Do you feel hotter or colder than others? */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Do you feel hotter or colder than others?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Temperature_Sensitivity"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Preference for fan, blanket, air-conditioning, or warm clothes */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Preference for fan, blanket, air-conditioning, or warm
-                      clothes
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Comfort_Preferences"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Reaction to seasons (summer, winter, rainy) */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Reaction to seasons (summer, winter, rainy)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Seasonal_Reaction"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Past Medical History
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Childhood diseases */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Childhood diseases (measles, mumps, etc.)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Childhood_Diseases"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Previous major illnesses */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Previous major illnesses (typhoid, TB, dengue, etc.)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Previous_Illnesses"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Accidents, surgeries, hospitalizations */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Accidents, surgeries, hospitalizations
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Accidents_or_Surgeries"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* History of long-term medication use */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      History of long-term medication use
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Long_Term_Medications"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">Family History</h3>
-                <div className="grid grid-cols-1 gap-4 p-2">
-                  {/* Hereditary Illnesses */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Illnesses in parents, grandparents, or siblings: Diabetes,
-                      hypertension, cancer, asthma, mental illness, skin
-                      diseases, thyroid disorders, etc.
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Hereditary_Illnesses"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Menstrual / Sexual History (if applicable)
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Age at first menses */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Age at first menses</h3>
-                    <FormField
-                      control={form.control}
-                      name="Age_at_First_Menses"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Menstrual cycle */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Menstrual cycle – regular or irregular?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Menstrual_Cycle"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Painful / Heavy / Scanty */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Painful? Heavy? Scanty?
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Menstrual_Pain_or_Flow"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Leucorrhoea */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Leucorrhoea – color, nature, odor
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Leucorrhoea"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Sexual history */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Sexual history – libido, marital life, fertility status
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Sexual_History"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">Personal History</h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Diet */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Diet: Vegetarian / Non-vegetarian
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Diet"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Addictions */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Addictions: Smoking, alcohol, tobacco, etc.
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Addictions"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Daily routine */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Daily routine: Meals, sleep, work, rest
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Daily_Routine"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Exercise / Physical activity */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Exercise / Yoga / Physical activity
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Physical_Activity"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Sleep habits */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Sleep habits and environment
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Sleep_Habits"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Allergies */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Known allergies or skin issues
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Allergies"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Physician’s Observation
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Physical Appearance */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Patient’s physical appearance and build
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Physical_Appearance"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Posture and Gait */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Posture and gait</h3>
-                    <FormField
-                      control={form.control}
-                      name="Posture_and_Gait"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Facial Expression */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Facial expression and eye contact
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Facial_Expression"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Speech */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Speech (clear, slow, fast, emotional)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Speech"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Behavior */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Behavior and body language during interview
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Behavior"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Clinical Diagnosis & Reports
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Investigation Reports */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Available investigation reports: CBC, USG, X-ray, MRI,
-                      etc.
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Investigation_Reports"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Current or Past Diagnoses */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Current or past diagnoses (allopathic or otherwise)
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Current_or_Past_Diagnoses"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Current Medications */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Current medications being taken regularly
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Current_Medications"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div className="printable-table mt-5 border">
-                <h3 className="bg-primary p-3 font-bold">
-                  Totality of Symptoms & Remedy Selection
-                </h3>
-                <div className="grid grid-cols-2 gap-4 p-2">
-                  {/* Summary of Symptoms */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Summary of Mind + Physical Generals + Particulars + PQRS
-                      symptoms
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Summary_of_Symptoms"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Remedy Prescribed */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Remedy prescribed with reasoning
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Remedy_Prescribed"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Name of Remedy */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Name of remedy</h3>
-                    <FormField
-                      control={form.control}
-                      name="Name_of_remedy"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Potency */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Potency</h3>
-                    <FormField
-                      control={form.control}
-                      name="Potency"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Repetition Schedule */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">Repetition schedule</h3>
-                    <FormField
-                      control={form.control}
-                      name="Repetition_Schedule"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-
-                  {/* Follow-Up Instructions */}
-                  <div className="space-y-2 border p-2">
-                    <h3 className="border-b font-bold">
-                      Follow-up instructions and next visit plan
-                    </h3>
-                    <FormField
-                      control={form.control}
-                      name="Follow_Up_Instructions"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <Textarea {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Print Button */}
-              <Table className="printer">
-                <TableHeader className="bg-sidebar">
-                  <TableRow>
-                    <TableHead className="text-left">Print</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  <TableRow>
-                    <TableCell>
-                      <Button
-                        className="w-fit"
-                        type="button"
-                        onClick={handlePrintSection16}
-                      >
-                        <Printer /> Print
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </form>
-          </Form>
+        <div className="space-y-5 rounded-md border p-4" ref={section16Ref}>
+          <h1 className="mb-4 text-center text-xl font-bold">
+            Case History Data
+          </h1>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 1. General Information
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Patient Name:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.atientFullName}
+                  </span>
+                </li>
+                <li>
+                  Age:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.age}
+                  </span>
+                </li>
+                <li>
+                  Gender:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.gender}
+                  </span>
+                </li>
+                <li>
+                  Marital Status:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.marital_Status}
+                  </span>
+                </li>
+                <li>
+                  Address:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.address}
+                  </span>
+                </li>
+                <li>
+                  Contact Number:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.contact_Number}
+                  </span>
+                </li>
+                <li>
+                  Occupation:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.occupation}
+                  </span>
+                </li>
+                <li>
+                  Date of Case Taking:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.date_of_Case_Taking}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 2. Chief Complaints
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  List complaints in order of priority:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.list_complaints_in_order_of_priority}
+                  </span>
+                </li>
+                <li>
+                  Onset (When did it start?):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.when_did_it_start}
+                  </span>
+                </li>
+                <li>
+                  Duration (How long has it persisted?):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.how_long_has_it_persisted}
+                  </span>
+                </li>
+                <li>
+                  Progression (Improving / worsening / unchanged?):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.progression}
+                  </span>
+                </li>
+                <li>
+                  Sequence (Which symptom came first?):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.sequence}
+                  </span>
+                </li>
+                <li>
+                  Associated symptoms:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.associated_symptoms}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 3. Modalities (Aggravation &
+                Amelioration)
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  What increases the problem?{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.what_increases_the_problem}
+                  </span>
+                </li>
+                <li>
+                  Time (morning, evening, night):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.time}
+                  </span>
+                </li>
+                <li>
+                  Position (standing, lying down, walking, etc.):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Position}
+                  </span>
+                </li>
+                <li>
+                  Emotions, weather, stress, food, exertion:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Emotions}
+                  </span>
+                </li>
+                <li>
+                  What relieves the symptoms?{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.What}
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 4. Mind Symptoms (Mental State &
+                Personality)
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Temperament (angry, anxious, calm, irritable, sensitive):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Temperament}
+                  </span>
+                </li>
+                <li>
+                  Fears (darkness, disease, height, death, etc.):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Fears}
+                  </span>
+                </li>
+                <li>
+                  Anxiety / Depression / Irritability:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Anxiety}
+                  </span>
+                </li>
+                <li>
+                  Confidence / Communication style:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Confidence}
+                  </span>
+                </li>
+                <li>
+                  Social behavior with family, society, crowds:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Social}
+                  </span>
+                </li>
+                <li>
+                  Dreams (falling, running, flying, frightening, recurring):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Dreams}
+                  </span>
+                </li>
+                <li>
+                  Past emotional trauma, grief, insult:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Past}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 5. Physical Generals
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Appetite (normal, low, increased):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Appetite}
+                  </span>
+                </li>
+                <li>
+                  Thirst (quantity, frequency, type of water):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Thirst}
+                  </span>
+                </li>
+                <li>
+                  Food cravings:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Food_Cravings}
+                  </span>
+                </li>
+                <li>
+                  Food aversions:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Food_Aversions}
+                  </span>
+                </li>
+                <li>
+                  Sweat (amount, area, odor, staining):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Sweat}
+                  </span>
+                </li>
+                <li>
+                  Sleep (quality, position, talking, refreshed or not):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Sleep}
+                  </span>
+                </li>
+                <li>
+                  Stool (frequency, color, consistency, ease of passing):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Stool}
+                  </span>
+                </li>
+                <li>
+                  Urine (frequency, color, burning, urgency):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Urine}
+                  </span>
+                </li>
+                <li>
+                  Thermal reaction (feels hot or chilly generally):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Thermal_Reaction}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 6. Particular Symptoms
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Specific organ/system affected:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Specific_Organ_or_System}
+                  </span>
+                </li>
+                <li>
+                  Type of pain or sensation (burning, cramping, dull, shooting,
+                  etc.):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Type_of_Pain_or_Sensation}
+                  </span>
+                </li>
+                <li>
+                  Timing and frequency:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Timing_and_Frequency}
+                  </span>
+                </li>
+                <li>
+                  Factors influencing the complaint (posture, weather, motion,
+                  rest):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Influencing_Factors}
+                  </span>
+                </li>
+                <li>
+                  Any visible swelling, discharge, deformity:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Visible_Swelling_or_Discharge}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 7. Concomitant Symptoms
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  What other symptoms accompany the chief complaint? (e.g.,
+                  nausea with headache, anxiety with palpitations):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Accompanying_Symptoms}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 8. Causation (Trigger Factors)
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  What triggered the disease/complaint?:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Trigger_Factors}
+                  </span>
+                </li>
+                <li>
+                  Physical trauma:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Physical_Trauma}
+                  </span>
+                </li>
+                <li>
+                  Emotional shock, grief, insult:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Emotional_Shock}
+                  </span>
+                </li>
+                <li>
+                  Exposure to cold/heat:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Environmental_Exposure}
+                  </span>
+                </li>
+                <li>
+                  Diet, change of place or climate:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Diet_or_Climate_Change}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 9. Thermal Reaction (Sensitivity to
+                Temperature)
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Do you feel hotter or colder than others?:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Temperature_Sensitivity}
+                  </span>
+                </li>
+                <li>
+                  Preference for fan, blanket, air-conditioning, or warm
+                  clothes:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Comfort_Preferences}
+                  </span>
+                </li>
+                <li>
+                  Reaction to seasons (summer, winter, rainy):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Seasonal_Reaction}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 10. Past Medical History
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Childhood diseases (measles, mumps, etc.):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Childhood_Diseases}
+                  </span>
+                </li>
+                <li>
+                  Previous major illnesses (typhoid, TB, dengue, etc.):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Previous_Illnesses}
+                  </span>
+                </li>
+                <li>
+                  Accidents, surgeries, hospitalizations:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Accidents_or_Surgeries}
+                  </span>
+                </li>
+                <li>
+                  History of long-term medication use:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Long_Term_Medications}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 11. Family History
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Illnesses in parents, grandparents, or siblings: Diabetes,
+                  hypertension, cancer, asthma, mental illness, skin diseases,
+                  thyroid disorders, etc.:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Hereditary_Illnesses}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 12. Menstrual / Sexual History (if
+                applicable)
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Age at first menses:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Age_at_First_Menses}
+                  </span>
+                </li>
+                <li>
+                  Menstrual cycle – regular or irregular?:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Menstrual_Cycle}
+                  </span>
+                </li>
+                <li>
+                  Painful? Heavy? Scanty?:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Menstrual_Pain_or_Flow}
+                  </span>
+                </li>
+                <li>
+                  Leucorrhoea – color, nature, odor:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Leucorrhoea}
+                  </span>
+                </li>
+                <li>
+                  Sexual history – libido, marital life, fertility status:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Sexual_History}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 13. Personal History
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Diet: Vegetarian / Non-vegetarian:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Diet}
+                  </span>
+                </li>
+                <li>
+                  Addictions: Smoking, alcohol, tobacco, etc.:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Addictions}
+                  </span>
+                </li>
+                <li>
+                  Daily routine: Meals, sleep, work, rest:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Daily_Routine}
+                  </span>
+                </li>
+                <li>
+                  Exercise / Yoga / Physical activity:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Physical_Activity}
+                  </span>
+                </li>
+                <li>
+                  Sleep habits and environment:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Sleep_Habits}
+                  </span>
+                </li>
+                <li>
+                  Known allergies or skin issues:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Allergies}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 14. Physician’s Observation
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Patient’s physical appearance and build:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Physical_Appearance}
+                  </span>
+                </li>
+                <li>
+                  Posture and gait:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Posture_and_Gait}
+                  </span>
+                </li>
+                <li>
+                  Facial expression and eye contact:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Facial_Expression}
+                  </span>
+                </li>
+                <li>
+                  Speech (clear, slow, fast, emotional):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Speech}
+                  </span>
+                </li>
+                <li>
+                  Behavior and body language during interview:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Behavior}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-5">
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 15. Clinical Diagnosis & Reports
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Available investigation reports: CBC, USG, X-ray, MRI, etc.:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Investigation_Reports}
+                  </span>
+                </li>
+                <li>
+                  Current or past diagnoses (allopathic or otherwise):{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Current_or_Past_Diagnoses}
+                  </span>
+                </li>
+                <li>
+                  Current medications being taken regularly:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Current_Medications}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="flex items-center gap-1 font-semibold">
+                <Heart fill="#FF0000" /> 16. Totality of Symptoms & Remedy
+                Selection
+              </h3>
+              <ul className="list-inside list-disc space-y-1">
+                <li>
+                  Summary of Mind + Physical Generals + Particulars + PQRS
+                  symptoms:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Summary_of_Symptoms}
+                  </span>
+                </li>
+                <li>
+                  Remedy prescribed with reasoning:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Remedy_Prescribed}
+                  </span>
+                </li>
+                <li>
+                  Name of remedy:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Name_of_remedy}
+                  </span>
+                </li>
+                <li>
+                  Potency:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Potency}
+                  </span>
+                </li>
+                <li>
+                  Repetition schedule:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Repetition_Schedule}
+                  </span>
+                </li>
+                <li>
+                  Follow-up instructions and next visit plan:{" "}
+                  <span className="font-semibold text-blue-600">
+                    {values.Follow_Up_Instructions}
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+           {/* Print Button */}
+                        <Table className="printer">
+                          <TableHeader className="bg-sidebar">
+                            <TableRow>
+                              <TableHead className="text-left">Print</TableHead>
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>
+                                <Button
+                                  className="w-fit"
+                                  type="button"
+                                  onClick={handlePrintSection16}
+                                >
+                                  <Printer /> Print
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
         </div>
       </DialogContent>
     </Dialog>
