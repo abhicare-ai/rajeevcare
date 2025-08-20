@@ -219,6 +219,7 @@ export default function GenerateQuationswithForm({
   const [isPending, startTransition] = useState(false);
   const router = useRouter();
   const onSubmit = async (input: DoctorValues) => {
+    
     try {
       startTransition(true);
       const data = await doctor({ input });
@@ -235,6 +236,14 @@ export default function GenerateQuationswithForm({
     }
   };
 
+const {
+  register,
+  handleSubmit,
+  formState: { errors },
+} = form;
+
+console.log(errors);
+
   return (
     <>
       {isPending && (
@@ -247,8 +256,8 @@ export default function GenerateQuationswithForm({
           </div>
         </div>
       )}
-      <Dialog open={open} onOpenChange={handleDialogClose}>
-        <DialogContent className="!h-[500px] !w-[1200px] overflow-y-auto">
+      <Dialog open={open} onOpenChange={handleDialogClose} modal={true}>
+        <DialogContent className="!h-[500px] !w-[1200px] overflow-y-auto" onInteractOutside={(e) => e.preventDefault()}>
           <DialogHeader className="space-y-6">
             <DialogTitle className="text-center font-bold">
               Prescription Generator with AI
