@@ -257,7 +257,7 @@ console.log(errors);
         </div>
       )}
       <Dialog open={open} onOpenChange={handleDialogClose} modal={true}>
-        <DialogContent className="!h-[500px] !w-[1200px] overflow-y-auto" onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent className="!h-[500px] md:!max-w-[900px] overflow-y-auto" onInteractOutside={(e) => e.preventDefault()}>
           <DialogHeader className="space-y-6">
             <DialogTitle className="text-center font-bold">
               Prescription Generator with AI
