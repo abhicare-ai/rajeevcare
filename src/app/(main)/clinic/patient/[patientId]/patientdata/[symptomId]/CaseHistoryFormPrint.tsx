@@ -348,7 +348,7 @@ export default function CaseHistoryFormPrint({
                 <li>
                   List complaints in order of priority:{" "}
                   <span className="font-semibold text-blue-600">
-                    {values.list_complaints_in_order_of_priority}
+                    {values.list_complaints_in_order_of_priority.join(", ")}
                   </span>
                 </li>
                 <li>

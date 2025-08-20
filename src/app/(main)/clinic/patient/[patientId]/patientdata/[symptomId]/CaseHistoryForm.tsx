@@ -556,7 +556,12 @@ export default function CaseHistoryForm({
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Textarea {...field} />
+                                 <TagsInput
+                                      value={field.value}
+                                      onValueChange={field.onChange}
+                                      placeholder="Enter List complaints in order of priority"
+                                      className="w-full"
+                                    />
                               </FormControl>
                               <FormMessage />
                             </FormItem>
